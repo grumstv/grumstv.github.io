@@ -928,7 +928,7 @@ async function getopersSLA() {
 														
 							if (differenceInSeconds > 60) {
 								arrayafrtcountwithqueue.push(1)
-								console.log('%c Test AFRT  - Очередь ТП' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + operFuckUpName ' ' + "Общее кол-во чатов в очереди: " + arrayafrtcountwithqueue.length, 'color:coral')
+								console.log('%c Test AFRT  - Очередь ТП' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + operFuckUpName + ' ' + "Общее кол-во чатов в очереди: " + arrayafrtcountwithqueue.length, 'color:coral')
 							} 
 						}
 						
