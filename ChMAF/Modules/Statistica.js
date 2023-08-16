@@ -731,6 +731,7 @@ let alloperaboveART = 0;
 let alloperaboveAFRT = 0;
 let flagFoundQueue = 0;
 let flagFoundOperGroup = 0;
+let flagChatIsInQueue = 0;
 let flagFoundOperAnswer = 0;
 let indexOfChangeGroup = -1;
 let indexOfFirstTimeInQueue = -1;
@@ -821,6 +822,7 @@ async function getopersSLA() {
                 for (let j = 0; j < operdata.items.length; j++) {
 								flagFoundQueue = 0;
 								flagFoundOperGroup = 0;
+								flagChatIsInQueue = 0;
 								flagFoundOperAnswer = 0;
 								indexOfChangeGroup = -1;
 								indexOfFirstTimeInQueue = -1;
@@ -871,6 +873,12 @@ async function getopersSLA() {
 									}
 							}
 							
+							if (flagChatIsInQueue === 0) {
+								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt ==="Ищем для вас лучшего оператора, подождите, пожалуйста.") {
+									flagChatIsInQueue = 1;
+								}
+							}
+							
 							if (flagFoundOperGroup == 1) {
 								if (flagFoundQueue === 0) {
 									if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "FirstTimeInQueue") {
@@ -890,7 +898,7 @@ async function getopersSLA() {
 						}
 
 
-						if (fres.answers.length > 0 && indexOfChangeGroup > indexOfFirstTimeInQueue) {
+						if (fres.answers.length >0 && flagChatIsInQueue === 0 &&  indexOfChangeGroup > indexOfFirstTimeInQueue) {
 								foundQueueTime = new Date(foundQueue).getTime();
 								foundOperAnswerTime = new Date(foundOperAnswer).getTime();
 
@@ -899,6 +907,16 @@ async function getopersSLA() {
 							if (differenceInSeconds > 60) {
 								arrayafrtcount.push(1)
 								console.log('%c Test AFRT' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + arrayafrtcount.length, 'color:coral')
+							} 
+						} else if (fres.answers.length >0 && flagChatIsInQueue === 1 && indexOfChangeGroup > indexOfFirstTimeInQueue) {
+								foundQueueTime = new Date(foundQueue).getTime();
+								foundOperAnswerTime = new Date(foundOperAnswer).getTime();
+
+								differenceInSeconds = (foundOperAnswerTime - foundQueueTime) / 1000;
+														
+							if (differenceInSeconds > 60) {
+								arrayafrtcount.push(1)
+								console.log('%c Test AFRT  - Очередь ТП' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + arrayafrtcount.length, 'color:coral')
 							} 
 						}
 						
