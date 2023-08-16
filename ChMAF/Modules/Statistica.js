@@ -990,7 +990,7 @@ async function getopersSLA() {
 			}
 
 			if (arrayafrtcount[i]) {
-				alloperaboveAFRT = arrayafrtcount.length
+				alloperaboveAFRT = (+arrayafrtcount.length + arrayafrtcountwithqueue.length)
 				// alloperChatsclsed += totalChatsClosed[i]
 				// console.log(alloperaboveAFRT)
 			}
@@ -1003,6 +1003,8 @@ async function getopersSLA() {
 		document.getElementById('ARTGroup').textContent = (100 - (alloperaboveART / summclsd) * 100).toFixed(1) + '%'
 		document.getElementById('AFRTGroup').textContent = (100 - (alloperaboveAFRT / summclsd) * 100).toFixed(1) + '%'
 		
-		console.log(alloperChatsclsed)
+		console.log('Chats above ART: ' + alloperaboveART)
+		console.log('Chats above AFRT: ' +alloperaboveAFRT)
+		console.log('All chats closed: ' +alloperChatsclsed)
     }
 }
