@@ -874,8 +874,9 @@ async function getopersSLA() {
 							}
 							
 							if (flagChatIsInQueue === 0) {
-								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt == "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
+								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
 									flagChatIsInQueue = 1;
+									console.log('chat is in queue')
 								}
 							}
 							
