@@ -865,6 +865,12 @@ async function getopersSLA() {
 						
 						//
 						for (let z = fres.messages.length - 1; z >= 0; z--) {
+							if (flagChatIsInQueue === 0) {
+								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
+									flagChatIsInQueue = 1;
+									console.log('chat is in queue')
+								}
+							}
 							
 							if (flagFoundOperGroup === 0) { 
 								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "ChangeGroup" && fres.messages[z].payload.prevGroup == undefined && fres.messages[z].payload.group == "c7bbb211-a217-4ed3-8112-98728dc382d8") {
@@ -873,12 +879,6 @@ async function getopersSLA() {
 									}
 							}
 							
-							if (flagChatIsInQueue === 0) {
-								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
-									flagChatIsInQueue = 1;
-									console.log('chat is in queue')
-								}
-							}
 							
 							if (flagFoundOperGroup == 1) {
 								if (flagFoundQueue === 0) {
