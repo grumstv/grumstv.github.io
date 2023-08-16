@@ -864,21 +864,13 @@ async function getopersSLA() {
 						
 						
 						//
-						for (let z = fres.messages.length - 1; z >= 0; z--) {
-							if (flagChatIsInQueue === 0) {
-								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
-									flagChatIsInQueue = 1;
-									console.log('chat is in queue')
-								}
-							}
-							
+						for (let z = fres.messages.length - 1; z >= 0; z--) {							
 							if (flagFoundOperGroup === 0) { 
 								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "ChangeGroup" && fres.messages[z].payload.prevGroup == undefined && fres.messages[z].payload.group == "c7bbb211-a217-4ed3-8112-98728dc382d8") {
 									flagFoundOperGroup = 1;
 									indexOfChangeGroup = z; 
 									}
 							}
-							
 							
 							if (flagFoundOperGroup == 1) {
 								if (flagFoundQueue === 0) {
@@ -888,6 +880,13 @@ async function getopersSLA() {
 										indexOfFirstTimeInQueue = z; 
 									}
 								}
+								
+							if (flagChatIsInQueue === 0) {
+								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
+									flagChatIsInQueue = 1;
+									console.log('chat is in queue')
+								}
+							}
 
 								if (flagFoundOperAnswer === 0) {
 									if (fres.messages[z].tpe && (fres.messages[z].tpe === "AnswerOperator" || fres.messages[z].tpe === "AnswerOperatorWithBot")) {
