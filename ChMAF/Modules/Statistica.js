@@ -859,7 +859,7 @@ async function getopersSLA() {
 						// }
 						
 						if(calculateAverageResponseTime(fres.messages) > 120) {
-							console.log('%c Test ART' + ' '+ operdata.items[j].conversationId + ' ' + calculateAverageResponseTime(fres.messages), 'color:green')
+							console.log('%c (ART)' + ' '+ operdata.items[j].conversationId + ' ' + calculateAverageResponseTime(fres.messages), 'color:green')
 							operartcount++;
 							arrayartcount[i] = operartcount
 						} else {
@@ -918,7 +918,7 @@ async function getopersSLA() {
 														
 							if (differenceInSeconds > 60) {
 								arrayafrtcount.push(1)
-								console.log('%c Test AFRT' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + operFuckUpName + ' ' + "Общее кол-во чатов без очереди: " + arrayafrtcount.length, 'color:coral')
+								console.log('%c (AFRT) ' + operFuckUpName + ' ' + fres.id + ' ' + differenceInSeconds  + ' ' + "Общее кол-во чатов без очереди: " + arrayafrtcount.length, 'color:coral')
 							} 
 						} else if (fres.answers.length >0 && flagChatIsInQueue === 1 && indexOfChangeGroup > indexOfFirstTimeInQueue) {
 								foundQueueTime = new Date(foundQueue).getTime();
@@ -928,7 +928,7 @@ async function getopersSLA() {
 														
 							if (differenceInSeconds > 60) {
 								arrayafrtcountwithqueue.push(1)
-								console.log('%c Test AFRT  - Очередь ТП' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + operFuckUpName + ' ' + "Общее кол-во чатов в очереди: " + arrayafrtcountwithqueue.length, 'color:coral')
+								console.log('%c [Очередь ТП] | (AFRT) ' + operFuckUpName + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + "Общее кол-во чатов в очереди: " + arrayafrtcountwithqueue.length, 'color:coral')
 							} 
 						}
 						
