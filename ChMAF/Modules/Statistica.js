@@ -868,7 +868,7 @@ async function getopersSLA() {
 								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "ChangeGroup" && fres.messages[z].payload.group == "c7bbb211-a217-4ed3-8112-98728dc382d8") {
 									flagFoundOperGroup = 1;
 									indexOfChangeGroup = z;
-									 console.log('tp group', [z], fres.id);
+									 console.log('tp group', z, fres.id);
 								}
 							}
 							
@@ -891,7 +891,7 @@ async function getopersSLA() {
 						}
 
 
-						if (fres.answers.length > 0 && indexOfChangeGroup < indexOfFirstTimeInQueue) {
+						if (fres.answers.length > 0 && indexOfChangeGroup > indexOfFirstTimeInQueue) {
 								foundQueueTime = new Date(foundQueue).getTime();
 								foundOperAnswerTime = new Date(foundOperAnswer).getTime();
 
