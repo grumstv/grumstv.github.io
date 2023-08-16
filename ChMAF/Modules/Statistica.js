@@ -868,7 +868,7 @@ async function getopersSLA() {
 								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "ChangeGroup" && fres.messages[z].payload.group == "c7bbb211-a217-4ed3-8112-98728dc382d8") { // Попробовать потом автоматизировать автоподстановку группы ТП 
 									flagFoundOperGroup = 1
 									indexOfChangeGroup = z;
-									console.log('tp group'.[z])
+									console.log('tp group',[z])
 								}
 							}
 							
