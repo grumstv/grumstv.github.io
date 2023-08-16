@@ -752,6 +752,7 @@ async function getopersSLA() {
 	let totalChatsClosed=[];
 	let arrayartcount =[];
 	let arrayafrtcount =[];
+	let arrayafrtcountwithqueue =[];
 	let arraycsatcount = [];
 	let arraycsatsumma = [];
 	let operatorOverdueChats=[];
@@ -892,7 +893,6 @@ async function getopersSLA() {
 							if (flagChatIsInQueue === 0) {
 								if (fres.messages[z].tpe && fres.messages[z].tpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
 									flagChatIsInQueue = 1;
-									console.log('chat is in queue')
 								}
 							}
 						}
@@ -906,7 +906,7 @@ async function getopersSLA() {
 														
 							if (differenceInSeconds > 60) {
 								arrayafrtcount.push(1)
-								console.log('%c Test AFRT' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + arrayafrtcount.length, 'color:coral')
+								console.log('%c Test AFRT' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + "Общее кол-во чатов без очереди: " + arrayafrtcount.length, 'color:coral')
 							} 
 						} else if (fres.answers.length >0 && flagChatIsInQueue === 1 && indexOfChangeGroup > indexOfFirstTimeInQueue) {
 								foundQueueTime = new Date(foundQueue).getTime();
@@ -915,8 +915,8 @@ async function getopersSLA() {
 								differenceInSeconds = (foundOperAnswerTime - foundQueueTime) / 1000;
 														
 							if (differenceInSeconds > 60) {
-								arrayafrtcount.push(1)
-								console.log('%c Test AFRT  - Очередь ТП' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + arrayafrtcount.length, 'color:coral')
+								arrayafrtcountwithqueue.push(1)
+								console.log('%c Test AFRT  - Очередь ТП' + ' ' + fres.id + ' ' + differenceInSeconds + ' ' + "Общее кол-во чатов в очереди: " + arrayafrtcountwithqueue.length, 'color:coral')
 							} 
 						}
 						
