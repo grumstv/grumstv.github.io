@@ -880,19 +880,19 @@ async function getopersSLA() {
 										indexOfFirstTimeInQueue = z; 
 									}
 								}
-								
-							if (flagChatIsInQueue === 0) {
-								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
-									flagChatIsInQueue = 1;
-									console.log('chat is in queue')
-								}
-							}
 
 								if (flagFoundOperAnswer === 0) {
 									if (fres.messages[z].tpe && (fres.messages[z].tpe === "AnswerOperator" || fres.messages[z].tpe === "AnswerOperatorWithBot")) {
 										foundOperAnswer = fres.messages[z].ts;
 										flagFoundOperAnswer = 1;
 									}
+								}
+							}
+							
+							if (flagChatIsInQueue === 0) {
+								if (fres.messages[z].eventTpe && fres.messages[z].eventTpe === "AnswerSystem" && fres.messages[z].txt === "Ищем для вас лучшего оператора, подождите, пожалуйста.") {
+									flagChatIsInQueue = 1;
+									console.log('chat is in queue')
 								}
 							}
 						}
