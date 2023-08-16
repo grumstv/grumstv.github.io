@@ -986,13 +986,13 @@ async function getopersSLA() {
 			if (arrayartcount[i]) {
 				alloperaboveART += arrayartcount[i]
 				// alloperChatsclsed += totalChatsClosed[i]
-				console.log(alloperaboveART)
+				// console.log(alloperaboveART)
 			}
 
 			if (arrayafrtcount[i]) {
 				alloperaboveAFRT = arrayafrtcount.length
 				// alloperChatsclsed += totalChatsClosed[i]
-				console.log(alloperaboveAFRT)
+				// console.log(alloperaboveAFRT)
 			}
 			
 			
