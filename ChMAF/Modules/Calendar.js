@@ -590,7 +590,7 @@ document.getElementById('refreshcalendar').onclick = function () {
 }
 
 document.getElementById('opendatsy').onclick = function () {
-    window.open("https://datsy.ru/")
+    window.open("https://datsy.info/")
 }
 
 document.getElementById('showOperActiveSlots').onclick = function() {
