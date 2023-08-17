@@ -92,7 +92,7 @@ function compareTimes(time1, time2) { //функция сравнения вре
 let parsedData;
 function checkAuth() { //функция проверки авторизации на datsy.ru
 	document.getElementById('responseTextarea1').value = '{}';
-    document.getElementById('responseTextarea2').value = `https://api.datsy.ru/api/auth/check.php`;
+    document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/auth/check.php`;
     document.getElementById('responseTextarea3').value = 'getAuthData';
 
     // Click the 'sendResponse' element to trigger the DOMSubtreeModified event
@@ -210,7 +210,7 @@ function getSlotData(name) {
 								  "mode": "cors",
 								  "credentials": "include"
 							}`;
-							document.getElementById('responseTextarea2').value = `https://api.datsy.ru/api/slot-event/add.php`;
+							document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/slot-event/add.php`;
 							document.getElementById('responseTextarea3').value = '';
 							document.getElementById('sendResponse').click();
 
@@ -230,7 +230,7 @@ function getSlotData(name) {
 								  "mode": "cors",
 								  "credentials": "include"
 							}`;
-							document.getElementById('responseTextarea2').value = `https://api.datsy.ru/api/slot-event/save.php`;
+							document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/slot-event/save.php`;
 							document.getElementById('responseTextarea3').value = '';
 							document.getElementById('sendResponse').click();
 							
@@ -258,7 +258,7 @@ function getSlotData(name) {
 								  "mode": "cors",
 								  "credentials": "include"
 								}`;
-								document.getElementById('responseTextarea2').value = `https://api.datsy.ru/api/slot-event/delete.php`;
+								document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/slot-event/delete.php`;
 								document.getElementById('responseTextarea3').value = '';
 								document.getElementById('sendResponse').click();
 							
@@ -295,7 +295,7 @@ function getTimeSlots() { //функция получения информаци
     let textvar = 0;
     let searchDate = document.getElementById('eventDate').value;
     document.getElementById('responseTextarea1').value = '{}';
-    document.getElementById('responseTextarea2').value = `https://api.datsy.ru/api/main-events/?date=${searchDate}`;
+    document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/main-events/?date=${searchDate}`;
     document.getElementById('responseTextarea3').value = 'getslotsinfo';
 
     // Click the 'sendResponse' element to trigger the DOMSubtreeModified event
@@ -508,7 +508,7 @@ function refreshActiveOperSlots() { // функция обновления ин�
 						  "mode": "cors",
 						  "credentials": "include"
 						}`;
-						document.getElementById('responseTextarea2').value = `https://api.datsy.ru/api/slot-event/delete.php`;
+						document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/slot-event/delete.php`;
 						document.getElementById('responseTextarea3').value = '';
 						document.getElementById('sendResponse').click();
 
