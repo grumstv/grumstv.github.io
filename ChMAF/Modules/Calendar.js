@@ -7,7 +7,7 @@ var win_Calendar =  // описание формы чтобы не давала 
                                 <button title="Скрывает меню" id="hidecalendar" style="width:50px; background: #228B22;">hide</button>
 								<button title="Очищает окно календаря" id="clearcalendar">🧹</button>
 								<button title="Обновляет информацию о слотах выбранной даты" id="refreshcalendar">♻</button>
-								<button title="Открывает сайт Datsy.ru" id="opendatsy">📅</button>
+								<button title="Открывает сайт datsy.info" id="opendatsy">📅</button>
 								<label title="Включение и отключение автоматического обновления информации в слотах с интервалом 30 секунд" class="checkbox-refresh">
 									<input id="autorefreshswitcher" type="checkbox" checked="">
 										<span class="checkbox-refresh-switch"></span>
@@ -90,7 +90,7 @@ function compareTimes(time1, time2) { //функция сравнения вре
 }
 
 let parsedData;
-function checkAuth() { //функция проверки авторизации на datsy.ru
+function checkAuth() { //функция проверки авторизации на datsy.info
 	document.getElementById('responseTextarea1').value = '{}';
     document.getElementById('responseTextarea2').value = `https://api.datsy.info/api/auth/check.php`;
     document.getElementById('responseTextarea3').value = 'getAuthData';
@@ -105,8 +105,8 @@ function checkAuth() { //функция проверки авторизации 
 		if (responsevar) {
 			parsedData = JSON.parse(responsevar)
 			if (parsedData['value-status'] == "Не авторизован") {
-				alert("Вы не авторизованы на datsy.ru Проверьте, пожалуйста, авторизацию и повторите попытку после переоткрытия виджета в расширении или кнопкой обновить ♻, иначе слоты могут не добавляться!")
-				window.open("https://datsy.ru/")
+				alert("Вы не авторизованы на datsy.info Проверьте, пожалуйста, авторизацию и повторите попытку после переоткрытия виджета в расширении или кнопкой обновить ♻, иначе слоты могут не добавляться!")
+				window.open("https://datsy.info/")
 			} else {
 				console.log("Вы авторизованы, смело продолжайте работу с календарем")
 				getTimeSlots()
@@ -203,7 +203,7 @@ function getSlotData(name) {
 									"sec-fetch-mode": "cors",
 									"sec-fetch-site": "same-site"
 								  },
-								  "referrer": "https://datsy.ru/",
+								  "referrer": "https://datsy.info/",
 								  "referrerPolicy": "strict-origin-when-cross-origin",
 								  "body": "addinput=${spisok[v].value}&slotname=${curSlotTime}&date=${curSlotDate}",
 								  "method": "POST",
@@ -223,7 +223,7 @@ function getSlotData(name) {
 									"sec-fetch-mode": "cors",
 									"sec-fetch-site": "same-site"
 								  },
-								  "referrer": "https://datsy.ru/",
+								  "referrer": "https://datsy.info/",
 								  "referrerPolicy": "strict-origin-when-cross-origin",
 								  "body": "event-text=${spisok[v].value}&save-slot=${spisok[v].title}",
 								  "method": "POST",
@@ -251,7 +251,7 @@ function getSlotData(name) {
 									"sec-fetch-mode": "cors",
 									"sec-fetch-site": "same-site"
 								  },
-								  "referrer": "https://datsy.ru/",
+								  "referrer": "https://datsy.info/",
 								  "referrerPolicy": "strict-origin-when-cross-origin",
 								  "body": "&deleteslot=${spisok[f].title}",
 								  "method": "POST",
@@ -501,7 +501,7 @@ function refreshActiveOperSlots() { // функция обновления ин�
 							"sec-fetch-mode": "cors",
 							"sec-fetch-site": "same-site"
 						  },
-						  "referrer": "https://datsy.ru/",
+						  "referrer": "https://datsy.info/",
 						  "referrerPolicy": "strict-origin-when-cross-origin",
 						  "body": "&deleteslot=${allSlotsToDelete[j].title}",
 						  "method": "POST",
