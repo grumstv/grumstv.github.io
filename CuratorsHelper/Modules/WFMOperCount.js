@@ -63,15 +63,6 @@ wintWFMOperCnt.onmouseup = function () { document.removeEventListener('mousemove
 let resultdata;
 let converteddata;
 let worktimesarray = [];
-let tmpDateBreakStart;
-let tmpDateBreakEnd;
-let tmpOtherWorkStart;
-let tmpOtherWorkEnd;
-let activeoperscounter;
-let tmpVigruzkaStart;
-let tmpVigruzkaEnd;
-let tmpFMStart;
-let tmpFMEnd;
 
 	function parseTime(timeString) {
 		    const now = new Date();
@@ -255,7 +246,7 @@ function searchitnow() {
 					soglots: [],
 					meetings: [],
 					trainings: [],
-					vactions: []
+					vacations: []
 				};
 
 				 if (element.schedules.length > 0) {
