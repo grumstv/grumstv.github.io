@@ -400,7 +400,13 @@ function searchitnow() {
                 other_work_start: "05:00",
                 other_work_end: "06:00",
                 FM_start: "05:00",
-                FM_end: "06:00"
+                FM_end: "06:00",
+				soglots_start: "05:00",
+                soglots_end: "06:00",	
+				meeting_start: "05:00",
+                meeting_end: "06:00",
+				training_start: "05:00",
+                training_end: "06:00"
             };
 
             if (element.schedules.length > 0) {
