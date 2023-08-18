@@ -88,11 +88,17 @@ let tmpFMEnd;
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   }
 
-  function hourEnd(hour) {
+function hourEnd(hour) {
     const hourStart = parseTime(hour);
-    const hourEnd = new Date(hourStart.getTime() + 60 * 60 * 1000);
+    const hourEnd = new Date(hourStart.getTime() + 30 * 60 * 1000); // 30 minutes for half-hourly interval
+    
+    // Handle the edge case for 23:30
+    if (hourEnd.getHours() === 0) {
+        hourEnd.setHours(24);
+    }
+
     return formatTime(hourEnd);
-  }
+}
 
 function countOperatorsByHour(arr, start, end) {
     const startDate = parseTime(start);
