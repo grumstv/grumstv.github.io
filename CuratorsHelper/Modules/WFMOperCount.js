@@ -109,7 +109,6 @@ function countOperatorsByHour(arr, start, end) {
         const scheduleStartDate = parseTime(operator.start);
         let scheduleEndDate = parseTime(operator.end);
         if (scheduleStartDate > scheduleEndDate) {
-            // the schedule ends on the next day
             scheduleEndDate.setDate(scheduleEndDate.getDate() + 1);
         }
 
@@ -118,36 +117,43 @@ function countOperatorsByHour(arr, start, end) {
             { start: 'vigruzka_start', end: 'vigruzka_end' },
             { start: 'meeting_start', end: 'meeting_end' },
             { start: 'training_start', end: 'training_end' },
-			{ start: 'soglots_start', end: 'soglots_end'}
+            { start: 'soglots_start', end: 'soglots_end'}
         ];
 
-        // iterate over each half-hour in the schedule
         let currentDate = new Date(scheduleStartDate);
         while (currentDate < scheduleEndDate) {
             const halfHourStart = new Date(currentDate);
-            const halfHourEnd = new Date(currentDate.getTime() + 30 * 60 * 1000); // 30 minutes for half-hourly interval
+            const halfHourEnd = new Date(currentDate.getTime() + 30 * 60 * 1000);
+            
             if (halfHourStart < startDate) {
                 halfHourStart.setTime(startDate.getTime());
             }
             if (halfHourEnd > endDate) {
                 halfHourEnd.setTime(endDate.getTime());
             }
+            
             if (halfHourStart < halfHourEnd) {
                 let count = 1;
+
                 for (const interval of intervalsToCheck) {
-                    if (parseTime(operator[interval.start]) < halfHourEnd && parseTime(operator[interval.end]) > halfHourStart) {
+                    const intervalStart = parseTime(operator[interval.start]);
+                    const intervalEnd = parseTime(operator[interval.end]);
+
+                    if (intervalStart < halfHourEnd && intervalEnd > halfHourStart) {
                         count = 0;
                         break;
                     }
                 }
-                if (parseTime(operator.other_work_start) <= halfHourEnd && parseTime(operator.other_work_end) > halfHourStart) {
+
+                if (parseTime(operator.other_work_start) < halfHourEnd && parseTime(operator.other_work_end) > halfHourStart) {
                     count = 0;
                 }
 
                 const halfHour = formatTime(halfHourStart);
                 counts[halfHour] = (counts[halfHour] || 0) + count;
             }
-            currentDate.setTime(currentDate.getTime() + 30 * 60 * 1000); // 30 minutes for half-hourly interval
+
+            currentDate.setTime(currentDate.getTime() + 30 * 60 * 1000);
         }
     }
 
@@ -165,6 +171,7 @@ function countOperatorsByHour(arr, start, end) {
         tbody.appendChild(row);
     }
 }
+
 
 // function countOperatorsByHour(arr, start, end) {
   // const now = new Date();
