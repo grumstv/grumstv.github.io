@@ -284,6 +284,13 @@ function prepTp() { //функция подготовки расширения �
         }
     }
     document.getElementById('rightPanel').appendChild(butServ)
+	
+	let openKnowledge = document.createElement('button')
+    openKnowledge.innerHTML = '💡'
+    openKnowledge.id = 'knowledgeCenter'
+    openKnowledge.title = 'Открывает базу знаний решений неполадок'
+    openKnowledge.classList.add('onlyfortp', 'rightPanelBtn')
+    document.getElementById('rightPanel').appendChild(openKnowledge)
 
 
     //пока неактуально ибо там сразу вся форма открывается при вызове потом может попробуем вернуть
