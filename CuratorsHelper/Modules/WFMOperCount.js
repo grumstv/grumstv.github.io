@@ -176,6 +176,13 @@ function countOperatorsByHour(arr, start, end) {
                     }
                 }
 
+				for (const vacationEvent of operator.vacations) {
+                    if (parseTime(vacationEvent.start) < halfHourEnd && parseTime(vacationEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }
+
                 // Повторите аналогичный процесс для других интервалов, таких как meetings, trainings и т. д.
 
                 if (parseTime(operator.other_work_start) < halfHourEnd && parseTime(operator.other_work_end) > halfHourStart) {
@@ -247,7 +254,8 @@ function searchitnow() {
 					FMs: [],
 					soglots: [],
 					meetings: [],
-					trainings: []
+					trainings: [],
+					vactions: []
 				};
 
 				 if (element.schedules.length > 0) {
@@ -279,6 +287,9 @@ function searchitnow() {
 									break;
 									case "Тренинг":
 										newObjOptions.trainings.push({ start: startTime, end: endTime });
+									break;
+									case "Отпуск":
+										newObjOptions.vacations.push({ start: startTime, end: endTime });
 									break;
                     }
                 });
