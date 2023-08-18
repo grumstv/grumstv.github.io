@@ -112,14 +112,6 @@ function countOperatorsByHour(arr, start, end) {
             scheduleEndDate.setDate(scheduleEndDate.getDate() + 1);
         }
 
-        const intervalsToCheck = [
-            { start: 'break_start', end: 'break_end' },
-            { start: 'vigruzka_start', end: 'vigruzka_end' },
-            { start: 'meeting_start', end: 'meeting_end' },
-            { start: 'training_start', end: 'training_end' },
-            { start: 'soglots_start', end: 'soglots_end'}
-        ];
-
         let currentDate = new Date(scheduleStartDate);
         while (currentDate < scheduleEndDate) {
             const halfHourStart = new Date(currentDate);
@@ -135,15 +127,56 @@ function countOperatorsByHour(arr, start, end) {
             if (halfHourStart < halfHourEnd) {
                 let count = 1;
 
-                for (const interval of intervalsToCheck) {
-                    const intervalStart = parseTime(operator[interval.start]);
-                    const intervalEnd = parseTime(operator[interval.end]);
-
-                    if (intervalStart < halfHourEnd && intervalEnd > halfHourStart) {
+                for (const breakEvent of operator.breaks) {
+                    if (parseTime(breakEvent.start) < halfHourEnd && parseTime(breakEvent.end) > halfHourStart) {
                         count = 0;
                         break;
                     }
                 }
+
+                for (const vigruzkaEvent of operator.vigruzkas) {
+                    if (parseTime(vigruzkaEvent.start) < halfHourEnd && parseTime(vigruzkaEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }
+				
+				for (const other_workEvent of operator.other_works) {
+                    if (parseTime(other_workEvent.start) < halfHourEnd && parseTime(other_workEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }
+
+				for (const FMEvent of operator.FMs) {
+                    if (parseTime(FMEvent.start) < halfHourEnd && parseTime(FMEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }	
+
+				for (const soglotEvent of operator.soglots) {
+                    if (parseTime(soglotEvent.start) < halfHourEnd && parseTime(soglotEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }	
+
+				for (const meetingEvent of operator.meetings) {
+                    if (parseTime(meetingEvent.start) < halfHourEnd && parseTime(meetingEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }	
+
+				for (const trainingEvent of operator.trainings) {
+                    if (parseTime(trainingEvent.start) < halfHourEnd && parseTime(trainingEvent.end) > halfHourStart) {
+                        count = 0;
+                        break;
+                    }
+                }
+
+                // Повторите аналогичный процесс для других интервалов, таких как meetings, trainings и т. д.
 
                 if (parseTime(operator.other_work_start) < halfHourEnd && parseTime(operator.other_work_end) > halfHourStart) {
                     count = 0;
@@ -172,198 +205,6 @@ function countOperatorsByHour(arr, start, end) {
     }
 }
 
-
-// function countOperatorsByHour(arr, start, end) {
-  // const now = new Date();
-  // const startDate = parseTime(start);
-  // const endDate = parseTime(end);
-
-  // const counts = {};
-
-  // for (const { start, end, break_start, break_end, other_work_start, other_work_end, vigruzka_start, vigruzka_end, meeting_start, meeting_end, training_start, training_end } of arr) {
-    // const scheduleStartDate = parseTime(start);
-    // const scheduleEndDate = parseTime(end);
-    // if (scheduleStartDate > scheduleEndDate) {
-      // the schedule ends on the next day
-      // scheduleEndDate.setDate(scheduleEndDate.getDate() + 1);
-    // }
-
-    // const breakStartDate = parseTime(break_start);
-    // const breakEndDate = parseTime(break_end);
-    // const otherStartDate = parseTime(other_work_start);
-    // const otherEndDate = parseTime(other_work_end);
-    // const vigruzkaStartDate = parseTime(vigruzka_start);
-    // const vigruzkaEndDate = parseTime(vigruzka_end);
-    // const meetingStartDate = parseTime(meeting_start);
-    // const meetingEndDate = parseTime(meeting_end);
-    // const trainingStartDate = parseTime(training_start);
-    // const trainingEndDate = parseTime(training_end);
-
-    // iterate over each hour in the schedule
-    // let currentDate = new Date(scheduleStartDate);
-    // while (currentDate < scheduleEndDate) {
-      // const hourStart = new Date(currentDate);
-      // const hourEnd = new Date(currentDate.getTime() + 60 * 60 * 1000);
-      // if (hourStart < startDate) {
-        // hourStart.setTime(startDate.getTime());
-      // }
-      // if (hourEnd > endDate) {
-        // hourEnd.setTime(endDate.getTime());
-      // }
-      // if (hourStart < hourEnd) {
-        // let count = 0;
-		// if ((breakStartDate <= hourStart && breakEndDate >= hourEnd) ||
-			// (vigruzkaStartDate <= hourStart && vigruzkaEndDate >= hourEnd) ||
-			// (meetingStartDate <= hourStart && meetingEndDate >= hourEnd) ||
-			// (trainingStartDate <= hourStart && trainingEndDate >= hourEnd)) {
-			// count = 0;
-		// } else {
-          // let operatorWorks = true;
-          // if (otherStartDate <= hourStart && otherEndDate >= hourEnd) {
-            // operatorWorks = false;
-          // }
-          // if (operatorWorks) {
-            // count = 1;
-          // }
-        // }
-        // const hour = formatTime(hourStart);
-        // counts[hour] = (counts[hour] || 0) + count;
-      // }
-      // currentDate.setTime(currentDate.getTime() + 60 * 60 * 1000);
-    // }
-  // }
-
-  // const tbody = document.querySelector('#dataoutputcount');
-  // for (const hour in counts) {
-    // const row = document.createElement('tr');
-    // const hourCell = document.createElement('td');
-    // hourCell.textContent = `${hour} - ${hourEnd(hour)}`;
-	// hourCell.style ="user-select:none";
-    // const countCell = document.createElement('td');
-    // countCell.textContent = counts[hour];
-    // countCell.style = "text-align: center; color:DeepSkyBlue"
-    // row.appendChild(hourCell);
-    // row.appendChild(countCell);
-    // tbody.appendChild(row);
-  // }
-
-	// function parseTime(timeString) {
-		// if (!timeString) {
-			// console.error('Invalid timeString provided:', timeString);
-			// return;
-		// }
-
-		// const [hours, minutes] = timeString.split(':').map(Number);
-		// return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-	// }
-
-  // function formatTime(date) {
-    // return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  // }
-
-  // function hourEnd(hour) {
-    // const hourStart = parseTime(hour);
-    // const hourEnd = new Date(hourStart.getTime() + 60 * 60 * 1000);
-    // return formatTime(hourEnd);
-  // }
-// }
-
-// function searchitnow() {
-			// let getdatatoclear = document.querySelector('#dataoutputcount')
-			// getdatatoclear.innerHTML=''
-			// worktimesarray = [];
-			// const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
-			// activeoperscounter = 0;
-			// let beginDate = document.getElementById('ishodDate').value
-			// let endDate = document.getElementById('konezDate').value
-			// let outputvar = document.getElementById('analyzedoutput');
-			// outputvar.innerHTML=''
-				
-			// document.getElementById('responseTextarea1').value = `{}`
-			// document.getElementById('responseTextarea2').value = `https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`
-			// document.getElementById('responseTextarea3').value = 'operslist'
-			// document.getElementById('sendResponse').click()
-
-			// document.getElementById("responseTextarea1").addEventListener("DOMSubtreeModified", function () {
-				// resultdata = document.getElementById('responseTextarea1').getAttribute('operslist');
-				// if (resultdata != null) {
-					// converteddata = JSON.parse(resultdata);
-					// console.log(converteddata)
-					// document.getElementById('responseTextarea1').removeAttribute('operslist')
-					
-					// converteddata.groups[0].operators.forEach(function(element) {
-						// if(element.schedules.length>0) {
-							// if(element.events.length>0 && element.events[0].title !="Отпуск" && element.events[0].title != "Перерыв по болезни") {
-								 // element.events.forEach(function(element) {
-									 // if (element.title == "Перерыв/Обед") {
-										 // tmpDateBreakStart = new Date(element.start).toLocaleString("ru-RU", options)
-										 // tmpDateBreakEnd = new Date(element.end).toLocaleString("ru-RU", options)
-									 // } else if (element.title == "Работа с выгрузкой") {
-										 // tmpVigruzkaStart = new Date(element.start).toLocaleString("ru-RU", options)
-										 // tmpVigruzkaEnd = new Date(element.end).toLocaleString("ru-RU", options)
-									 // } else if (element.title == "Работа в другом отделе") {
-										 // tmpOtherWorkStart = new Date(element.start).toLocaleString("ru-RU", options)
-										 // tmpOtherWorkEnd = new Date(element.end).toLocaleString("ru-RU", options)
-									 // } else if (element.title == "Форс-мажор") {
-										 // tmpFMStart = new Date(element.start).toLocaleString("ru-RU", options)
-										 // tmpFMEnd = new Date(element.end).toLocaleString("ru-RU", options)
-									 // }
-								 // }) 
-									 
-
-							// let tmpDateBegin = new Date(element.schedules[0].start).toLocaleString("ru-RU", options);
-							// let tmpDateEnd = new Date(element.schedules[0].end).toLocaleString("ru-RU", options);
-							// const newObjOptions = {
-							  // operator: element.name + ' ' + element.surname,
-							  // start: tmpDateBegin,
-							  // end: tmpDateEnd,
-							  // break_start:tmpDateBreakStart,
-							  // break_end:tmpDateBreakEnd,
-							  // vigruzka_start:tmpVigruzkaStart,
-							  // vigruzka_end:tmpVigruzkaEnd,
-							  // other_work_start:tmpOtherWorkStart == undefined ? "05:00" : tmpOtherWorkStart,
-							  // other_work_end:tmpOtherWorkEnd == undefined ? "06:00" : tmpOtherWorkEnd,
-							  // FM_start:tmpFMStart == undefined ? "05:00" :  tmpFMStart,
-							  // FM_end:tmpFMEnd == undefined ? "06:00"  : tmpFMEnd
-							// };
-							// worktimesarray.push(newObjOptions)
-							
-							// activeoperscounter++;
-							// outputvar.innerHTML += '<span style="color:MediumSpringGreen">' + element.name + ' ' + element.surname + '</span>' + '<br>'
-							// console.log(element)
-							// } else if(element.events.length==0)  {
-								// outputvar.innerHTML += '<span style="color:DeepSkyBlue">[СУ/Нет перерыва]' + element.name + ' ' + element.surname + '</span>' + '<br>'
-								// activeoperscounter++								
-								
-							// let tmpDateBegin = new Date(element.schedules[0].start).toLocaleString("ru-RU", options);
-							// let tmpDateEnd = new Date(element.schedules[0].end).toLocaleString("ru-RU", options);
-							// const newObjOptions = {
-							  // operator: element.name + ' ' + element.surname,
-							  // start: tmpDateBegin,
-							  // end: tmpDateEnd,
-							  // break_start: "05:00",
-							  // break_end: "06:00",
-							  // other_work_start:"05:00",
-							  // other_work_end:"06:00",
-							  // vigruzka_start:"05:00",
-							  // vigruzka_end:"06:00",
-							  // FM_start:"05:00",
-							  // FM_end:"06:00"
-							// };
-							// worktimesarray.push(newObjOptions)
-							// } else if (element.events[0].title =="Отпуск") {
-								// outputvar.innerHTML += '<span style="color:coral">[Отпуск]' + element.name + ' ' + element.surname + '</span>' + '<br>'	
-							// } else if ( element.events.length>0  && element.events[0].title == "Перерыв по болезни") {
-								// outputvar.innerHTML += '<span style="color:coral">[Заболел]' + element.name + ' ' + element.surname + '</span>' + '<br>'	
-							// }
-						// } 
-					// })
-						// outputvar.innerHTML += "Всего активных операторов: " + activeoperscounter
-						// worktimesarray = worktimesarray.sort((a, b) => a.start.localeCompare(b.start));
-						// countOperatorsByHour(worktimesarray, "07:00", "24:00")
-				// }
-			// })
-// }
 
 function searchitnow() {
     const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
@@ -395,64 +236,50 @@ function searchitnow() {
         const converteddata = JSON.parse(resultdata);
         responseTextarea1.removeAttribute('operslist');
 
-        converteddata.groups[0].operators.forEach(element => {
-            let newObjOptions = {
-                operator: `${element.name} ${element.surname}`,
-                start: '',
-                end: '',
-                break_start: "05:00",
-                break_end: "06:00",
-                vigruzka_start: "05:00",
-                vigruzka_end: "06:00",
-                other_work_start: "05:00",
-                other_work_end: "06:00",
-                FM_start: "05:00",
-                FM_end: "06:00",
-				soglots_start: "05:00",
-                soglots_end: "06:00",	
-				meeting_start: "05:00",
-                meeting_end: "06:00",
-				training_start: "05:00",
-                training_end: "06:00"
-            };
+		converteddata.groups[0].operators.forEach(element => {
+				let newObjOptions = {
+					operator: `${element.name} ${element.surname}`,
+					start: '',
+					end: '',
+					breaks: [],
+					vigruzkas: [],
+					other_works: [],
+					FMs: [],
+					soglots: [],
+					meetings: [],
+					trainings: []
+				};
 
-            if (element.schedules.length > 0) {
-                newObjOptions.start = new Date(element.schedules[0].start).toLocaleString("ru-RU", options);
-                newObjOptions.end = new Date(element.schedules[0].end).toLocaleString("ru-RU", options);
+				 if (element.schedules.length > 0) {
+							newObjOptions.start = new Date(element.schedules[0].start).toLocaleString("ru-RU", options);
+							newObjOptions.end = new Date(element.schedules[0].end).toLocaleString("ru-RU", options);
 
-                element.events.forEach(event => {
-                    const startTime = new Date(event.start).toLocaleString("ru-RU", options);
-                    const endTime = new Date(event.end).toLocaleString("ru-RU", options);
+							element.events.forEach(event => {
+								const startTime = new Date(event.start).toLocaleString("ru-RU", options);
+								const endTime = new Date(event.end).toLocaleString("ru-RU", options);
 
-                    switch (event.title) {
-                        case "Перерыв/Обед":
-                            newObjOptions.break_start = startTime;
-                            newObjOptions.break_end = endTime;
-                            break;
-                        case "Работа с выгрузкой":
-                            newObjOptions.vigruzka_start = startTime;
-                            newObjOptions.vigruzka_end = endTime;
-                            break;
-                        case "Работа в другом отделе":
-                            newObjOptions.other_work_start = startTime;
-                            newObjOptions.other_work_end = endTime;
-                            break;
-                        case "Форс-мажор":
-                            newObjOptions.FM_start = startTime;
-                            newObjOptions.FM_end = endTime;
-                            break;
-						case "Согласованное отсутствие":
-						    newObjOptions.soglots_start = startTime;
-                            newObjOptions.soglots_end = endTime;
-                            break;
-						case "Встреча":
-						    newObjOptions.meeting_start = startTime;
-                            newObjOptions.meeting_end = endTime;
-                            break;
-						case "Тренинг":
-						    newObjOptions.training_start = startTime;
-                            newObjOptions.training_end = endTime;
-                            break;
+								switch (event.title) {
+									case "Перерыв/Обед":
+										newObjOptions.breaks.push({ start: startTime, end: endTime });
+										break;
+									case "Работа с выгрузкой":
+										newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
+										break;
+									case "Работа в другом отделе":	
+										newObjOptions.other_works.push({ start: startTime, end: endTime });
+										break;
+									case "Форс-мажор":	
+										newObjOptions.FMs.push({ start: startTime, end: endTime });
+										break;
+									case "Согласованное отсутствие":
+										newObjOptions.soglots.push({ start: startTime, end: endTime });
+									break;
+									case "Встреча":
+										newObjOptions.meetings.push({ start: startTime, end: endTime });
+									break;
+									case "Тренинг":
+										newObjOptions.trainings.push({ start: startTime, end: endTime });
+									break;
                     }
                 });
 
@@ -466,7 +293,7 @@ function searchitnow() {
                     outputVar.innerHTML += `<span style="color:MediumSpringGreen">${element.name} ${element.surname}</span><br>`;
                 }
                 
-                worktimesarray.push(newObjOptions);
+				worktimesarray.push(newObjOptions);
                 activeoperscounter++;
             }
         });
