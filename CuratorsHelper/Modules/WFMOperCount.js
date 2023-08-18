@@ -80,7 +80,7 @@ function countOperatorsByHour(arr, start, end) {
 
   const counts = {};
 
-  for (const { start, end, break_start, break_end, other_work_start, other_work_end, vigruzka_start, vigruzka_end } of arr) {
+  for (const { start, end, break_start, break_end, other_work_start, other_work_end, vigruzka_start, vigruzka_end, meeting_start, meeting_end, training_start, training_end } of arr) {
     const scheduleStartDate = parseTime(start);
     const scheduleEndDate = parseTime(end);
     if (scheduleStartDate > scheduleEndDate) {
@@ -94,6 +94,10 @@ function countOperatorsByHour(arr, start, end) {
     const otherEndDate = parseTime(other_work_end);
     const vigruzkaStartDate = parseTime(vigruzka_start);
     const vigruzkaEndDate = parseTime(vigruzka_end);
+    const meetingStartDate = parseTime(meeting_start);
+    const meetingEndDate = parseTime(meeting_end);
+    const trainingStartDate = parseTime(training_start);
+    const trainingEndDate = parseTime(training_end);
 
     // iterate over each hour in the schedule
     let currentDate = new Date(scheduleStartDate);
@@ -108,10 +112,12 @@ function countOperatorsByHour(arr, start, end) {
       }
       if (hourStart < hourEnd) {
         let count = 0;
-        if ((breakStartDate <= hourStart && breakEndDate >= hourEnd) ||
-            (vigruzkaStartDate <= hourStart && vigruzkaEndDate >= hourEnd)) {
-          count = 0;
-        } else {
+		if ((breakStartDate <= hourStart && breakEndDate >= hourEnd) ||
+			(vigruzkaStartDate <= hourStart && vigruzkaEndDate >= hourEnd) ||
+			(meetingStartDate <= hourStart && meetingEndDate >= hourEnd) ||
+			(trainingStartDate <= hourStart && trainingEndDate >= hourEnd)) {
+			count = 0;
+		} else {
           let operatorWorks = true;
           if (otherStartDate <= hourStart && otherEndDate >= hourEnd) {
             operatorWorks = false;
@@ -329,12 +335,12 @@ function searchitnow() {
                             newObjOptions.FM_end = endTime;
                             break;
 						case "Встреча":
-						    newObjOptions.FM_start = startTime;
-                            newObjOptions.FM_end = endTime;
+						    newObjOptions.meeting_start = startTime;
+                            newObjOptions.meeting_end = endTime;
                             break;
 						case "Тренинг":
-						    newObjOptions.FM_start = startTime;
-                            newObjOptions.FM_end = endTime;
+						    newObjOptions.training_start = startTime;
+                            newObjOptions.training_end = endTime;
                             break;
                     }
                 });
