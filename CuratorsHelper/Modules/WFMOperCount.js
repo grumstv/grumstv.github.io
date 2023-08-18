@@ -147,10 +147,15 @@ function countOperatorsByHour(arr, start, end) {
     tbody.appendChild(row);
   }
 
-  function parseTime(timeString) {
-    const [hours, minutes] = timeString.split(':').map(Number);
-    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-  }
+	function parseTime(timeString) {
+		if (!timeString) {
+			console.error('Invalid timeString provided:', timeString);
+			return;
+		}
+
+		const [hours, minutes] = timeString.split(':').map(Number);
+		return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+	}
 
   function formatTime(date) {
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
