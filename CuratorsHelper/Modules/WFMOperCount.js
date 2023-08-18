@@ -73,6 +73,26 @@ let tmpVigruzkaEnd;
 let tmpFMStart;
 let tmpFMEnd;
 
+	function parseTime(timeString) {
+		if (!timeString) {
+			console.error('Invalid timeString provided:', timeString);
+			return;
+		}
+
+		const [hours, minutes] = timeString.split(':').map(Number);
+		return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+	}
+
+  function formatTime(date) {
+    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  }
+
+  function hourEnd(hour) {
+    const hourStart = parseTime(hour);
+    const hourEnd = new Date(hourStart.getTime() + 60 * 60 * 1000);
+    return formatTime(hourEnd);
+  }
+
 function countOperatorsByHour(arr, start, end) {
     const now = new Date();
     const startDate = parseTime(start);
