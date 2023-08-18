@@ -117,7 +117,8 @@ function countOperatorsByHour(arr, start, end) {
             { start: 'break_start', end: 'break_end' },
             { start: 'vigruzka_start', end: 'vigruzka_end' },
             { start: 'meeting_start', end: 'meeting_end' },
-            { start: 'training_start', end: 'training_end' }
+            { start: 'training_start', end: 'training_end' },
+			{ start: 'soglots_start', end: 'soglots_end'}
         ];
 
         // iterate over each half-hour in the schedule
@@ -428,8 +429,8 @@ function searchitnow() {
                             newObjOptions.FM_end = endTime;
                             break;
 						case "Согласованное отсутствие":
-						    newObjOptions.FM_start = startTime;
-                            newObjOptions.FM_end = endTime;
+						    newObjOptions.soglots_start = startTime;
+                            newObjOptions.soglots_end = endTime;
                             break;
 						case "Встреча":
 						    newObjOptions.meeting_start = startTime;
