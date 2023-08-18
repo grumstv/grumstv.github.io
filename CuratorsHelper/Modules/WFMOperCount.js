@@ -134,12 +134,12 @@ function countOperatorsByHour(arr, start, end) {
             if (halfHourStart < halfHourEnd) {
                 let count = 1;
                 for (const interval of intervalsToCheck) {
-                    if (parseTime(operator[interval.start]) < halfHourStart && parseTime(operator[interval.end]) > halfHourStart) {
+                    if (parseTime(operator[interval.start]) < halfHourEnd && parseTime(operator[interval.end]) > halfHourStart) {
                         count = 0;
                         break;
                     }
                 }
-                if (parseTime(operator.other_work_start) <= halfHourStart && parseTime(operator.other_work_end) > halfHourStart) {
+                if (parseTime(operator.other_work_start) <= halfHourEnd && parseTime(operator.other_work_end) > halfHourStart) {
                     count = 0;
                 }
 
