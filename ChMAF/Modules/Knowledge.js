@@ -62,6 +62,7 @@ document.getElementById('knowledgeCenter').onclick = function() {
 		document.getElementById('knowledgeCenter').classList.add('activeScriptBtn');
 	} else {
 		document.getElementById('AF_Knowledge').style.display = "none"
+		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
 	}
 	
 }
