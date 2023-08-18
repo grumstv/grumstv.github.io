@@ -117,9 +117,7 @@ function countOperatorsByHour(arr, start, end) {
             { start: 'break_start', end: 'break_end' },
             { start: 'vigruzka_start', end: 'vigruzka_end' },
             { start: 'meeting_start', end: 'meeting_end' },
-            { start: 'training_start', end: 'training_end' },
-			{ start: 'meeting_start', end: 'meeting_end' },
-			{ start: 'training_start', end: 'training_end'}
+            { start: 'training_start', end: 'training_end' }
         ];
 
         // iterate over each half-hour in the schedule
@@ -136,12 +134,12 @@ function countOperatorsByHour(arr, start, end) {
             if (halfHourStart < halfHourEnd) {
                 let count = 1;
                 for (const interval of intervalsToCheck) {
-                    if (parseTime(operator[interval.start]) <= halfHourStart && parseTime(operator[interval.end]) >= halfHourEnd) {
+                    if (parseTime(operator[interval.start]) < halfHourStart && parseTime(operator[interval.end]) > halfHourStart) {
                         count = 0;
                         break;
                     }
                 }
-                if (parseTime(operator.other_work_start) <= halfHourStart && parseTime(operator.other_work_end) >= halfHourEnd) {
+                if (parseTime(operator.other_work_start) <= halfHourStart && parseTime(operator.other_work_end) > halfHourStart) {
                     count = 0;
                 }
 
