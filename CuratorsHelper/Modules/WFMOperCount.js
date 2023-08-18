@@ -117,7 +117,9 @@ function countOperatorsByHour(arr, start, end) {
             { start: 'break_start', end: 'break_end' },
             { start: 'vigruzka_start', end: 'vigruzka_end' },
             { start: 'meeting_start', end: 'meeting_end' },
-            { start: 'training_start', end: 'training_end' }
+            { start: 'training_start', end: 'training_end' },
+			{ start: 'meeting_start', end: 'meeting_end' },
+			{ start: 'training_start', end: 'training_end'}
         ];
 
         // iterate over each half-hour in the schedule
