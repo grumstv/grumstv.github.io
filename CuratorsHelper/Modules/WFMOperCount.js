@@ -324,6 +324,10 @@ function searchitnow() {
                             newObjOptions.FM_start = startTime;
                             newObjOptions.FM_end = endTime;
                             break;
+						case "Согласованное отсутствие":
+						    newObjOptions.FM_start = startTime;
+                            newObjOptions.FM_end = endTime;
+                            break;
                     }
                 });
 
