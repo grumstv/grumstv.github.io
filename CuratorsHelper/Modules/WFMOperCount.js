@@ -74,99 +74,165 @@ let tmpFMStart;
 let tmpFMEnd;
 
 function countOperatorsByHour(arr, start, end) {
-  const now = new Date();
-  const startDate = parseTime(start);
-  const endDate = parseTime(end);
+    const now = new Date();
+    const startDate = parseTime(start);
+    const endDate = parseTime(end);
+    const counts = {};
 
-  const counts = {};
+    for (const operator of arr) {
+        const scheduleStartDate = parseTime(operator.start);
+        let scheduleEndDate = parseTime(operator.end);
+        if (scheduleStartDate > scheduleEndDate) {
+            // the schedule ends on the next day
+            scheduleEndDate.setDate(scheduleEndDate.getDate() + 1);
+        }
 
-  for (const { start, end, break_start, break_end, other_work_start, other_work_end, vigruzka_start, vigruzka_end, meeting_start, meeting_end, training_start, training_end } of arr) {
-    const scheduleStartDate = parseTime(start);
-    const scheduleEndDate = parseTime(end);
-    if (scheduleStartDate > scheduleEndDate) {
-      // the schedule ends on the next day
-      scheduleEndDate.setDate(scheduleEndDate.getDate() + 1);
+        const intervalsToCheck = [
+            { start: 'break_start', end: 'break_end' },
+            { start: 'vigruzka_start', end: 'vigruzka_end' },
+            { start: 'meeting_start', end: 'meeting_end' },
+            { start: 'training_start', end: 'training_end' }
+        ];
+
+        // iterate over each half-hour in the schedule
+        let currentDate = new Date(scheduleStartDate);
+        while (currentDate < scheduleEndDate) {
+            const halfHourStart = new Date(currentDate);
+            const halfHourEnd = new Date(currentDate.getTime() + 30 * 60 * 1000); // 30 minutes for half-hourly interval
+            if (halfHourStart < startDate) {
+                halfHourStart.setTime(startDate.getTime());
+            }
+            if (halfHourEnd > endDate) {
+                halfHourEnd.setTime(endDate.getTime());
+            }
+            if (halfHourStart < halfHourEnd) {
+                let count = 1;
+                for (const interval of intervalsToCheck) {
+                    if (parseTime(operator[interval.start]) <= halfHourStart && parseTime(operator[interval.end]) >= halfHourEnd) {
+                        count = 0;
+                        break;
+                    }
+                }
+                if (parseTime(operator.other_work_start) <= halfHourStart && parseTime(operator.other_work_end) >= halfHourEnd) {
+                    count = 0;
+                }
+
+                const halfHour = formatTime(halfHourStart);
+                counts[halfHour] = (counts[halfHour] || 0) + count;
+            }
+            currentDate.setTime(currentDate.getTime() + 30 * 60 * 1000); // 30 minutes for half-hourly interval
+        }
     }
 
-    const breakStartDate = parseTime(break_start);
-    const breakEndDate = parseTime(break_end);
-    const otherStartDate = parseTime(other_work_start);
-    const otherEndDate = parseTime(other_work_end);
-    const vigruzkaStartDate = parseTime(vigruzka_start);
-    const vigruzkaEndDate = parseTime(vigruzka_end);
-    const meetingStartDate = parseTime(meeting_start);
-    const meetingEndDate = parseTime(meeting_end);
-    const trainingStartDate = parseTime(training_start);
-    const trainingEndDate = parseTime(training_end);
+    const tbody = document.querySelector('#dataoutputcount');
+    for (const halfHour in counts) {
+        const row = document.createElement('tr');
+        const hourCell = document.createElement('td');
+        hourCell.textContent = `${halfHour} - ${hourEnd(halfHour)}`;
+        hourCell.style = "user-select:none";
+        const countCell = document.createElement('td');
+        countCell.textContent = counts[halfHour];
+        countCell.style = "text-align: center; color:DeepSkyBlue";
+        row.appendChild(hourCell);
+        row.appendChild(countCell);
+        tbody.appendChild(row);
+    }
+}
+
+// function countOperatorsByHour(arr, start, end) {
+  // const now = new Date();
+  // const startDate = parseTime(start);
+  // const endDate = parseTime(end);
+
+  // const counts = {};
+
+  // for (const { start, end, break_start, break_end, other_work_start, other_work_end, vigruzka_start, vigruzka_end, meeting_start, meeting_end, training_start, training_end } of arr) {
+    // const scheduleStartDate = parseTime(start);
+    // const scheduleEndDate = parseTime(end);
+    // if (scheduleStartDate > scheduleEndDate) {
+      // the schedule ends on the next day
+      // scheduleEndDate.setDate(scheduleEndDate.getDate() + 1);
+    // }
+
+    // const breakStartDate = parseTime(break_start);
+    // const breakEndDate = parseTime(break_end);
+    // const otherStartDate = parseTime(other_work_start);
+    // const otherEndDate = parseTime(other_work_end);
+    // const vigruzkaStartDate = parseTime(vigruzka_start);
+    // const vigruzkaEndDate = parseTime(vigruzka_end);
+    // const meetingStartDate = parseTime(meeting_start);
+    // const meetingEndDate = parseTime(meeting_end);
+    // const trainingStartDate = parseTime(training_start);
+    // const trainingEndDate = parseTime(training_end);
 
     // iterate over each hour in the schedule
-    let currentDate = new Date(scheduleStartDate);
-    while (currentDate < scheduleEndDate) {
-      const hourStart = new Date(currentDate);
-      const hourEnd = new Date(currentDate.getTime() + 60 * 60 * 1000);
-      if (hourStart < startDate) {
-        hourStart.setTime(startDate.getTime());
-      }
-      if (hourEnd > endDate) {
-        hourEnd.setTime(endDate.getTime());
-      }
-      if (hourStart < hourEnd) {
-        let count = 0;
-		if ((breakStartDate <= hourStart && breakEndDate >= hourEnd) ||
-			(vigruzkaStartDate <= hourStart && vigruzkaEndDate >= hourEnd) ||
-			(meetingStartDate <= hourStart && meetingEndDate >= hourEnd) ||
-			(trainingStartDate <= hourStart && trainingEndDate >= hourEnd)) {
-			count = 0;
-		} else {
-          let operatorWorks = true;
-          if (otherStartDate <= hourStart && otherEndDate >= hourEnd) {
-            operatorWorks = false;
-          }
-          if (operatorWorks) {
-            count = 1;
-          }
-        }
-        const hour = formatTime(hourStart);
-        counts[hour] = (counts[hour] || 0) + count;
-      }
-      currentDate.setTime(currentDate.getTime() + 60 * 60 * 1000);
-    }
-  }
+    // let currentDate = new Date(scheduleStartDate);
+    // while (currentDate < scheduleEndDate) {
+      // const hourStart = new Date(currentDate);
+      // const hourEnd = new Date(currentDate.getTime() + 60 * 60 * 1000);
+      // if (hourStart < startDate) {
+        // hourStart.setTime(startDate.getTime());
+      // }
+      // if (hourEnd > endDate) {
+        // hourEnd.setTime(endDate.getTime());
+      // }
+      // if (hourStart < hourEnd) {
+        // let count = 0;
+		// if ((breakStartDate <= hourStart && breakEndDate >= hourEnd) ||
+			// (vigruzkaStartDate <= hourStart && vigruzkaEndDate >= hourEnd) ||
+			// (meetingStartDate <= hourStart && meetingEndDate >= hourEnd) ||
+			// (trainingStartDate <= hourStart && trainingEndDate >= hourEnd)) {
+			// count = 0;
+		// } else {
+          // let operatorWorks = true;
+          // if (otherStartDate <= hourStart && otherEndDate >= hourEnd) {
+            // operatorWorks = false;
+          // }
+          // if (operatorWorks) {
+            // count = 1;
+          // }
+        // }
+        // const hour = formatTime(hourStart);
+        // counts[hour] = (counts[hour] || 0) + count;
+      // }
+      // currentDate.setTime(currentDate.getTime() + 60 * 60 * 1000);
+    // }
+  // }
 
-  const tbody = document.querySelector('#dataoutputcount');
-  for (const hour in counts) {
-    const row = document.createElement('tr');
-    const hourCell = document.createElement('td');
-    hourCell.textContent = `${hour} - ${hourEnd(hour)}`;
-	hourCell.style ="user-select:none";
-    const countCell = document.createElement('td');
-    countCell.textContent = counts[hour];
-    countCell.style = "text-align: center; color:DeepSkyBlue"
-    row.appendChild(hourCell);
-    row.appendChild(countCell);
-    tbody.appendChild(row);
-  }
+  // const tbody = document.querySelector('#dataoutputcount');
+  // for (const hour in counts) {
+    // const row = document.createElement('tr');
+    // const hourCell = document.createElement('td');
+    // hourCell.textContent = `${hour} - ${hourEnd(hour)}`;
+	// hourCell.style ="user-select:none";
+    // const countCell = document.createElement('td');
+    // countCell.textContent = counts[hour];
+    // countCell.style = "text-align: center; color:DeepSkyBlue"
+    // row.appendChild(hourCell);
+    // row.appendChild(countCell);
+    // tbody.appendChild(row);
+  // }
 
-	function parseTime(timeString) {
-		if (!timeString) {
-			console.error('Invalid timeString provided:', timeString);
-			return;
-		}
+	// function parseTime(timeString) {
+		// if (!timeString) {
+			// console.error('Invalid timeString provided:', timeString);
+			// return;
+		// }
 
-		const [hours, minutes] = timeString.split(':').map(Number);
-		return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-	}
+		// const [hours, minutes] = timeString.split(':').map(Number);
+		// return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+	// }
 
-  function formatTime(date) {
-    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  }
+  // function formatTime(date) {
+    // return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  // }
 
-  function hourEnd(hour) {
-    const hourStart = parseTime(hour);
-    const hourEnd = new Date(hourStart.getTime() + 60 * 60 * 1000);
-    return formatTime(hourEnd);
-  }
-}
+  // function hourEnd(hour) {
+    // const hourStart = parseTime(hour);
+    // const hourEnd = new Date(hourStart.getTime() + 60 * 60 * 1000);
+    // return formatTime(hourEnd);
+  // }
+// }
 
 // function searchitnow() {
 			// let getdatatoclear = document.querySelector('#dataoutputcount')
