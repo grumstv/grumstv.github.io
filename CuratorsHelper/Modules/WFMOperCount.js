@@ -74,6 +74,7 @@ let tmpFMStart;
 let tmpFMEnd;
 
 	function parseTime(timeString) {
+		    const now = new Date();
 		if (!timeString) {
 			console.error('Invalid timeString provided:', timeString);
 			return;
@@ -94,7 +95,6 @@ let tmpFMEnd;
   }
 
 function countOperatorsByHour(arr, start, end) {
-    const now = new Date();
     const startDate = parseTime(start);
     const endDate = parseTime(end);
     const counts = {};
