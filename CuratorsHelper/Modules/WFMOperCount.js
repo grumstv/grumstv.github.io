@@ -328,6 +328,14 @@ function searchitnow() {
 						    newObjOptions.FM_start = startTime;
                             newObjOptions.FM_end = endTime;
                             break;
+						case "Встреча":
+						    newObjOptions.FM_start = startTime;
+                            newObjOptions.FM_end = endTime;
+                            break;
+						case "Тренинг":
+						    newObjOptions.FM_start = startTime;
+                            newObjOptions.FM_end = endTime;
+                            break;
                     }
                 });
 
