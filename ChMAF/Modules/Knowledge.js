@@ -56,6 +56,15 @@ wintKnowledge.onmousedown = function(event) {
   }
 };
 
+document.getElementById('knowledgeCenter').onclick = function() {
+	if (document.getElementById('AF_Knowledge').style.display == "none") {
+		document.getElementById('AF_Knowledge').style.display = ""
+	} else {
+		document.getElementById('AF_Knowledge').style.display = "none"
+	}
+	
+}
+
 document.getElementById('hideMeKnowledge').onclick = function(){
 	document.getElementById('AF_Knowledge').style.display = "none"
 }
