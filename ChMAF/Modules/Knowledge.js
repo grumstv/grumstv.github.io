@@ -56,10 +56,21 @@ wintKnowledge.onmousedown = function(event) {
   }
 };
 
+let knowDataContainer;
+
+async function getKnowData() { // получаем из файла список версий моб. приложений
+	let knowData;
+	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
+	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
+	knowDataContainer = versionsdata.result;
+	console.log(knowDataContainer) //получим список версий
+}
+
 document.getElementById('knowledgeCenter').onclick = function() {
 	if (document.getElementById('AF_Knowledge').style.display == "none") {
 		document.getElementById('AF_Knowledge').style.display = ""
 		document.getElementById('knowledgeCenter').classList.add('activeScriptBtn');
+		getKnowData()
 	} else {
 		document.getElementById('AF_Knowledge').style.display = "none"
 		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
