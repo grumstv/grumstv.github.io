@@ -64,9 +64,12 @@ wintKnowledge.onmousedown = function(event) {
 };
 
 let knowDataContainer;
-
+let dropdown0;
+let dropdown1;
 async function getKnowData() { // получаем из файла список версий моб. приложений
 	let knowData;
+	dropdown0.innerHTML = '';
+    dropdown1.innerHTML = '';
 	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
 	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
 	knowDataContainer = versionsdata.result;
@@ -95,7 +98,7 @@ async function getKnowData() { // получаем из файла список 
 	// Наполняем первый dropdown
 // Наполняем первый dropdown
 		const uniqueValues0 = [...new Set(knowDataContainer.map(item => item[0]))];
-		const dropdown0 = document.getElementById("lessonTypeList");
+		dropdown0 = document.getElementById("lessonTypeList");
 		uniqueValues0.forEach(value => {
 			const option = document.createElement("option");
 			option.value = value;
@@ -103,7 +106,7 @@ async function getKnowData() { // получаем из файла список 
 			dropdown0.appendChild(option);
 		});
 
-		const dropdown1 = document.getElementById("CategoryNameList");
+		dropdown1 = document.getElementById("CategoryNameList");
 
 		// Функция обновления второго dropdown на основе выбора в первом
 		dropdown0.addEventListener("change", function() {
