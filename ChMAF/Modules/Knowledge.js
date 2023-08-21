@@ -17,6 +17,8 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					</select>
 						<div style="margin: 5px; width: 550px" id="ProblemsName">
 						</div>
+						<div style="margin: 5px; width: 550px; position:absolute; top 0; right: 550px; background: #464451" id="ProblemsSolution">
+						</div>
 				</div>
 
 			</span>
