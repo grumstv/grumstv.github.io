@@ -67,7 +67,18 @@ async function getKnowData() { // получаем из файла список 
 	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
 	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
 	knowDataContainer = versionsdata.result;
-	console.log(knowDataContainer) //получим список версий
+	console.log(knowDataContainer) //получим обект с информацией
+	
+	const uniqueValues = [...new Set(knowDataContainer.map(item => item[0]))];
+
+	const dropdown = document.getElementById("lessonTypeList");
+
+	uniqueValues.forEach(value => {
+		const option = document.createElement("option");
+		option.value = value;
+		option.textContent = value;
+		dropdown.appendChild(option);
+	});
 }
 
 document.getElementById('knowledgeCenter').onclick = function() {
