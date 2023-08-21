@@ -157,6 +157,7 @@ async function getKnowData() { // получаем из файла список 
 			problems.forEach(problem => {
 				const problemElem = document.createElement("div");
 				problemElem.style = "background: lightsteelblue;   width: 96%;    border-radius: 10px;    text-align: center;    font-weight: 800; border-bottom: 1px solid black;"
+				problemElem.setAttribute('name','exploreSolution')
 				problemElem.textContent = problem;
 				problemsDiv.appendChild(problemElem);
 			});
@@ -170,7 +171,8 @@ document.getElementById('knowledgeCenter').onclick = function() {
 		getKnowData()
 	} else {
 		document.getElementById('AF_Knowledge').style.display = "none"
-		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
+		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');+
+		document.getElementById('ProblemsName').innerHTML = ''
 	}
 	
 }
@@ -178,4 +180,5 @@ document.getElementById('knowledgeCenter').onclick = function() {
 document.getElementById('hideMeKnowledge').onclick = function(){
 	document.getElementById('AF_Knowledge').style.display = "none"
 	document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
+	document.getElementById('ProblemsName').innerHTML = ''
 }
