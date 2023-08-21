@@ -13,8 +13,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 						<option style="background-color:#69b930; text-align: center;  color: white; font-weight: 700;" value="lType">Тип урока</option>
 					</select>
 					<select id="CategoryNameList"></select>
-						<div style="margin: 5px; width: 550px" id="test_box">
-				
+						<div style="margin: 5px; width: 550px" id="ProblemsName">
 						</div>
 				</div>
 
@@ -72,6 +71,15 @@ async function getKnowData() { // получаем из файла список 
 		dropdown0.innerHTML = '';
 		dropdown1.innerHTML = '';
 	}	
+	
+	if (dropdown0) {
+    while(dropdown0.options.length > 1) {
+        dropdown0.remove(1);
+    }
+	
+	dropdown1.innerHTML = '';
+}
+
 
 	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
 	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
@@ -110,6 +118,29 @@ async function getKnowData() { // получаем из файла список 
 				dropdown1.appendChild(option);
 			});
 		});
+		
+		const problemsDiv = document.getElementById("ProblemsName");
+
+		dropdown1.addEventListener("change", function() {
+			const selectedType = dropdown0.value;
+			const selectedCategory = this.value;
+
+			// Очистить div перед добавлением новых данных
+			problemsDiv.innerHTML = '';
+
+			// Найти соответствующие проблемы для выбранной категории
+			const problems = knowDataContainer
+				.filter(item => item[0] === selectedType && item[1] === selectedCategory)
+				.map(item => item[2]);
+
+			// Добавить каждую проблему в div
+			problems.forEach(problem => {
+				const problemElem = document.createElement("div");
+				problemElem.textContent = problem;
+				problemsDiv.appendChild(problemElem);
+			});
+		});
+
 	
 }
 
