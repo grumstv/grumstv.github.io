@@ -6,11 +6,15 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					<button title="Скрытие меню" id="hideMeKnowledge" class="buttonHide">hide</button>
 				</div>
 				<div style="margin: 5px; width: 550px;" id="testField">
-					<button>Test</button>
+					<input></input>
+					<button id="SearchForWord">🔎Find</button>
+					<select id="lessonTypeList"></select>
+					<select id="CategoryNameList"></select>
+						<div style="margin: 5px; width: 550px" id="test_box">
+				
+						</div>
 				</div>
-				<div style="margin: 5px; width: 550px" id="test_box">
 
-				</div>
 			</span>
 	</span>
 </div>`;
