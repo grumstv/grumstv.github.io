@@ -9,7 +9,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					<input></input>
 					<button id="SearchForWord">🔎Find</button>
 					<br>
-					<select id="lessonTypeList">
+					<select id="lessonTypeList"
 						<option style="background-color:#69b930; text-align: center;  color: white; font-weight: 700;" value="lType">Тип урока</option>
 					</select>
 					<select id="CategoryNameList">
@@ -17,7 +17,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					</select>
 						<div style="margin: 5px; width: 550px" id="ProblemsName">
 						</div>
-						<div style="margin: 5px; width: 550px; position:absolute; top 0; right: 550px; background: #464451" id="ProblemsSolution">
+						<div style="margin: 5px; width: 550px; position: absolute; top: -6px; left: 545px; background: #464451; color: bisque; padding: 5px;" id="ProblemsSolution">
 						</div>
 				</div>
 
