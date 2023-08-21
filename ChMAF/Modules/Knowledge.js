@@ -67,10 +67,6 @@ let dropdown0;
 let dropdown1;
 async function getKnowData() { // получаем из файла список версий моб. приложений
 	let knowData;
-	if (dropdown0) {
-		dropdown0.innerHTML = '';
-		dropdown1.innerHTML = '';
-	}	
 	
 	if (dropdown0) {
     while(dropdown0.options.length > 1) {
@@ -79,7 +75,6 @@ async function getKnowData() { // получаем из файла список 
 	
 	dropdown1.innerHTML = '';
 }
-
 
 	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
 	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
@@ -136,12 +131,11 @@ async function getKnowData() { // получаем из файла список 
 			// Добавить каждую проблему в div
 			problems.forEach(problem => {
 				const problemElem = document.createElement("div");
+				problemElem.style = "background: lightsteelblue;   width: 96%;    border-radius: 10px;    text-align: center;    font-weight: 800;"
 				problemElem.textContent = problem;
 				problemsDiv.appendChild(problemElem);
 			});
 		});
-
-	
 }
 
 document.getElementById('knowledgeCenter').onclick = function() {
