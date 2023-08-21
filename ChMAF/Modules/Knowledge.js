@@ -101,9 +101,29 @@ async function getKnowData() { // получаем из файла список 
 		// Функция обновления второго dropdown на основе выбора в первом
 		dropdown0.addEventListener("change", function() {
 			const selectedValue = this.value;
+			
+			    // Проверяем, существует ли опция "Категория"
+				let catOptionExists = false;
+				for(let i = 0; i < dropdown1.options.length; i++) {
+					if(dropdown1.options[i].value === "CatType") {
+						catOptionExists = true;
+						break;
+					}
+				}
+
+				// Если опции "Категория" нет, то добавляем её
+				if(!catOptionExists) {
+					const catOption = document.createElement("option");
+					catOption.style = "background-color:DeepSkyBlue; text-align: center; color: white; font-weight: 700;";
+					catOption.value = "CatType";
+					catOption.textContent = "Категория";
+					dropdown1.appendChild(catOption);
+				}
 
 			// Очищаем второй dropdown
-			dropdown1.innerHTML = '';
+			while(dropdown1.options.length > 1) {
+				dropdown1.remove(1);
+			}
 
 			// Получаем значения для второго dropdown на основе выбранного значения в первом
 			const secondDropdownValues = [...new Set(knowDataContainer
