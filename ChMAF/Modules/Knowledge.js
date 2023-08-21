@@ -8,6 +8,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 				<div style="margin: 5px; width: 550px;" id="testField">
 					<input></input>
 					<button id="SearchForWord">🔎Find</button>
+					<br>
 					<select id="lessonTypeList"></select>
 					<select id="CategoryNameList"></select>
 						<div style="margin: 5px; width: 550px" id="test_box">
@@ -69,7 +70,7 @@ async function getKnowData() { // получаем из файла список 
 	knowDataContainer = versionsdata.result;
 	console.log(knowDataContainer) //получим обект с информацией
 	
-	const uniqueValues = [...new Set(knowDataContainer.map(item => item[0]))];
+/* 	const uniqueValues = [...new Set(knowDataContainer.map(item => item[0]))];
 
 	const dropdown = document.getElementById("lessonTypeList");
 
@@ -79,6 +80,49 @@ async function getKnowData() { // получаем из файла список 
 		option.textContent = value;
 		dropdown.appendChild(option);
 	});
+	
+	const uniqueValues1 = [...new Set(knowDataContainer.map(item => item[1]))];
+	const dropdown1 = document.getElementById("CategoryNameList");
+	uniqueValues1.forEach(value => {
+		const option = document.createElement("option");
+		option.value = value;
+		option.textContent = value;
+		dropdown1.appendChild(option);
+	}); */
+	
+	// Наполняем первый dropdown
+	const uniqueValues0 = [...new Set(knowDataContainer.map(item => item[0]))];
+	const dropdown0 = document.getElementById("lessonTypeList");
+	uniqueValues0.forEach(value => {
+		const option = document.createElement("option");
+		option.value = value;
+		option.textContent = value;
+		dropdown0.appendChild(option);
+	});
+
+	const dropdown1 = document.getElementById("CategoryNameList");
+
+	// Функция обновления второго dropdown на основе выбора в первом
+	dropdown0.addEventListener("change", function() {
+		const selectedValue = this.value;
+
+		// Очищаем второй dropdown
+		dropdown1.innerHTML = '';
+
+		// Получаем значения для второго dropdown на основе выбранного значения в первом
+		const secondDropdownValues = knowDataContainer
+			.filter(item => item[0] === selectedValue)
+			.map(item => item[1]);
+
+		// Наполняем второй dropdown
+		secondDropdownValues.forEach(value => {
+			const option = document.createElement("option");
+			option.value = value;
+			option.textContent = value;
+			dropdown1.appendChild(option);
+		});
+	});
+	
 }
 
 document.getElementById('knowledgeCenter').onclick = function() {
