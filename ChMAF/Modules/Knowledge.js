@@ -68,7 +68,7 @@ let dropdown0;
 let dropdown1;
 async function getKnowData() { // получаем из файла список версий моб. приложений
 	let knowData;
-	if (dropdown0.length >0) {
+	if (dropdown0) {
 		dropdown0.innerHTML = '';
 		dropdown1.innerHTML = '';
 	}	
