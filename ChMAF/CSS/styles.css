@@ -757,3 +757,7 @@ button {
 		background:#ff9f4b !important;
 		cursor:pointer;
 	}
+	
+	#ProblemsSolution {
+		cursor:default;
+	}
