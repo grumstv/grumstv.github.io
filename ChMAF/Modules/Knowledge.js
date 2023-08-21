@@ -68,34 +68,16 @@ let dropdown0;
 let dropdown1;
 async function getKnowData() { // получаем из файла список версий моб. приложений
 	let knowData;
-	dropdown0.innerHTML = '';
-    dropdown1.innerHTML = '';
+	if (dropdown0.length >0) {
+		dropdown0.innerHTML = '';
+		dropdown1.innerHTML = '';
+	}	
+
 	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
 	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
 	knowDataContainer = versionsdata.result;
 	console.log(knowDataContainer) //получим обект с информацией
 	
-/* 	const uniqueValues = [...new Set(knowDataContainer.map(item => item[0]))];
-
-	const dropdown = document.getElementById("lessonTypeList");
-
-	uniqueValues.forEach(value => {
-		const option = document.createElement("option");
-		option.value = value;
-		option.textContent = value;
-		dropdown.appendChild(option);
-	});
-	
-	const uniqueValues1 = [...new Set(knowDataContainer.map(item => item[1]))];
-	const dropdown1 = document.getElementById("CategoryNameList");
-	uniqueValues1.forEach(value => {
-		const option = document.createElement("option");
-		option.value = value;
-		option.textContent = value;
-		dropdown1.appendChild(option);
-	}); */
-	
-	// Наполняем первый dropdown
 // Наполняем первый dropdown
 		const uniqueValues0 = [...new Set(knowDataContainer.map(item => item[0]))];
 		dropdown0 = document.getElementById("lessonTypeList");
