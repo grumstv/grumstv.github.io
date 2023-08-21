@@ -17,7 +17,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					</select>
 						<div style="margin: 5px; width: 550px" id="ProblemsName">
 						</div>
-						<div style="margin: 5px; width: 550px; position: absolute; top: -6px; left: 545px; background: #464451; color: bisque; padding: 5px;" id="ProblemsSolution">
+						<div style="display: none; margin: 5px; width: 550px; position: absolute; top: -6px; left: 545px; background: #464451; color: bisque; padding: 5px;" id="ProblemsSolution">
 						</div>
 				</div>
 
@@ -156,13 +156,35 @@ async function getKnowData() { // получаем из файла список 
 				.map(item => item[2]);
 
 			// Добавить каждую проблему в div
-			problems.forEach(problem => {
-				const problemElem = document.createElement("div");
-				problemElem.style = "background: lightsteelblue;   width: 96%;    border-radius: 10px;    text-align: center;    font-weight: 800; border-bottom: 1px solid black;"
-				problemElem.setAttribute('name','exploreSolution')
-				problemElem.textContent = problem;
-				problemsDiv.appendChild(problemElem);
+			// problems.forEach(problem => {
+				// const problemElem = document.createElement("div");
+				// problemElem.style = "background: lightsteelblue;   width: 96%;    border-radius: 10px;    text-align: center;    font-weight: 800; border-bottom: 1px solid black;"
+				// problemElem.setAttribute('name','exploreSolution')
+				// problemElem.textContent = problem;
+				// problemsDiv.appendChild(problemElem);
+			// });
+			
+			problems.forEach((problem, index) => {
+			const problemElem = document.createElement("div");
+			problemElem.style = "background: lightsteelblue;   width: 96%;    border-radius: 10px;    text-align: center;    font-weight: 800; border-bottom: 1px solid black;";
+			problemElem.setAttribute('name','exploreSolution');
+			problemElem.textContent = problem;
+			
+			// Добавляем обработчик события клика
+			problemElem.addEventListener('click', function() {
+				const solutionElem = document.getElementById("ProblemsSolution");
+				solutionElem.style.display = ""; // показываем элемент
+				// Ищем соответствующее решение
+				const matchedData = knowDataContainer.find(item => item[0] === selectedType && item[1] === selectedCategory && item[2] === problem);
+				if (matchedData) {
+					solutionElem.textContent = matchedData[3]; // устанавливаем текст решения
+				}
 			});
+			
+			problemsDiv.appendChild(problemElem);
+		});
+			
+			
 		});
 }
 
