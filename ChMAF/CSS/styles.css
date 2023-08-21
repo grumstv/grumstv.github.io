@@ -752,3 +752,8 @@ button {
 	span[name=changeList]:hover {
 		background:#af622c !important;
 	}
+	
+	div[name="exploreSolution"]:hover {
+		background:#ff9f4b !important;
+		cursor:pointer;
+	}
