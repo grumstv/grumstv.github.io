@@ -171,7 +171,7 @@ document.getElementById('knowledgeCenter').onclick = function() {
 		getKnowData()
 	} else {
 		document.getElementById('AF_Knowledge').style.display = "none"
-		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');+
+		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
 		document.getElementById('ProblemsName').innerHTML = ''
 	}
 	
