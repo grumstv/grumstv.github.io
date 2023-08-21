@@ -9,7 +9,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					<input></input>
 					<button id="SearchForWord">🔎Find</button>
 					<br>
-					<select id="lessonTypeList"
+					<select id="lessonTypeList">
 						<option style="background-color:#69b930; text-align: center;  color: white; font-weight: 700;" value="lType">Тип урока</option>
 					</select>
 					<select id="CategoryNameList">
