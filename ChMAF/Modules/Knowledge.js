@@ -230,26 +230,23 @@ async function getKnowData() { // получаем из файла список 
 				div.textContent = item[2];
 				resultsDiv.appendChild(div);
 
-				div.addEventListener('click', function() {
+				div.addEventListener('click', function() {						
+					// Получаем все элементы с именем foundToSolution
+					const allFoundElems = document.querySelectorAll('[name="foundToSolution"]');
 					
-					    const allFoundElems = document.querySelectorAll('[name="foundToSolution"]');
-						
-						   // Получаем все элементы с именем foundToSolution
-						const allFoundElems = document.querySelectorAll('[name="foundToSolution"]');
-						
-						// Удаляем класс active у всех элементов
-						allFoundElems.forEach(elem => {
-							elem.classList.remove("active");
-						});
-
-						// Добавляем класс active к текущему элементу
-						this.classList.add("active");
-						
-						const solutionElem = document.getElementById("ProblemsSolution");
-						solutionElem.style.display = ""; // показываем элемент
-						const clickedIndex = +this.getAttribute('data-index'); // извлекаем индекс из атрибута data-index
-						solutionElem.textContent = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
+					// Удаляем класс active у всех элементов
+					allFoundElems.forEach(elem => {
+						elem.classList.remove("active");
 					});
+
+					// Добавляем класс active к текущему элементу
+					this.classList.add("active");
+					
+					const solutionElem = document.getElementById("ProblemsSolution");
+					solutionElem.style.display = ""; // показываем элемент
+					const clickedIndex = +this.getAttribute('data-index'); // извлекаем индекс из атрибута data-index
+					solutionElem.textContent = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
+				});
 			}
 		});
 
