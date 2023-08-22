@@ -766,3 +766,7 @@ button {
 	#ProblemsSolution {
 		cursor:default;
 	}
+	
+	div[name="foundToSolution"].active, div[name="exploreSolution"].active {
+		background: #4fca82 !important
+	}

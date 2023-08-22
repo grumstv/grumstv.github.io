@@ -12,7 +12,6 @@ var win_Knowledge =  // описание элементов окна ссыло�
 				</div>
 				<div style="margin: 5px; width: 550px;" id="testField">
 					<input id="textToSearchSolution"></input>
-					<button id="SearchForWord">🔎Find</button>
 					<br>
 					<select id="lessonTypeList">
 						<option style="background-color:#69b930; text-align: center;  color: white; font-weight: 700;" value="lType">Тип урока</option>
@@ -232,11 +231,25 @@ async function getKnowData() { // получаем из файла список 
 				resultsDiv.appendChild(div);
 
 				div.addEventListener('click', function() {
-					const solutionElem = document.getElementById("ProblemsSolution");
-					solutionElem.style.display = ""; // показываем элемент
-					const clickedIndex = +this.getAttribute('data-index'); // извлекаем индекс из атрибута data-index
-					solutionElem.textContent = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
-				});
+					
+					    const allFoundElems = document.querySelectorAll('[name="foundToSolution"]');
+						
+						   // Получаем все элементы с именем foundToSolution
+						const allFoundElems = document.querySelectorAll('[name="foundToSolution"]');
+						
+						// Удаляем класс active у всех элементов
+						allFoundElems.forEach(elem => {
+							elem.classList.remove("active");
+						});
+
+						// Добавляем класс active к текущему элементу
+						this.classList.add("active");
+						
+						const solutionElem = document.getElementById("ProblemsSolution");
+						solutionElem.style.display = ""; // показываем элемент
+						const clickedIndex = +this.getAttribute('data-index'); // извлекаем индекс из атрибута data-index
+						solutionElem.textContent = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
+					});
 			}
 		});
 
