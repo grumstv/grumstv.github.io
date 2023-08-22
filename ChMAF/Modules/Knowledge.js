@@ -78,6 +78,8 @@ document.getElementById('IndicatorLoadData').onclick = async function() {
 	document.getElementById('ProblemsName').innerHTML = ''
 	document.getElementById('ProblemsSolution').style.display = 'none'
 	document.getElementById('IndicatorLoadData').textContent = "⏳"
+	document.getElementById('textToSearchSolution').value = ''
+	document.getElementById('ProblemsSolution').style.display = 'none'
 	getKnowData()
 }
 
