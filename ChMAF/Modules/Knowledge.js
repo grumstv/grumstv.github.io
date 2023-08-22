@@ -125,6 +125,7 @@ async function getKnowData() { // получаем из файла список 
 			
 			document.getElementById('textToSearchSolution').value = ''
 			document.getElementById('ProblemsNameFromSearch').textContent = ''
+			document.getElementById('ProblemsSolution').style.display = 'none'
 			
 			    // Проверяем, существует ли опция "Категория"
 				let catOptionExists = false;
