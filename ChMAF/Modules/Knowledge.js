@@ -72,7 +72,7 @@ wintKnowledge.onmousedown = function(event) {
 };
 
 
-document.getElementById('IndicatorLoadData').onclick = function() {
+document.getElementById('IndicatorLoadData').onclick = async function() {
 		let knowData;
 		document.getElementById('IndicatorLoadData').textContent = "⏳"
 		knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
