@@ -11,7 +11,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					<button title="Индикатор загрузки базы знаний" id="IndicatorLoadData">⏳</button>
 				</div>
 				<div style="margin: 5px; width: 550px;" id="testField">
-					<input></input>
+					<input id="textToSearchSolution"></input>
 					<button id="SearchForWord">🔎Find</button>
 					<br>
 					<select id="lessonTypeList">
@@ -23,6 +23,8 @@ var win_Knowledge =  // описание элементов окна ссыло�
 						<div style="margin: 5px; width: 550px" id="ProblemsName">
 						</div>
 						<div style="display: none; margin: 5px; width: 550px; position: absolute; top: -6px; left: 545px; background: #464451; color: bisque; padding: 5px;" id="ProblemsSolution">
+						</div>
+						<div style="margin: 5px; width: 550px" id="ProblemsNameFromSearch">
 						</div>
 				</div>
 
@@ -194,6 +196,33 @@ async function getKnowData() { // получаем из файла список 
 			
 			
 		});
+		
+		
+		    // Получаем элементы DOM
+		const searchInput = document.getElementById("textToSearchSolution");
+		const resultsDiv = document.getElementById("ProblemsNameFromSearch");
+
+		// Обработчик события input
+		searchInput.addEventListener('input', function() {
+			// Получаем введенный текст
+			const query = this.value.toLowerCase();
+
+			// Фильтруем массив
+			const filteredResults = knowDataContainer.filter(arrayItem => {
+				return arrayItem[2].toLowerCase().includes(query);
+			});
+
+			// Очищаем результаты
+			resultsDiv.innerHTML = '';
+
+			// Выводим результаты
+			for (let item of filteredResults) {
+				const div = document.createElement('div');
+				div.style = "background: lightsteelblue; width: 96%; border-radius: 10px; text-align: center; font-weight: 800; border-bottom: 1px solid black;"
+				div.textContent = item[2];
+				resultsDiv.appendChild(div);
+			}
+		});		
 }
 
 document.getElementById('knowledgeCenter').onclick = function() {
