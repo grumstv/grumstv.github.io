@@ -206,6 +206,11 @@ async function getKnowData() { // получаем из файла список 
 
 		// Обработчик события input
 		searchInput.addEventListener('input', function() {
+			
+			document.getElementById('ProblemsName').textContent = ''
+			document.getElementById('lessonTypeList').children[0].selected = true
+			document.getElementById('CategoryNameList').children[0].selected = true
+
 			// Получаем введенный текст
 			const query = this.value.toLowerCase();
 
