@@ -1,3 +1,7 @@
+let knowDataContainer;
+let dropdown0;
+let dropdown1;
+
 var win_Knowledge =  // описание элементов окна ссылок
     `<div style="display: flex; width: 550px;">
         <span style="width: 550px">
@@ -67,9 +71,20 @@ wintKnowledge.onmousedown = function(event) {
   }
 };
 
-let knowDataContainer;
-let dropdown0;
-let dropdown1;
+
+document.getElementById('IndicatorLoadData').onclick = function() {
+		let knowData;
+		document.getElementById('IndicatorLoadData').textContent = "⏳"
+		knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
+	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
+	if (versionsdata && versionsdata.result.length>0) {
+		knowDataContainer = versionsdata.result;
+		console.log(knowDataContainer) //получим обект с информацией
+		document.getElementById('IndicatorLoadData').textContent = "🟢"
+	}
+}
+
+
 async function getKnowData() { // получаем из файла список версий моб. приложений
 	let knowData;
 	
