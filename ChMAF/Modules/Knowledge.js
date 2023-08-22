@@ -123,6 +123,9 @@ async function getKnowData() { // получаем из файла список 
 		dropdown0.addEventListener("change", function() {
 			const selectedValue = this.value;
 			
+			document.getElementById('textToSearchSolution').value = ''
+			document.getElementById('ProblemsNameFromSearch').textContent = ''
+			
 			    // Проверяем, существует ли опция "Категория"
 				let catOptionExists = false;
 				for(let i = 0; i < dropdown1.options.length; i++) {
