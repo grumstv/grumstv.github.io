@@ -74,6 +74,7 @@ wintKnowledge.onmousedown = function(event) {
 
 document.getElementById('IndicatorLoadData').onclick = async function() {
 	document.getElementById('ProblemsName').innerHTML = ''
+	document.getElementById('ProblemsSolution').style.display = 'none'
 	document.getElementById('IndicatorLoadData').textContent = "⏳"
 	getKnowData()
 }
@@ -204,6 +205,7 @@ document.getElementById('knowledgeCenter').onclick = function() {
 		document.getElementById('AF_Knowledge').style.display = "none"
 		document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
 		document.getElementById('ProblemsName').innerHTML = ''
+		document.getElementById('ProblemsSolution').style.display = 'none'
 	}
 	
 }
@@ -212,4 +214,5 @@ document.getElementById('hideMeKnowledge').onclick = function(){
 	document.getElementById('AF_Knowledge').style.display = "none"
 	document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
 	document.getElementById('ProblemsName').innerHTML = ''
+	document.getElementById('ProblemsSolution').style.display = 'none'
 }
