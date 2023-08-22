@@ -162,7 +162,7 @@ async function getKnowData() { // получаем из файла список 
 		
 		const problemsDiv = document.getElementById("ProblemsName");
 
-		dropdown1.addEventListener("change", function() {
+	dropdown1.addEventListener("change", function() {
 			const selectedType = dropdown0.value;
 			const selectedCategory = this.value;
 
@@ -184,6 +184,17 @@ async function getKnowData() { // получаем из файла список 
 			
 			// Добавляем обработчик события клика
 			problemElem.addEventListener('click', function() {
+				// Получаем все элементы с именем exploreSolution
+				const allProblemElems = document.querySelectorAll('[name="exploreSolution"]');
+				
+				// Удаляем класс active у всех элементов
+				allProblemElems.forEach(elem => {
+					elem.classList.remove("active");
+				});
+
+				// Добавляем класс active к текущему элементу
+				this.classList.add("active");
+				
 				const solutionElem = document.getElementById("ProblemsSolution");
 				solutionElem.style.display = ""; // показываем элемент
 				// Ищем соответствующее решение
@@ -192,12 +203,13 @@ async function getKnowData() { // получаем из файла список 
 					solutionElem.textContent = matchedData[3]; // устанавливаем текст решения
 				}
 			});
+
 			
 			problemsDiv.appendChild(problemElem);
 		});
 			
 			
-		});
+	});
 		
 		
 		    // Получаем элементы DOM
