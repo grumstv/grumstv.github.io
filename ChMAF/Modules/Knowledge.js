@@ -4,6 +4,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 			<span style="cursor: -webkit-grab;">
 				<div style="margin: 5px; width: 550;">
 					<button title="Скрытие меню" id="hideMeKnowledge" class="buttonHide">hide</button>
+					<button title="Индикатор загрузки базы знаний" id="IndicatorLoadData">⏳</button>
 				</div>
 				<div style="margin: 5px; width: 550px;" id="testField">
 					<input></input>
@@ -85,8 +86,12 @@ async function getKnowData() { // получаем из файла список 
 
 	knowData = 'https://script.google.com/macros/s/AKfycbySlhuMPHSKHiI6Rhoyg797id3lbPg_zdeG_iBoEvYxwqlxkD4QizWm8OJDEucma7tGyg/exec'
 	await fetch(knowData).then(r => r.json()).then(r => versionsdata = r)
-	knowDataContainer = versionsdata.result;
-	console.log(knowDataContainer) //получим обект с информацией
+	if (versionsdata && versionsdata.result.length>0) {
+		knowDataContainer = versionsdata.result;
+		console.log(knowDataContainer) //получим обект с информацией
+		document.getElementById('IndicatorLoadData').textContent = "🟢"
+	}
+
 	
 // Наполняем первый dropdown
 		const uniqueValues0 = [...new Set(knowDataContainer.map(item => item[0]))];
@@ -156,13 +161,6 @@ async function getKnowData() { // получаем из файла список 
 				.map(item => item[2]);
 
 			// Добавить каждую проблему в div
-			// problems.forEach(problem => {
-				// const problemElem = document.createElement("div");
-				// problemElem.style = "background: lightsteelblue;   width: 96%;    border-radius: 10px;    text-align: center;    font-weight: 800; border-bottom: 1px solid black;"
-				// problemElem.setAttribute('name','exploreSolution')
-				// problemElem.textContent = problem;
-				// problemsDiv.appendChild(problemElem);
-			// });
 			
 			problems.forEach((problem, index) => {
 			const problemElem = document.createElement("div");
