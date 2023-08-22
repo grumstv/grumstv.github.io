@@ -73,6 +73,7 @@ wintKnowledge.onmousedown = function(event) {
 
 
 document.getElementById('IndicatorLoadData').onclick = async function() {
+	document.getElementById('ProblemsName').innerHTML = ''
 	document.getElementById('IndicatorLoadData').textContent = "⏳"
 	getKnowData()
 }
