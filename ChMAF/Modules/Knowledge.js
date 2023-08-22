@@ -207,23 +207,27 @@ async function getKnowData() { // получаем из файла список 
 			// Получаем введенный текст
 			const query = this.value.toLowerCase();
 
+			// Очищаем результаты
+			resultsDiv.innerHTML = '';
+
+			// Если поле ввода пусто, просто завершаем выполнение функции
+			if (query.length === 0) return;
+
 			// Фильтруем массив
 			const filteredResults = knowDataContainer.filter(arrayItem => {
 				return arrayItem[2].toLowerCase().includes(query);
 			});
-
-			// Очищаем результаты
-			resultsDiv.innerHTML = '';
 
 			// Выводим результаты
 			for (let item of filteredResults) {
 				const div = document.createElement('div');
 				div.style = "background: lightsteelblue; width: 96%; border-radius: 10px; text-align: center; font-weight: 800; border-bottom: 1px solid black;"
 				div.setAttribute('name','foundToSolution')
-				div.textContent =item[0] +' ' + item[1] + ' ' + item[2];
+				div.textContent = item[2];
 				resultsDiv.appendChild(div);
 			}
-		});		
+		});
+	
 }
 
 document.getElementById('knowledgeCenter').onclick = function() {
