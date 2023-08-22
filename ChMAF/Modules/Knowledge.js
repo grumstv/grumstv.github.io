@@ -200,6 +200,7 @@ document.getElementById('knowledgeCenter').onclick = function() {
 	if (document.getElementById('AF_Knowledge').style.display == "none") {
 		document.getElementById('AF_Knowledge').style.display = ""
 		document.getElementById('knowledgeCenter').classList.add('activeScriptBtn');
+		document.getElementById('IndicatorLoadData').textContent = "⏳"
 		getKnowData()
 	} else {
 		document.getElementById('AF_Knowledge').style.display = "none"
