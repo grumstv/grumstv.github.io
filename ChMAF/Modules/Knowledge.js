@@ -220,25 +220,23 @@ async function getKnowData() { // получаем из файла список 
 
 			// Выводим результаты
 			for (let item of filteredResults) {
+				const index = knowDataContainer.indexOf(item); // получаем индекс элемента в массиве knowDataContainer
 				const div = document.createElement('div');
 				div.style = "background: lightsteelblue; width: 96%; border-radius: 10px; text-align: center; font-weight: 800; border-bottom: 1px solid black;"
-				div.setAttribute('name','foundToSolution')
+				div.setAttribute('name', 'foundToSolution');
+				div.setAttribute('data-index', index); // сохраняем индекс в атрибуте data-index
 				div.textContent = item[2];
 				resultsDiv.appendChild(div);
-				
-				
-			div.addEventListener('click', function() {
-				const solutionElem = document.getElementById("ProblemsSolution");
-				solutionElem.style.display = ""; // показываем элемент
-				// Ищем соответствующее решение
-				const matchedData = knowDataContainer.find(item => item[0] === selectedType && item[1] === selectedCategory && item[2] === problem);
-				if (matchedData) {
-					solutionElem.textContent = matchedData[3]; // устанавливаем текст решения
-				}
-			});
-				
+
+				div.addEventListener('click', function() {
+					const solutionElem = document.getElementById("ProblemsSolution");
+					solutionElem.style.display = ""; // показываем элемент
+					const clickedIndex = +this.getAttribute('data-index'); // извлекаем индекс из атрибута data-index
+					solutionElem.textContent = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
+				});
 			}
 		});
+
 	
 }
 
