@@ -200,7 +200,7 @@ async function getKnowData() { // получаем из файла список 
 				// Ищем соответствующее решение
 				const matchedData = knowDataContainer.find(item => item[0] === selectedType && item[1] === selectedCategory && item[2] === problem);
 				if (matchedData) {
-					solutionElem.textContent = matchedData[3]; // устанавливаем текст решения
+					solutionElem.innerHTML = matchedData[3]; // устанавливаем текст решения
 				}
 			});
 
@@ -262,7 +262,7 @@ async function getKnowData() { // получаем из файла список 
 					const solutionElem = document.getElementById("ProblemsSolution");
 					solutionElem.style.display = ""; // показываем элемент
 					const clickedIndex = +this.getAttribute('data-index'); // извлекаем индекс из атрибута data-index
-					solutionElem.textContent = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
+					solutionElem.innerHTML = knowDataContainer[clickedIndex][3]; // устанавливаем текст решения
 				});
 			}
 		});
