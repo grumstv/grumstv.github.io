@@ -219,6 +219,7 @@ async function getKnowData() { // получаем из файла список 
 			for (let item of filteredResults) {
 				const div = document.createElement('div');
 				div.style = "background: lightsteelblue; width: 96%; border-radius: 10px; text-align: center; font-weight: 800; border-bottom: 1px solid black;"
+				div.setAttribute('name','foundToSolution')
 				div.textContent =item[0] +' ' + item[1] + ' ' + item[2];
 				resultsDiv.appendChild(div);
 			}

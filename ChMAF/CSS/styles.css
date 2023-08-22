@@ -758,6 +758,11 @@ button {
 		cursor:pointer;
 	}
 	
+	div[name="foundToSolution"]:hover {
+		background:#ff9f4b !important;
+		cursor:pointer;
+	}
+	
 	#ProblemsSolution {
 		cursor:default;
 	}
