@@ -292,7 +292,6 @@ function prepTp() { //функция подготовки расширения �
     openKnowledge.classList.add('onlyfortp', 'rightPanelBtn')
     document.getElementById('rightPanel').appendChild(openKnowledge)
 
-
     //пока неактуально ибо там сразу вся форма открывается при вызове потом может попробуем вернуть
     let taskBut = document.createElement('button')
     taskBut.id = "taskBut"
