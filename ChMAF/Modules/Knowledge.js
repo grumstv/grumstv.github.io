@@ -11,7 +11,7 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					<button title="Индикатор загрузки базы знаний" id="IndicatorLoadData">⏳</button>
 				</div>
 				<div style="margin: 5px; width: 550px;" id="testField">
-					<input id="textToSearchSolution"></input>
+					<input placeholder="Слово для поиска" id="textToSearchSolution"></input>
 					<br>
 					<select id="lessonTypeList">
 						<option style="background-color:#69b930; text-align: center;  color: white; font-weight: 700;" value="lType">Тип урока</option>
