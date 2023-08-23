@@ -14,10 +14,10 @@ var win_Knowledge =  // описание элементов окна ссыло�
 					<input placeholder="Слово для поиска" id="textToSearchSolution" style="border-radius: 20px; text-align: center; width: 300px; margin-left: 20%;"></input>
 					<br>
 					<div>
-						<select style="width: 40%; height: 20px; border-radius: 20px;" id="lessonTypeList">
-							<option style="background-color:#69b930; text-align: center;  color: white; font-weight: 700;" value="lType">Тип урока</option>
+						<select style="width: 40%; height: 20px; border-radius: 20px; text-align: center;" id="lessonTypeList">
+							<option style="background-color:#69b930; text-align: center; color: white; font-weight: 700;" value="lType">Тип урока</option>
 						</select>
-						<select style="width: 50%; height: 20px; border-radius: 20px;" id="CategoryNameList">
+						<select style="width: 50%; height: 20px; border-radius: 20px; text-align: center;" id="CategoryNameList">
 							<option style="background-color:DeepSkyBlue; text-align: center;  color: white; font-weight: 700;" value="CatType">Категория</option>
 						</select>
 					</div>
