@@ -130,6 +130,7 @@ async function getKnowData() { // получаем из файла список 
 		dropdown0.addEventListener("change", function() {
 			const selectedValue = this.value;
 			
+			document.getElementById('ProblemsName').textContent = ''
 			document.getElementById('textToSearchSolution').value = ''
 			document.getElementById('ProblemsNameFromSearch').textContent = ''
 			document.getElementById('ProblemsSolution').style.display = 'none'
