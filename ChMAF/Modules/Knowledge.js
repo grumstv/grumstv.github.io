@@ -52,6 +52,12 @@ wintKnowledge.onmousedown = function(event) {
     let elemTop = wintKnowledge.offsetTop;
 
     function onMouseMove(event) {
+      // Проверяем, зажата ли левая кнопка мыши
+      if (!(event.buttons & 1)) {
+        onMouseUp();
+        return;
+      }
+
       let deltaX = event.clientX - startX;
       let deltaY = event.clientY - startY;
 
