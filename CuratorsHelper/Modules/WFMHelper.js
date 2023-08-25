@@ -13,7 +13,7 @@ var win_WFMHelper = `<div">
 										<li><label title="⏰ 07:00-19:00 🍔 12:15-13:30"><input type="checkbox" name="upper" value="Тарасова Наталья">Тарасова Наталья</label></li>								
 										<li><label title="⏰ 08:00-20:00 🍔 13:45-15:00"><input type="checkbox" name="upper" value="Зубарев Дмитрий">Зубарев Дмитрий</label></li>
 										<li><label title="⏰ 08:00-20:00 🍔 14:45-16:00"><input type="checkbox" name="upper" value="Радченко Александр">Радченко Александр</label></li>	
-										<li><label title="⏰ 10:00-22:00 🍔 15:30-16:45"><input type="checkbox" name="lower" value="Лукач Дарья">Лукач Дарья</label></li>
+										<li><label title="⏰ 11:00-23:00 🍔 15:45-17:00"><input type="checkbox" name="lower" value="Лукач Дарья">Лукач Дарья</label></li>
 										<li><label title="⏰ 10:00-22:00 🍔 15:45-17:00"><input type="checkbox" name="lower" value="Приблуда Константин">Приблуда Константин</label></li>										
 										<li><label title="⏰ 12:00-00:00 🍔 16:45-18:00"><input type="checkbox" name="upper" value="Артемьев Сергей">Артемьев Сергей</label></li>
 									<li><label name="selectAllWorkersByChanges" style="background-color:DeepSkyBlue; text-align:center; font-weight:700; color:black; padding:2px; padding-left:10px; padding-right:10px; border: 1px solid black;">2/2 | Нижняя смена</label></li>
