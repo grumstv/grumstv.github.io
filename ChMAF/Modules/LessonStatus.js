@@ -44,6 +44,10 @@ wintLessonStatus.onmousedown = function(event) {
     let elemTop = wintLessonStatus.offsetTop;
 
     function onMouseMove(event) {
+		if (!(event.buttons & 1)) {
+			onMouseUp();
+			return;
+		  }
       let deltaX = event.clientX - startX;
       let deltaY = event.clientY - startY;
 
