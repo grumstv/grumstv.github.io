@@ -20,7 +20,7 @@ var win_WFMHelper = `<div">
 										<li><label title="⏰ 07:00-19:00 🍔 12:45-14:00"><input type="checkbox" name="lower" value="Шеремет Александр">Шеремет Александр</label></li>									
 										<li><label title="⏰ 09:00-21:00 🍔 14:45-16:00"><input type="checkbox" name="upper" value="Изотеев Даниил">Изотеев Даниил</label></li>
 										<li><label title="⏰ 08:00-20:00 🍔 13:45-15:00"><input type="checkbox" name="lower" value="Медяник Олег">Медяник Олег</label></li>
-										<li><label title="⏰ 08:00-20:00 🍔 14:45-16:00 "><input type="checkbox" name="lower" value="Ромашов Даниил">Ромашов Даниил</label></li>
+										<li><label title="⏰ 11:00-23:00 🍔 15:45-17:00 "><input type="checkbox" name="lower" value="Ромашов Даниил">Ромашов Даниил</label></li>
 										<li><label title="⏰ 11:00-23:00 🍔 15:45-17:00"><input type="checkbox" name="lower" value="Зурнин Павел">Зурнин Павел</label></li>
 										<li><label title="⏰ 12:00-00:00 🍔 16:45-18:00"><input type="checkbox" name="lower" value="Бахтын Ростислав">Бахтын Ростислав</label></li>
 									<li><label style="background-color:MediumSeaGreen; text-align:center; font-weight:700; color:black; padding:2px; padding-left:45px; padding-right:45px; border: 1px solid black;">5/2 смена</label></li>
