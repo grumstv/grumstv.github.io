@@ -302,4 +302,7 @@ document.getElementById('hideMeKnowledge').onclick = function(){
 	document.getElementById('knowledgeCenter').classList.remove('activeScriptBtn');
 	document.getElementById('ProblemsName').innerHTML = ''
 	document.getElementById('ProblemsSolution').style.display = 'none'
+	document.getElementById('textToSearchSolution').value = ''
+	document.getElementById('ProblemsNameFromSearch').innerHTML = ''
+	
 }
