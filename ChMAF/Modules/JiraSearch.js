@@ -147,10 +147,7 @@ function getJiraTask() { // функция получения таски джи�
 		}
 
 		for (let i = 0; i < issueKeys.length; i++) {
-			const matchedNumbers = rezissuetable.issueTable.table.match(/(">.)*?([0-9]+)\n/gm);
-			const currentNumber = matchedNumbers ? matchedNumbers[i] : null;
-
-			if (currentNumber && issueKeys[i] !== undefined) {
+			if (issueKeys[i] !== undefined) {
 				function filterItems(item, index) {
 					return index % 2 !== 0 ? item : null;
 				}
