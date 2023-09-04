@@ -339,6 +339,22 @@ function switchJiraPages() {
 									document.getElementById('responseTextarea1').removeAttribute('newPageIssue')
 									let issues = [];
 									let temporarka;
+									
+									let issueKeys;
+									if (searchTypeFlag === "PSQuery") {
+										const regex = /data-issue-key=\"(PS-\d+)\"/gm;
+										const allMatches = [];
+										let match;
+										while ((match = regex.exec(rezissuetable.issueTable.table)) !== null) {
+											allMatches.push(match[1]);
+										}
+										issueKeys = [...new Set(allMatches)];  // Убираем дубликаты
+									} else {
+										issueKeys = rezissuetable.issueTable.issueKeys;
+									}
+									
+									
+									
 									for (let i = 0; i < rezissuetable.issueTable.displayed; i++) {
 
 										if (rezissuetable.issueTable.issueKeys[i] != undefined) {
@@ -372,17 +388,21 @@ function switchJiraPages() {
 											temporarka = replaceItem1(matchedItems1[i]);
 										}
 										
+										if (issueKeys[i] != undefined) {
+										
 										issues += '<span style="color: #00FA9A">&#5129;</span>' + 
 										`<img src="${rezissuetable.issueTable.table.match(/https:\/\/jira.skyeng.tech\/images\/icons\/priorities\/.*svg/gm)[i]}" style="width:20px; height:25px;" title="Приоритеты: ⛔ - Blocker, полностью залитая красная стрелка вверх - Critical, три красные стрелки вверх - Major, три синие вниз - Minor, ⭕ - Trivial">` + 
 										' ' + '<span class="newcount" style="width:20px; margin-left: 5px; background:#3CB371; padding:2px; padding-left:6px; font-weight:700; border-radius:10px;">' + 
 										`${rezissuetable.issueTable.table.match(/(">.)*?([0-9]+)\n/gm)[i]}` + '</span>' + 
-										`<a name="buglinks" href="https://jira.skyeng.tech/browse/${rezissuetable.issueTable.issueKeys[Number(pageSwArr[d].getAttribute('value'))+i]}" onclick="" target="_blank" style="margin-left:5px; color: #ffe4c4">` + temporarka + '</a>' + 
+										`<a name="buglinks" href="https://jira.skyeng.tech/browse/${issueKeys[Number(pageSwArr[d].getAttribute('value'))+i]}" onclick="" target="_blank" style="margin-left:5px; color: #ffe4c4">` +
+										temporarka + '</a>' + 
 										`<span name="issueIds" style="display:none">${rezissuetable.issueTable.issueIds[Number(pageSwArr[d].getAttribute('value')) + i]}` + '</span>' + 
 										'<span class = "jiraissues" style="margin-left: 10px; cursor: pointer">💬</span>' + 
 										'<span class = "refreshissues" style="color:#ADFF2F; margin-left: 5px; cursor: pointer">&#69717;&#120783;</span>' + 
 										'<span name="addtofavourites" style="cursor:pointer;" title="Добавить задачу в Избранное">🤍</span>' + '</br>'
 
 
+										}
 										}
 									}
 
