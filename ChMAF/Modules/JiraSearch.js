@@ -126,7 +126,7 @@ function getJiraTask() { // функция получения таски джи�
 		
 		// Получаем ключи задач
 		let issueKeys;
-		if (searchTypeFlag === "PSQuery") {
+		if (document.getElementById('PSquery').classList.contains('active-query')) {
 			const regex = /data-issue-key=\"(PS-\d+)\"/gm;
 			const allMatches = [];
 			let match;
@@ -364,7 +364,7 @@ function switchJiraPages() {
 									let temporarka;
 									
 									let issueKeys;
-									if (searchTypeFlag === "PSQuery") {
+									if (document.getElementById('PSquery').classList.contains('active-query')) {
 										const regex = /data-issue-key=\"(PS-\d+)\"/gm;
 										const allMatches = [];
 										let match;
