@@ -7,6 +7,7 @@ let androidbugsqueryitem = '';
 let defqueryitem
 let frqueryitem
 let rezissuetable;
+let PSqueryitem;
 var win_Jira =  // описание элементов окна Поиска по Jira
     `<div style="display: flex; width: 550px;">
         <span style="width: 550px">
@@ -323,6 +324,8 @@ function switchJiraPages() {
 								case 'defQuery':
 								    document.getElementById('responseTextarea1').value = `{${optionsforfetch(defqueryitem, pageSwArr[d].getAttribute('value'))}}`
 								break;
+								case 'PSquery':
+									document.getElementById('responseTextarea1').value = `{${optionsforfetch(PSqueryitem, pageSwArr[d].getAttribute('value'))}}`
 							}
 							
 							document.getElementById('responseTextarea2').value = "https://jira.skyeng.tech/rest/issueNav/1/issueTable"
@@ -593,8 +596,8 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('favouriteissuetable').style.display = "none"
         }
 		
-		document.getElementById('PSquery').onclick = function() {
-			let PSqueryitem = ` project = PS AND text ~ "${testJira.value}" ORDER BY Created`
+		document.getElementById('PSquery').onclick = function() { //Если выбрана PS
+			PSqueryitem = ` project = PS AND text ~ "${testJira.value}" ORDER BY Created`
             document.getElementById('JQLquery').value = PSqueryitem;
             document.getElementById('testJira').value = ""
 			this.classList.toggle('active-query')
@@ -838,7 +841,13 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(defqueryitem, 0)}}`
 				searchTypeFlag = "defQuery"
 
-            } else if (document.getElementById('freshQuery').classList.contains('active-query')) {
+            } else if(document.getElementById('PSquery').classList.contains('active-query')){
+				document.getElementById('JQLquery').value = PSqueryitem;
+				PSqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
+                document.getElementById('responseTextarea1').value = `{${optionsforfetch(PSqueryitem, 0)}}`
+				searchTypeFlag = "PSQuery"
+				
+			} else if (document.getElementById('freshQuery').classList.contains('active-query')) {
                 frqueryitem = `issuetype in (Bug, Task) AND status != closed AND Reports >= 0 AND text ~ "${testJira.value}" ORDER BY Created`
                 document.getElementById('JQLquery').value = frqueryitem;
                 frqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
