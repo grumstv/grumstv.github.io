@@ -7,7 +7,6 @@ let androidbugsqueryitem = '';
 let defqueryitem
 let frqueryitem
 let rezissuetable;
-let PSqueryitem;
 var win_Jira =  // описание элементов окна Поиска по Jira
     `<div style="display: flex; width: 550px;">
         <span style="width: 550px">
@@ -218,7 +217,7 @@ function getJiraTask() { // функция получения таски джи�
 
 		var spanElements = "";
 		for (var i = 0; i < spanCount; i++) {
-			if (i ==0) {
+			if (i == 0) {
 				spanElements += `<span style="Flex: 1; background: darkslateblue; text-align: center; border: 1px solid steelblue;" class="active" name="changeList" value="${i * 50}">${i + 1}</span>`;
 			} else {
 				spanElements += `<span style="Flex: 1; background: darkslateblue; text-align: center; border: 1px solid steelblue;" name="changeList" value="${i * 50}">${i + 1}</span>`;
@@ -375,6 +374,7 @@ function switchJiraPages() {
 								break;
 								case 'PSquery':
 									document.getElementById('responseTextarea1').value = `{${optionsforfetch(PSqueryitem, pageSwArr[d].getAttribute('value'))}}`
+								break;
 							}
 							
 							document.getElementById('responseTextarea2').value = "https://jira.skyeng.tech/rest/issueNav/1/issueTable"
