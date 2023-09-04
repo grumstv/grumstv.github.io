@@ -25,11 +25,12 @@ var win_Jira =  // описание элементов окна Поиска п�
                             <button id="ZBPQuery" title="Страница для поиска Zero Bug Policy">🙅‍♂️ZeroBug</button>
 							<button id="freshQuery" title="Страница при поиске по ключевому слову, выводящая свежесозданные баги в порядке убывания и с 0 Support Tab с заранее записанным JQL запросом">🍀Fresh</button>
 							<button id="customQuery" title="Страница для ручного составления JQL запроса. Поле для ввода поиска не используется, только лишь верхняя часть от выбора отдела до ввода искомого текста в двойных кавычках после надписи text~">📝Custom</button>
+							<button id="PSquery" title="Страница для поиска по ID или тексту срези запросов в Project Support, потому как в Mattermost может не найти">PS</button>
 							<button id="getiosbugs" title="По клику сразу ищет баги по iOS как если бы выискали стандартно с вводом текста поиска iOS">🍏iOS</button>
 							<button id="getandroidbugs" title="По клику сразу ищет баги по iOS как если бы выискали стандартно с вводом текста поиска Android">🤖Android</button>
 							<button id="favouriteBugs" title="Страница с сохраненными багами для быстрого доступа">❤</button>
 							<textarea id="JQLquery" placeholder="JQL запрос" title="Введите сюда JQL запрос" autocomplete="off" type="text" style="text-align: center; width: 500px; color: black; margin-top: 5px; margin-left: 5%;"></textarea>
-							<input id="testJira" placeholder="Введите слово или фразу для поиска" title="введите слово или фразу для поиска по Jira при одном клике будет искать по багам, если ввести в поле номер задачи например VIM-7288 и дабл кликнуть на рокету будет поиск по номеру" autocomplete="off" type="text" style="text-align: center; width: 300px; color: black; margin-top: 5px; margin-left: 20%;">
+							<input id="testJira" placeholder="Введите слово или фразу для поиска" title="введите слово или фразу для поиска по Jira при одном клике будет искать по багам, если ввести в поле номер задачи например VIM-7288 и дабл кликнуть на рокету будет поиск по номеру" autocomplete="off" type="text" style="text-align: center; width: 300px; color: black; margin-top: 5px; margin-left: 20%; border-radius: 20px;">
 							<button id="getJiraTasks" style="width: 25.23px;">🚀</button>
 						</div>
 
@@ -590,6 +591,23 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('getJiraTasks').style.display = ""
             document.getElementById('favouriteissuetable').style.display = "none"
         }
+		
+		document.getElementById('PSquery').onclick = function() {
+			let PSqueryitem = ` project = PS AND text ~ "${testJira.value}" ORDER BY Created`
+            document.getElementById('JQLquery').value = PSqueryitem;
+            document.getElementById('testJira').value = ""
+			this.classList.toggle('active-query')
+            document.getElementById('getiosbugs').classList.remove('active-query')
+            document.getElementById('getandroidbugs').classList.remove('active-query')
+            document.getElementById('customQuery').classList.remove('active-query')
+            document.getElementById('favouriteBugs').classList.remove('active-query')
+            document.getElementById('ZBPQuery').classList.remove('active-query')
+            document.getElementById('freshQuery').classList.remove('active-query')
+			document.getElementById('testJira').style.display = ""
+			document.getElementById('issuetable').style.display = ""
+			document.getElementById('getJiraTasks').style.display = ""
+			document.getElementById('favouriteissuetable').style.display = "none"
+		}
 
         document.getElementById('getiosbugs').onclick = function () { // если выбрана ios
             document.getElementById('testJira').value = "ios"
