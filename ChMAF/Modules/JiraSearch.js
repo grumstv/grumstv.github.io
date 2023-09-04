@@ -435,7 +435,11 @@ function switchJiraPages() {
 											temporarka = replaceItem1(matchedItems1[i]);
 										}
 										
+										const matchedNumbers = rezissuetable.issueTable.table.match(/(">.)*?([0-9]+)\n/gm);
+										const currentNumber = matchedNumbers ? matchedNumbers[i] : null;
+										
 									if (currentNumber && issueKeys[i] !== undefined) {
+										
 													function filterItems(item, index) {
 														return index % 2 !== 0 ? item : null;
 													}
