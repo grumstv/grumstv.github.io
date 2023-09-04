@@ -601,6 +601,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('JQLquery').value = PSqueryitem;
             document.getElementById('testJira').value = ""
 			this.classList.toggle('active-query')
+			document.getElementById('defaultQuery').classList.remove('active-query')
             document.getElementById('getiosbugs').classList.remove('active-query')
             document.getElementById('getandroidbugs').classList.remove('active-query')
             document.getElementById('customQuery').classList.remove('active-query')
