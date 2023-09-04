@@ -121,7 +121,7 @@ function getJiraTask() { // функция получения таски джи�
 	else {
 		//   rezissuetable = JSON.parse(rezissuetable)
 		document.getElementById('responseTextarea1').removeAttribute('getissuetable')
-		let issues = [];
+		// let issues = [];
 		let temporarka;
 		
 		// Получаем ключи задач
