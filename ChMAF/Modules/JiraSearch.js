@@ -150,7 +150,7 @@ function getJiraTask() { // функция получения таски джи�
 			const matchedNumbers = rezissuetable.issueTable.table.match(/(">.)*?([0-9]+)\n/gm);
 			const currentNumber = matchedNumbers ? matchedNumbers[i] : null;
 
-			if (issueKeys[i] !== undefined) {
+			if (currentNumber && issueKeys[i] !== undefined) {
 				function filterItems(item, index) {
 					return index % 2 !== 0 ? item : null;
 				}
@@ -175,6 +175,35 @@ function getJiraTask() { // функция получения таски джи�
 					`<img src="${rezissuetable.issueTable.table.match(/https:\/\/jira.skyeng.tech\/images\/icons\/priorities\/.*svg/gm)[i]}" style="width:20px; height:25px;" title="Приоритеты: ⛔ - Blocker, полностью залитая красная стрелка вверх - Critical, три красные стрелки вверх - Major, три синие вниз - Minor, ⭕ - Trivial">` + 
 					' ' + '<span class="newcount" style="width:20px; margin-left: 5px; background:#3CB371; padding:2px; padding-left:6px; font-weight:700; border-radius:10px;">' + currentNumber + '</span>' + 
 					`<a name="buglinks" href="https://jira.skyeng.tech/browse/${issueKeys[i]}" onclick="" target="_blank" style="margin-left:5px; color: #ffe4c4">` + temporarka + '</a>' + 
+					`<span name="issueIds" style="display:none">${rezissuetable.issueTable.issueIds[i]}</span>` + 
+					'<span class = "jiraissues" style="margin-left: 10px; cursor: pointer">💬</span>' + 
+					'<span class = "refreshissues" style="color:#ADFF2F; margin-left: 5px; cursor: pointer">&#69717;&#120783;</span>' + 
+					'<span name="addtofavourites" style="cursor:pointer;" title="Добавить задачу в Избранное">🤍</span>' + 
+					'</br>';
+			} else if (issueKeys[i] !== undefined)) {
+				function filterItems(item, index) {
+					return index % 2 !== 0 ? item : null;
+				}
+
+				function replaceItem(item) {
+					return item.replace('">', ' – ');
+				}
+
+				const matchedItems = rezissuetable.issueTable.table.match(/(\w+-\d+">.*?).<\/a>/gmi).filter(filterItems);
+				const searchText = document.getElementById('testJira').value;
+				const isMatched = replaceItem(matchedItems[i]).toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+
+				if (isMatched) {
+					const replacePattern = new RegExp(searchText, 'i');
+					const replaceValue = `<span style="color:MediumSpringGreen; font-weight:700; text-shadow:1px 2px 5px rgb(0 0 0 / 55%);">${searchText.toUpperCase()}</span>`;
+					temporarka = replaceItem(matchedItems[i]).replace(replacePattern, replaceValue);
+				} else {
+					temporarka = replaceItem(matchedItems[i]);
+				}
+
+				issues += '<span style="color: #00FA9A">&#5129;</span>' + 
+					`<img src="${rezissuetable.issueTable.table.match(/https:\/\/jira.skyeng.tech\/images\/icons\/priorities\/.*svg/gm)[i]}" style="width:20px; height:25px;" title="Приоритеты: ⛔ - Blocker, полностью залитая красная стрелка вверх - Critical, три красные стрелки вверх - Major, три синие вниз - Minor, ⭕ - Trivial">` + 
+					' ' + `<a name="buglinks" href="https://jira.skyeng.tech/browse/${issueKeys[i]}" onclick="" target="_blank" style="margin-left:5px; color: #ffe4c4">` + temporarka + '</a>' + 
 					`<span name="issueIds" style="display:none">${rezissuetable.issueTable.issueIds[i]}</span>` + 
 					'<span class = "jiraissues" style="margin-left: 10px; cursor: pointer">💬</span>' + 
 					'<span class = "refreshissues" style="color:#ADFF2F; margin-left: 5px; cursor: pointer">&#69717;&#120783;</span>' + 
