@@ -373,8 +373,6 @@ function switchJiraPages() {
 								case 'defQuery':
 								    document.getElementById('responseTextarea1').value = `{${optionsforfetch(defqueryitem, pageSwArr[d].getAttribute('value'))}}`
 								break;
-								case 'PSquery':
-									document.getElementById('responseTextarea1').value = `{${optionsforfetch(PSqueryitem, pageSwArr[d].getAttribute('value'))}}`
 							}
 							
 							document.getElementById('responseTextarea2').value = "https://jira.skyeng.tech/rest/issueNav/1/issueTable"
