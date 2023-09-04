@@ -180,7 +180,7 @@ function getJiraTask() { // функция получения таски джи�
 					'<span class = "refreshissues" style="color:#ADFF2F; margin-left: 5px; cursor: pointer">&#69717;&#120783;</span>' + 
 					'<span name="addtofavourites" style="cursor:pointer;" title="Добавить задачу в Избранное">🤍</span>' + 
 					'</br>';
-			} else if (issueKeys[i] !== undefined)) {
+			} else if (issueKeys[i] !== undefined) {
 				function filterItems(item, index) {
 					return index % 2 !== 0 ? item : null;
 				}
