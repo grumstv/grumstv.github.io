@@ -21,7 +21,7 @@ var win_Jira =  // описание элементов окна Поиска п�
                         </div>
 
 						<div id="control_jira_search">
-							<button id="defaultQuery" title="Страница для поиска по умолчанию с заранее записанным JQL запросом" class="active-query" style="margin-left: 9%;">📇Default</button>
+							<button id="defaultQuery" title="Страница для поиска по умолчанию с заранее записанным JQL запросом" class="active-query" style="margin-left: 5%;">📇Default</button>
                             <button id="ZBPQuery" title="Страница для поиска Zero Bug Policy">🙅‍♂️ZeroBug</button>
 							<button id="freshQuery" title="Страница при поиске по ключевому слову, выводящая свежесозданные баги в порядке убывания и с 0 Support Tab с заранее записанным JQL запросом">🍀Fresh</button>
 							<button id="customQuery" title="Страница для ручного составления JQL запроса. Поле для ввода поиска не используется, только лишь верхняя часть от выбора отдела до ввода искомого текста в двойных кавычках после надписи text~">📝Custom</button>
@@ -586,6 +586,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('favouriteBugs').classList.remove('active-query')
             document.getElementById('ZBPQuery').classList.remove('active-query')
             document.getElementById('freshQuery').classList.remove('active-query')
+            document.getElementById('PSquery').classList.remove('active-query')
             document.getElementById('issuetable').style.display = ""
             document.getElementById('testJira').style.display = ""
             document.getElementById('getJiraTasks').style.display = ""
@@ -618,6 +619,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('favouriteBugs').classList.remove('active-query')
             document.getElementById('ZBPQuery').classList.remove('active-query')
             document.getElementById('freshQuery').classList.remove('active-query')
+			document.getElementById('PSquery').classList.remove('active-query')
             document.getElementById('issuetable').style.display = ""
             document.getElementById('testJira').style.display = ""
             document.getElementById('getJiraTasks').style.display = ""
@@ -634,6 +636,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('favouriteBugs').classList.remove('active-query')
             document.getElementById('ZBPQuery').classList.remove('active-query')
             document.getElementById('freshQuery').classList.remove('active-query')
+			document.getElementById('PSquery').classList.remove('active-query')
             document.getElementById('issuetable').style.display = ""
             document.getElementById('testJira').style.display = ""
             document.getElementById('getJiraTasks').style.display = ""
@@ -652,6 +655,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('customQuery').classList.remove('active-query')
             document.getElementById('favouriteBugs').classList.remove('active-query')
             document.getElementById('ZBPQuery').classList.remove('active-query')
+			document.getElementById('PSquery').classList.remove('active-query')
             document.getElementById('issuetable').style.display = ""
             document.getElementById('testJira').style.display = ""
             document.getElementById('getJiraTasks').style.display = ""
@@ -669,6 +673,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('customQuery').classList.remove('active-query')
             document.getElementById('favouriteBugs').classList.remove('active-query')
             document.getElementById('freshQuery').classList.remove('active-query')
+			document.getElementById('PSquery').classList.remove('active-query')
             document.getElementById('issuetable').style.display = ""
             document.getElementById('testJira').style.display = ""
             document.getElementById('getJiraTasks').style.display = ""
@@ -688,6 +693,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             document.getElementById('favouriteBugs').classList.remove('active-query')
             document.getElementById('ZBPQuery').classList.remove('active-query')
             document.getElementById('freshQuery').classList.remove('active-query')
+			document.getElementById('PSquery').classList.remove('active-query')
             document.getElementById('issuetable').style.display = ""
             document.getElementById('testJira').style.display = ""
             document.getElementById('getJiraTasks').style.display = ""
@@ -703,6 +709,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
 				document.getElementById('getiosbugs').classList.remove('active-query')
                 document.getElementById('getandroidbugs').classList.remove('active-query')
 				document.getElementById('ZBPQuery').classList.remove('active-query')
+				document.getElementById('PSquery').classList.remove('active-query')
                 document.getElementById('issuetable').style.display = "none"
                 document.getElementById('favouriteissuetable').style.display = ""
                 document.getElementById('testJira').style.display = "none"
