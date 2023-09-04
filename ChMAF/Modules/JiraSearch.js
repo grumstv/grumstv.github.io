@@ -620,12 +620,12 @@ function switchJiraPages() {
 						// pageSwArr[d].onclick = function() {
 							// document.getElementById('issuetable').innerHTML = '<span style="color:bisque">Загрузка...</span>'
 							// issues = ''
-							Удаление класса 'active' со всех элементов
+					//		Удаление класса 'active' со всех элементов
 							// for(let z=0; z<pageSwArr.length; z++) {
 								// pageSwArr[z].classList.remove('active');
 							// }
 
-							Добавление класса 'active' к текущему элементу
+					//		Добавление класса 'active' к текущему элементу
 							// this.classList.add('active');
 							
 							// switch (searchTypeFlag) {
