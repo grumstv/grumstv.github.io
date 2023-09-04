@@ -915,47 +915,36 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
 				PSqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(PSqueryitem, 0)}}`
 				searchTypeFlag = "PSQuery"
-				
 			} else if (document.getElementById('freshQuery').classList.contains('active-query')) {
                 frqueryitem = `issuetype in (Bug, Task) AND status != closed AND Reports >= 0 AND text ~ "${testJira.value}" ORDER BY Created`
                 document.getElementById('JQLquery').value = frqueryitem;
                 frqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
-
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(frqueryitem, 0)}}`
 				searchTypeFlag = "freshQuery"
-
             } else if (document.getElementById('customQuery').classList.contains('active-query')) {
                 customquery = `${localStorage.getItem('customquery')}`
                 document.getElementById('JQLquery').value = customquery
                 customquery = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
-
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(customquery, 0)}}`
 				searchTypeFlag = "custQuery"
-
             } else if (document.getElementById('getiosbugs').classList.contains('active-query')) {
                 iosbugsqueryitem = `project in (VIM, MP, MV, KIDS, TS, ADULT, AUTH, BILL, COMM, KIDSMOB, MATH, MOBACK, MOBT, SS, ST, SMMOB, STUDCAB, ESM, VID, SL, STUDCABMOB, EDUMOB) AND issuetype = Bug AND status != closed AND Reports > 0 AND resolution in (Unresolved, Incomplete, "Cannot Reproduce") AND text ~ "${testJira.value}" ORDER BY Created`
                 document.getElementById('JQLquery').value = iosbugsqueryitem;
                 iosbugsqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
-
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(iosbugsqueryitem, 0)}}`
 				searchTypeFlag = "iosQuery"
-
             } else if (document.getElementById('getandroidbugs').classList.contains('active-query')) {
                 androidbugsqueryitem = `project in (VIM, MP, MV, KIDS, TS, ADULT, AUTH, BILL, COMM, KIDSMOB, MATH, MOBACK, MOBT, SS, ST, SMMOB, STUDCAB, ESM, VID, SL, STUDCABMOB, EDUMOB) AND issuetype = Bug AND status != closed AND Reports > 0 AND resolution in (Unresolved, Incomplete, "Cannot Reproduce") AND text ~ "${testJira.value}" ORDER BY Created`
                 document.getElementById('JQLquery').value = androidbugsqueryitem;
                 androidbugsqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
-
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(androidbugsqueryitem, 0)}}`
 				searchTypeFlag = "androidQuery"
-
             } else if (document.getElementById('ZBPQuery').classList.contains('active-query')) {
                 zbpqueryitem = `issuetype in (Bug, Task) AND status = closed AND resolution in ("Won't Fix", "Won't Do") AND Reports >= 0 AND created >= 2022-01-01 AND text ~ "${testJira.value}" ORDER BY updated`
                 document.getElementById('JQLquery').value = zbpqueryitem;
                 zbpqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
-
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(zbpqueryitem, 0)}}`
 				searchTypeFlag = "zbpQuery"
-
             }
 
             document.getElementById('responseTextarea2').value = "https://jira.skyeng.tech/rest/issueNav/1/issueTable"
