@@ -843,6 +843,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
 				searchTypeFlag = "defQuery"
 
             } else if(document.getElementById('PSquery').classList.contains('active-query')){
+				PSqueryitem = ` project = PS AND text ~ "${testJira.value}" ORDER BY Created`
 				document.getElementById('JQLquery').value = PSqueryitem;
 				PSqueryitem = document.getElementById('JQLquery').value.replaceAll(' ', '+').replaceAll(',', '%2C').replaceAll('=', '%3D').replaceAll('>', '%3E').replaceAll('"', '%22').replaceAll('<', '%3C')
                 document.getElementById('responseTextarea1').value = `{${optionsforfetch(PSqueryitem, 0)}}`
