@@ -390,7 +390,7 @@ function calcAvgSLACompleted() {
 					arrayOfOuttimedSLA ++
 				}
 	}
-	console.log("Prosrochennih SLA chatov " + arrayOfOuttimedSLA)
+	// console.log("Prosrochennih SLA chatov " + arrayOfOuttimedSLA)
 	
 	document.getElementById('avgSLAClosedData').innerHTML = '<span style="background: #bb680f; padding: 5px; color: floralwhite; font-weight: 700; border-radius: 10px;">' + "SLA закрытия: " + (((pureArray.length - arrayOfOuttimedSLA) / pureArray.length)*100).toFixed(1) + '%' + '</span>'
 }
@@ -986,7 +986,7 @@ document.getElementById('stargrab').onclick = async function () {
     let selTheme = document.getElementById('ThemesToSearch').options
     for (let i = 0; i < selTheme.length; i++) {
         if (selTheme[i].selected == true) {
-            console.log(selTheme[i].value)
+            // console.log(selTheme[i].value)
             chosentheme = selTheme[i].value
         }
     }
@@ -1098,9 +1098,9 @@ document.getElementById('stargrab').onclick = async function () {
 
                                     operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
 
-                                    console.log(payloadarray);
-                                    console.log(namespisochek[i]);
-                                    console.log(operstagsarray);
+                                    // console.log(payloadarray);
+                                    // console.log(namespisochek[i]);
+                                    // console.log(operstagsarray);
                                 } else if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration == undefined) {
 									
 									(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
@@ -1116,9 +1116,9 @@ document.getElementById('stargrab').onclick = async function () {
 
                                     operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
 
-                                    console.log(payloadarray);
-                                    console.log(namespisochek[i]);
-                                    console.log(operstagsarray);
+                                    // console.log(payloadarray);
+                                    // console.log(namespisochek[i]);
+                                    // console.log(operstagsarray);
                                 }
                             });
                     } else if (chosentheme !== "parseallthemes" && chosentheme == "parsenothemes") {
@@ -1150,8 +1150,8 @@ document.getElementById('stargrab').onclick = async function () {
 
                                 }
 
-                                console.log(payloadarray);
-                                console.log(namespisochek[i]);
+                                // console.log(payloadarray);
+                                // console.log(namespisochek[i]);
                             });
 
 
@@ -1211,8 +1211,8 @@ document.getElementById('stargrab').onclick = async function () {
 
                                 }
 
-                                console.log(payloadarray);
-                                console.log(namespisochek[i]);
+                                // console.log(payloadarray);
+                                // console.log(namespisochek[i]);
                             });
                     }
                 }
@@ -1240,7 +1240,7 @@ document.getElementById('stargrab').onclick = async function () {
         }
         return element;
     });
-    console.log(cleanedarray)
+    // console.log(cleanedarray)
 
     const themesgrabbeddata = document.getElementById('themesgrabbeddata');
     themesgrabbeddata.innerHTML = '';
@@ -1299,7 +1299,7 @@ document.getElementById('stargrab').onclick = async function () {
 
         return unique;
     }, [])
-    console.log(filteredArrayTags)
+    // console.log(filteredArrayTags)
  
     // Iterate through the data array and create table rows
     pureArray.forEach((element, index) => {
@@ -1429,7 +1429,7 @@ document.getElementById('stargrab').onclick = async function () {
             rows.forEach(function (row) {
                 row.style.display = '';
             });
-            console.log("Ни один чекбокс не выбран");
+            // console.log("Ни один чекбокс не выбран");
             calcAvgCsat();
 			calcAvgSLACompleted()
         }
