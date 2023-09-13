@@ -1084,6 +1084,7 @@ document.getElementById('stargrab').onclick = async function () {
                             .then(r => r.json())
                             .then(r => {
                                 if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration != undefined) {
+									console.log(r.channelUser.payload["nextClass-status"])
                                     payloadarray.push({
                                         ChatId: conversationId,
                                         OperatorName: namespisochek[i],
@@ -1099,6 +1100,7 @@ document.getElementById('stargrab').onclick = async function () {
                                     console.log(namespisochek[i]);
                                     console.log(operstagsarray);
                                 } else if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration == undefined) {
+									console.log(r.channelUser.payload["nextClass-status"])
                                     payloadarray.push({
                                         ChatId: conversationId,
                                         OperatorName: namespisochek[i],
@@ -1119,7 +1121,7 @@ document.getElementById('stargrab').onclick = async function () {
                         await fetch("https://skyeng.autofaq.ai/api/conversations/" + conversationId)
                             .then(r => r.json())
                             .then(r => {
-
+								console.log(r.channelUser.payload["nextClass-status"])
                                 operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
                                 if (r.payload.topicId && r.payload.topicId.value == '' && tmponlyoperhashes[j].Duration == undefined) {
                                     payloadarray.push({
@@ -1151,7 +1153,7 @@ document.getElementById('stargrab').onclick = async function () {
                         await fetch("https://skyeng.autofaq.ai/api/conversations/" + conversationId)
                             .then(r => r.json())
                             .then(r => {
-
+								console.log(r.channelUser.payload["nextClass-status"])
                                 if (r.payload && r.payload.tags) {
                                     operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
                                 } else {
