@@ -1463,41 +1463,78 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
 			return item.hasOwnProperty('ChatId') && item.hasOwnProperty('Tags');
 		}
 
+		// function downloadCSV(array) {
+			// let csvContent = 'data:text/csv;charset=utf-8,';
+			// let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6";
+			// csvContent += header + "\r\n";
+
+			// array.forEach((item, index) => {
+				// if (!isValidItem(item)) {
+					// console.warn(`Element at index ${index} is invalid. Skipping...`, item);
+					// return; // Пропускаем этот элемент
+				// }
+
+				// let tags = [];
+				
+				// if (item.Tags === "") {
+					// tags = [];
+				// } else if (isJsonString(item.Tags)) {
+					// tags = JSON.parse(item.Tags);
+				// } else {
+					// console.warn(`Element at index ${index} has invalid Tags. Using empty array.`, item);
+				// }
+				
+				// let row = [item.ChatId, ...tags];
+				// csvContent += row.join(",") + "\r\n";
+				// console.log(`Processed element at index ${index}:`, row.join(","));
+			// });
+
+
+			// let encodedUri = encodeURI(csvContent);
+			// let link = document.createElement("a");
+			// link.setAttribute("href", encodedUri);
+			// link.setAttribute("download", "export.csv");
+			// document.body.appendChild(link);
+			// link.click();
+			// document.body.removeChild(link);
+		// }
+		
 		function downloadCSV(array) {
-			let csvContent = 'data:text/csv;charset=utf-8,';
-			let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6";
-			csvContent += header + "\r\n";
+		let csvContent = 'data:text/csv;charset=utf-8,';
+		let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6";
+		csvContent += header + "\r\n";
 
-			array.forEach((item, index) => {
-				if (!isValidItem(item)) {
-					console.warn(`Element at index ${index} is invalid. Skipping...`, item);
-					return; // Пропускаем этот элемент
-				}
+		array.forEach((item, index) => {
+			if (!isValidItem(item)) {
+				console.warn(`Element at index ${index} is invalid. Skipping...`, item);
+				return;
+			}
 
-				let tags = [];
-				
-				if (item.Tags === "") {
-					tags = [];
-				} else if (isJsonString(item.Tags)) {
-					tags = JSON.parse(item.Tags);
-				} else {
-					console.warn(`Element at index ${index} has invalid Tags. Using empty array.`, item);
-				}
-				
-				let row = [item.ChatId, ...tags];
-				csvContent += row.join(",") + "\r\n";
-				console.log(`Processed element at index ${index}:`, row.join(","));
-			});
+			let tags = [];
+			if (item.Tags === "") {
+				tags = [];
+			} else if (isJsonString(item.Tags)) {
+				tags = JSON.parse(item.Tags);
+			} else {
+				console.warn(`Element at index ${index} has invalid Tags. Using empty array.`, item);
+			}
+			
+			let row = [item.ChatId, ...tags];
+			csvContent += row.join(",") + "\r\n";
+			console.log(`Processed element at index ${index}:`, row.join(","));
+		});
 
+		// Создание Blob из строки CSV и загрузка файла
+		let blob = new Blob([csvContent], { type: 'text/csv' });
+		let link = document.createElement("a");
+		link.href = URL.createObjectURL(blob);
+		link.download = "export.csv";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
 
-			let encodedUri = encodeURI(csvContent);
-			let link = document.createElement("a");
-			link.setAttribute("href", encodedUri);
-			link.setAttribute("download", "export.csv");
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-		}
+		
 
         console.log(operstagsarray.length);
         downloadCSV(operstagsarray);
