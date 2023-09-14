@@ -33,7 +33,7 @@ var win_Grabber =  // описание элементов окна Grabber
 
                         <div style="margin: 5px; width: 800px" id="grabbox">
 								 <span style="color:bisque; float:center; margin-top:5px; margin-left:10px;">Начальная дата <input type="date" style="color:black; margin-left:20px;  width:125px;" name="FirstData" id="dateFromGrab"></span>
-								 <button id="dayminus">◀</button>
+								 <button style="margin-left:15%" id="dayminus">◀</button>
 								 <button id="dayplus">▶</button>
 								 <span style="color:bisque; margin-top:2px; float:right; margin-right:10px; height:28px;">Конечная дата <input type="date" style="color:black; float:right; margin-left:20px; margin-right:10px; width:125px;" name="LastData" id="dateToGrab"</span>
                         </div>
