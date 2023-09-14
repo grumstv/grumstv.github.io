@@ -1458,7 +1458,10 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
 			}
 			return true;
 		}
-
+		
+		function isValidItem(item) {
+			return item.hasOwnProperty('ChatId') && item.hasOwnProperty('Tags');
+		}
 
 		function downloadCSV(array) {
 			let csvContent = 'data:text/csv;charset=utf-8,';
