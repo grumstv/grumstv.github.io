@@ -1448,9 +1448,10 @@ document.getElementById('stargrab').onclick = async function () {
 		if (allUnchecked) {
 			function isJsonString(str) {
 				try {
+					if (typeof str !== 'string') throw new Error('Not a string');
 					JSON.parse(str);
 				} catch (e) {
-					console.error('Invalid JSON for:', str);
+					console.error('Invalid JSON for:', str, 'Error:', e.message);
 					return false;
 				}
 				return true;
