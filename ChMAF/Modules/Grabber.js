@@ -1446,6 +1446,11 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
 
     if (allUnchecked) {
         function isJsonString(str) {
+            // Проверяем на пустую строку или строку содержащую только перевод строки
+            if (str === "" || str === "[\n]") {
+                return false;
+            }
+
             try {
                 if (typeof str !== 'string') throw new Error('Not a string');
                 JSON.parse(str);
@@ -1458,13 +1463,12 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
 
         function downloadCSV(array) {
             let csvContent = 'data:text/csv;charset=utf-8,';
-            let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6"; // Можете добавить больше колонок, если нужно
+            let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6";
             csvContent += header + "\r\n";
 
             array.forEach(item => {
                 let tags = [];
                 
-                // Проверяем корректность JSON строки
                 if (isJsonString(item.Tags)) {
                     tags = JSON.parse(item.Tags);
                 }
@@ -1489,6 +1493,7 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
         saveFilteredTableCSV()
     }
 }
+
 		
 
     ///
