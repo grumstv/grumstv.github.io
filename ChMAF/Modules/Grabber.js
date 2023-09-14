@@ -1439,7 +1439,61 @@ document.getElementById('stargrab').onclick = async function () {
 
 
     document.getElementById('hideselecalltags').onclick = filterTableRowsByTags
-    document.getElementById('SaveToCSVFilteredByTags').onclick = saveFilteredTableCSV
+	
+	
+
+
+	
+	
+    document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
+		let checkboxes = document.querySelectorAll('input[type="checkbox"][name="tagsforfilter"]');
+		let allUnchecked = Array.from(checkboxes).every(checkbox => !checkbox.checked);
+
+		if (allUnchecked) {
+			function isJsonString(str) {
+				try {
+					JSON.parse(str);
+				} catch (e) {
+					return false;
+				}
+				return true;
+			}
+
+			function downloadCSV(array) {
+				// Преобразование массива объектов в CSV
+				let csvContent = 'data:text/csv;charset=utf-8,';
+				let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6"; // вы можете добавить больше колонок для тегов, если нужно
+				csvContent += header + "\r\n";
+				array.forEach(item => {
+					if (isJsonString(item.Tags)) {
+						let tags = JSON.parse(item.Tags);
+						let row = [item.ChatId, ...tags];
+						csvContent += row.join(",") + "\r\n";
+					} else {
+						// Если Tags не является корректной JSON строкой, просто записываем ChatId
+						csvContent += item.ChatId + "\r\n";
+					}
+				});
+
+				// Создание ссылки для загрузки и её автоматическое нажатие
+				let encodedUri = encodeURI(csvContent);
+				let link = document.createElement("a");
+				link.setAttribute("href", encodedUri);
+				link.setAttribute("download", "export.csv");
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			}
+
+			// Вызов функции для загрузки
+			downloadCSV(operstagsarray);
+		} else {
+			saveFilteredTableCSV()
+		}
+		
+	}
+
+	
 
     ///
 
