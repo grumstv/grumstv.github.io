@@ -1439,11 +1439,7 @@ document.getElementById('stargrab').onclick = async function () {
 
 
     document.getElementById('hideselecalltags').onclick = filterTableRowsByTags
-	
-	
-
-
-	
+		
 	
     document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
 		let checkboxes = document.querySelectorAll('input[type="checkbox"][name="tagsforfilter"]');
@@ -1454,6 +1450,7 @@ document.getElementById('stargrab').onclick = async function () {
 				try {
 					JSON.parse(str);
 				} catch (e) {
+					console.error('Invalid JSON for:', str);
 					return false;
 				}
 				return true;
@@ -1473,6 +1470,7 @@ document.getElementById('stargrab').onclick = async function () {
 						// Если Tags не является корректной JSON строкой, просто записываем ChatId
 						csvContent += item.ChatId + "\r\n";
 					}
+					    console.log(row.join(","));
 				});
 
 				// Создание ссылки для загрузки и её автоматическое нажатие
@@ -1486,6 +1484,7 @@ document.getElementById('stargrab').onclick = async function () {
 			}
 
 			// Вызов функции для загрузки
+			console.log(operstagsarray.length);
 			downloadCSV(operstagsarray);
 		} else {
 			saveFilteredTableCSV()
