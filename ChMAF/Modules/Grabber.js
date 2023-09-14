@@ -1466,11 +1466,11 @@ document.getElementById('stargrab').onclick = async function () {
 						let tags = JSON.parse(item.Tags);
 						let row = [item.ChatId, ...tags];
 						csvContent += row.join(",") + "\r\n";
+						console.log(row.join(","));
 					} else {
 						// Если Tags не является корректной JSON строкой, просто записываем ChatId
 						csvContent += item.ChatId + "\r\n";
 					}
-					    console.log(row.join(","));
 				});
 
 				// Создание ссылки для загрузки и её автоматическое нажатие
