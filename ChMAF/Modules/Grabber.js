@@ -1598,7 +1598,6 @@ document.getElementById('webtoCSV').onclick = function () {
 			let newDateEnd = dateend.toISOString().split('T')[0];
 			document.getElementById('dateFromGrab').value = newDateStart;
 			document.getElementById('dateToGrab').value = newDateEnd;
-			searchitnow()
 		}
 
 		document.getElementById('dayminus').onclick = function() { // обработчик нажатия на кнопку предыдущего дня
@@ -1612,5 +1611,4 @@ document.getElementById('webtoCSV').onclick = function () {
 			let newDateEnd = dateend.toISOString().split('T')[0];
 			document.getElementById('dateFromGrab').value = newDateStart;
 			document.getElementById('dateToGrab').value = newDateEnd;
-			searchitnow()
 		}
