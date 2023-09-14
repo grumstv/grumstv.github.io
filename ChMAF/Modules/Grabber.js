@@ -1461,31 +1461,38 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
             return true;
         }
 
-        function downloadCSV(array) {
-            let csvContent = 'data:text/csv;charset=utf-8,';
-            let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6";
-            csvContent += header + "\r\n";
+		function downloadCSV(array) {
+			let csvContent = 'data:text/csv;charset=utf-8,';
+			let header = "ChatId,Tag1,Tag2,Tag3,Tag4,Tag5,Tag6";
+			csvContent += header + "\r\n";
 
-            array.forEach(item => {
-                let tags = [];
-                
-                if (isJsonString(item.Tags)) {
-                    tags = JSON.parse(item.Tags);
-                }
-                
-                let row = [item.ChatId, ...tags];
-                csvContent += row.join(",") + "\r\n";
-                console.log(row.join(","));
-            });
+			array.forEach((item, index) => {
+				if (!item.ChatId) {
+					console.warn(`Element at index ${index} missing ChatId.`, item);
+					return; // Пропускаем этот элемент
+				}
 
-            let encodedUri = encodeURI(csvContent);
-            let link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "export.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+				let tags = [];
+				
+				if (isJsonString(item.Tags)) {
+					tags = JSON.parse(item.Tags);
+				} else {
+					console.warn(`Element at index ${index} has invalid Tags.`, item);
+				}
+				
+				let row = [item.ChatId, ...tags];
+				csvContent += row.join(",") + "\r\n";
+				console.log(`Processed element at index ${index}:`, row.join(","));
+			});
+
+			let encodedUri = encodeURI(csvContent);
+			let link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute("download", "export.csv");
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}
 
         console.log(operstagsarray.length);
         downloadCSV(operstagsarray);
