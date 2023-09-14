@@ -33,6 +33,8 @@ var win_Grabber =  // описание элементов окна Grabber
 
                         <div style="margin: 5px; width: 800px" id="grabbox">
 								 <span style="color:bisque; float:center; margin-top:5px; margin-left:10px;">Начальная дата <input type="date" style="color:black; margin-left:20px;  width:125px;" name="FirstData" id="dateFromGrab"></span>
+								 <button id="dayminus">◀</button>
+								 <button id="dayplus">▶</button>
 								 <span style="color:bisque; margin-top:2px; float:right; margin-right:10px; height:28px;">Конечная дата <input type="date" style="color:black; float:right; margin-left:20px; margin-right:10px; width:125px;" name="LastData" id="dateToGrab"</span>
                         </div>
 
@@ -1584,3 +1586,31 @@ document.getElementById('webtoCSV').onclick = function () {
 
     downloadCSV(pureArray, filename);
 }
+
+		document.getElementById('dayplus').onclick = function() { // обработчик нажатия на кнопку следующего дня
+			let dateInputIshod = document.getElementById('dateFromGrab').value;
+			let dateInputKonez = document.getElementById('dateToGrab').value;
+			let datestart = new Date(dateInputIshod);
+			let dateend = new Date(dateInputKonez);
+			datestart.setDate(datestart.getDate() + 1);
+			dateend.setDate(dateend.getDate() + 1);
+			let newDateStart = datestart.toISOString().split('T')[0];
+			let newDateEnd = dateend.toISOString().split('T')[0];
+			document.getElementById('dateFromGrab').value = newDateStart;
+			document.getElementById('dateToGrab').value = newDateEnd;
+			searchitnow()
+		}
+
+		document.getElementById('dayminus').onclick = function() { // обработчик нажатия на кнопку предыдущего дня
+			let dateInputIshod = document.getElementById('dateFromGrab').value;
+			let dateInputKonez = document.getElementById('dateToGrab').value;
+			let datestart = new Date(dateInputIshod);
+			let dateend = new Date(dateInputKonez);
+			datestart.setDate(datestart.getDate() - 1);
+			dateend.setDate(dateend.getDate() - 1);
+			let newDateStart = datestart.toISOString().split('T')[0];
+			let newDateEnd = dateend.toISOString().split('T')[0];
+			document.getElementById('dateFromGrab').value = newDateStart;
+			document.getElementById('dateToGrab').value = newDateEnd;
+			searchitnow()
+		}
