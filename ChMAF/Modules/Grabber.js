@@ -1445,21 +1445,20 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
     let allUnchecked = Array.from(checkboxes).every(checkbox => !checkbox.checked);
 
     if (allUnchecked) {
-        function isJsonString(str) {
-            // Проверяем на пустую строку или строку содержащую только перевод строки
-            if (str === "" || str === "[\n]") {
-                return false;
-            }
+		function isJsonString(str) {
+			try {
+				if (typeof str !== 'string') throw new Error('Not a string');
+				let parsed = JSON.parse(str);
+				
+				// Не допускаем другие типы кроме массивов
+				if (!Array.isArray(parsed)) throw new Error('Not an array');
+			} catch (e) {
+				console.error('Invalid JSON for:', str, 'Error:', e.message);
+				return false;
+			}
+			return true;
+		}
 
-            try {
-                if (typeof str !== 'string') throw new Error('Not a string');
-                JSON.parse(str);
-            } catch (e) {
-                console.error('Invalid JSON for:', str, 'Error:', e.message);
-                return false;
-            }
-            return true;
-        }
 
 		function downloadCSV(array) {
 			let csvContent = 'data:text/csv;charset=utf-8,';
@@ -1467,23 +1466,26 @@ document.getElementById('SaveToCSVFilteredByTags').onclick = function() {
 			csvContent += header + "\r\n";
 
 			array.forEach((item, index) => {
-				if (!item.ChatId) {
-					console.warn(`Element at index ${index} missing ChatId.`, item);
+				if (!isValidItem(item)) {
+					console.warn(`Element at index ${index} is invalid. Skipping...`, item);
 					return; // Пропускаем этот элемент
 				}
 
 				let tags = [];
 				
-				if (isJsonString(item.Tags)) {
+				if (item.Tags === "") {
+					tags = [];
+				} else if (isJsonString(item.Tags)) {
 					tags = JSON.parse(item.Tags);
 				} else {
-					console.warn(`Element at index ${index} has invalid Tags.`, item);
+					console.warn(`Element at index ${index} has invalid Tags. Using empty array.`, item);
 				}
 				
 				let row = [item.ChatId, ...tags];
 				csvContent += row.join(",") + "\r\n";
 				console.log(`Processed element at index ${index}:`, row.join(","));
 			});
+
 
 			let encodedUri = encodeURI(csvContent);
 			let link = document.createElement("a");
