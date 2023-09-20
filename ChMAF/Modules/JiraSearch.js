@@ -20,7 +20,7 @@ var win_Jira =  // описание элементов окна Поиска п�
                         </div>
 
 						<div id="control_jira_search">
-							<button id="defaultQuery" title="Страница для поиска по умолчанию с заранее записанным JQL запросом" class="active-query" style="margin-left: 5%;">📇Default</button>
+							<button id="defaultQuery" title="Страница для поиска по умолчанию с заранее записанным JQL запросом" class="active-query">📇Default</button>
                             <button id="ZBPQuery" title="Страница для поиска Zero Bug Policy">🙅‍♂️ZeroBug</button>
 							<button id="freshQuery" title="Страница при поиске по ключевому слову, выводящая свежесозданные баги в порядке убывания и с 0 Support Tab с заранее записанным JQL запросом">🍀Fresh</button>
 							<button id="customQuery" title="Страница для ручного составления JQL запроса. Поле для ввода поиска не используется, только лишь верхняя часть от выбора отдела до ввода искомого текста в двойных кавычках после надписи text~">📝Custom</button>
@@ -28,6 +28,9 @@ var win_Jira =  // описание элементов окна Поиска п�
 							<button id="getiosbugs" title="По клику сразу ищет баги по iOS как если бы выискали стандартно с вводом текста поиска iOS">🍏iOS</button>
 							<button id="getandroidbugs" title="По клику сразу ищет баги по iOS как если бы выискали стандартно с вводом текста поиска Android">🤖Android</button>
 							<button id="favouriteBugs" title="Страница с сохраненными багами для быстрого доступа">❤</button>
+                        </div>
+
+                        <div id="fields_jira_search">
 							<textarea id="JQLquery" placeholder="JQL запрос" title="Введите сюда JQL запрос" autocomplete="off" type="text" style="text-align: center; width: 500px; color: black; margin-top: 5px; margin-left: 5%;"></textarea>
 							<input id="testJira" placeholder="Введите слово или фразу для поиска" title="введите слово или фразу для поиска по Jira при одном клике будет искать по багам, если ввести в поле номер задачи например VIM-7288 и дабл кликнуть на рокету будет поиск по номеру" autocomplete="off" type="text" style="text-align: center; width: 300px; color: black; margin-top: 5px; margin-left: 20%; border-radius: 20px;">
 							<button id="getJiraTasks" style="width: 25.23px;">🚀</button>
@@ -144,9 +147,8 @@ function toggleAndDeactivateQueries(currentId) { // Смена класса кн
 
 function showelemonpages() { // открываем элементы окна если они скрыты
 	document.getElementById('testJira').value = ""
-	document.getElementById('testJira').style.display = ""
+	document.getElementById('fields_jira_search').style.display = ""
 	document.getElementById('issuetable').style.display = ""
-	document.getElementById('getJiraTasks').style.display = ""
 	document.getElementById('foundIssuesAmount').style.display = "";
 	document.getElementById('pagesSwitcher').style.display = "flex";
 	document.getElementById('favouriteissuetable').style.display = "none"
@@ -373,58 +375,60 @@ function switchJiraPages() {
 
     pageSwArr.forEach((page, d) => {
         page.onclick = async function() {
-            document.getElementById('issuetable').innerHTML = '<span style="color:bisque">Загрузка...</span>';
-            
-            pageSwArr.forEach(p => p.classList.remove('active'));
-            this.classList.add('active');
-
-            const optionsValue = optionsforfetch(requesttojiratext, page.getAttribute('value'));
-
-            textArea1.value = `{${optionsValue}}`;
-            textArea2.value = "https://jira.skyeng.tech/rest/issueNav/1/issueTable";
-            textArea3.value = 'newPageIssue';
-            sendRespbtn.click();
-
-            setTimeout(function() {
-                const rezissuetable = JSON.parse(textArea1.getAttribute('newPageIssue'));
-                textArea1.removeAttribute('newPageIssue');
-
-				const { issueKeys, table, issueIds } = rezissuetable.issueTable;
-				const matchedItems = table.match(/(\w+-\d+">.*?).<\/a>/gmi).filter(filterItems);
-				const matchedNumbers = table.match(/(">.)*?([0-9]+)\n/gm);
-				const searchText = document.getElementById('testJira').value;
+            if (!this.classList.contains('active')) {
+                document.getElementById('issuetable').innerHTML = '<span style="color:bisque">Загрузка...</span>';
                 
-                let issues = '';
-                for (let i = 0; i < rezissuetable.issueTable.displayed; i++) {
-					const currentNumber = matchedNumbers ? matchedNumbers[i] : null;
-					const currentIssue = matchedItems[i];
-					const currentKey = issueKeys[i];
-					const currentIds = issueIds[i];
-					const currentpic = table.match(/https:\/\/jira.skyeng.tech\/images\/icons\/priorities\/.*svg/gm)[i];
+                pageSwArr.forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
 
-                    if (currentIssue && currentKey) {
-                        issues += formatIssue(currentIssue, currentNumber, currentKey, searchText, currentpic, currentIds);
-							} else {
-								console.error("Не удалось найти соответствие для индекса: " + i);
-										}
-									}
+                const optionsValue = optionsforfetch(requesttojiratext, page.getAttribute('value'));
 
-									document.getElementById('issuetable').innerHTML = issues;
-									
-                const barray = document.querySelectorAll('.jiraissues');
-                addJiraIssueOnClickEvent(barray, issueKeys);
+                textArea1.value = `{${optionsValue}}`;
+                textArea2.value = "https://jira.skyeng.tech/rest/issueNav/1/issueTable";
+                textArea3.value = 'newPageIssue';
+                sendRespbtn.click();
 
-				addFavouritesOnClickEvent(
-					document.getElementsByName('addtofavourites'),
-					document.getElementsByName('buglinks'),
-					document.getElementsByName('issueIds'),
-					document.getElementById('favouriteissuetable')
-				);
+                setTimeout(function() {
+                    const rezissuetable = JSON.parse(textArea1.getAttribute('newPageIssue'));
+                    textArea1.removeAttribute('newPageIssue');
 
-                const refreshissuesarr = document.querySelectorAll('.refreshissues');
-                addRefreshIssueOnClickEvent(refreshissuesarr, issueIds);
-                
-            }, 1000);
+                    const { issueKeys, table, issueIds } = rezissuetable.issueTable;
+                    const matchedItems = table.match(/(\w+-\d+">.*?).<\/a>/gmi).filter(filterItems);
+                    const matchedNumbers = table.match(/(">.)*?([0-9]+)\n/gm);
+                    const searchText = document.getElementById('testJira').value;
+                    
+                    let issues = '';
+                    for (let i = 0; i < rezissuetable.issueTable.displayed; i++) {
+                        const currentNumber = matchedNumbers ? matchedNumbers[i] : null;
+                        const currentIssue = matchedItems[i];
+                        const currentKey = issueKeys[i];
+                        const currentIds = issueIds[i];
+                        const currentpic = table.match(/https:\/\/jira.skyeng.tech\/images\/icons\/priorities\/.*svg/gm)[i];
+
+                        if (currentIssue && currentKey) {
+                            issues += formatIssue(currentIssue, currentNumber, currentKey, searchText, currentpic, currentIds);
+                                } else {
+                                    console.error("Не удалось найти соответствие для индекса: " + i);
+                                            }
+                                        }
+
+                                        document.getElementById('issuetable').innerHTML = issues;
+                                        
+                    const barray = document.querySelectorAll('.jiraissues');
+                    addJiraIssueOnClickEvent(barray, issueKeys);
+
+                    addFavouritesOnClickEvent(
+                        document.getElementsByName('addtofavourites'),
+                        document.getElementsByName('buglinks'),
+                        document.getElementsByName('issueIds'),
+                        document.getElementById('favouriteissuetable')
+                    );
+
+                    const refreshissuesarr = document.querySelectorAll('.refreshissues');
+                    addRefreshIssueOnClickEvent(refreshissuesarr, issueIds);
+                    
+                }, 1000);
+            }
         }
     });
 			}
@@ -561,8 +565,7 @@ document.getElementById('JiraOpenForm').onclick = function () { // открыв�
             if (document.getElementById('favouriteissuetable').style.display != "") {
 				toggleAndDeactivateQueries(this.id);
                 document.getElementById('issuetable').style.display = "none";
-                document.getElementById('testJira').style.display = "none";
-                document.getElementById('getJiraTasks').style.display = "none";
+                document.getElementById('fields_jira_search').style.display = "none";
 				document.getElementById('foundIssuesAmount').style.display = "none";
 				document.getElementById('pagesSwitcher').style.display = "none";
 				document.getElementById('favouriteissuetable').style.display = "";
