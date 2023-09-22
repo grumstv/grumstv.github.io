@@ -77,15 +77,6 @@ document.getElementById('GrListData').onclick = function() {
 				document.getElementById('AF_GrList').style.display = '';
 			}
 }
-
-    document.getElementById('hideMeGrList').onclick = function () { // скрытие окна Список группы
-        if (document.getElementById('AF_GrList').style.display == '') {
-            document.getElementById('AF_GrList').style.display = 'none';
-            document.getElementById('grlistinfo').innerText = "";
-            document.getElementById('idgrouptolist').value = "";
-        }
-    }
-
     let grdata = [];
     let responsegrdata;
     document.getElementById('getidgrouptolist').onclick = async function () {
@@ -146,3 +137,11 @@ document.getElementById('GrListData').onclick = function() {
         })
 
     } // end of func getidgrouptolist
+
+    document.getElementById('hideMeGrList').onclick = function () { // скрытие окна Список группы
+        if (document.getElementById('AF_GrList').style.display == '') {
+            document.getElementById('AF_GrList').style.display = 'none';
+            document.getElementById('grlistinfo').innerText = "";
+            document.getElementById('idgrouptolist').value = "";
+        }
+    }
