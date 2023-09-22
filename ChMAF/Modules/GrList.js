@@ -30,24 +30,52 @@ wintGrList.style.display = 'none';
 wintGrList.setAttribute('id', 'AF_GrList');
 wintGrList.innerHTML = win_GrList;
 
-var listenerGrList = function (e, a) { // сохранение позиции окна Список группы
-    wintGrList.style.left = Number(e.clientX - myX13) + "px";
-    wintGrList.style.top = Number(e.clientY - myY13) + "px";
-    localStorage.setItem('winTopGrList', String(Number(e.clientY - myY13)));
-    localStorage.setItem('winLeftGrList', String(Number(e.clientX - myX13)));
+wintGrList.onmousedown = function(event) {
+  if (checkelementtype(event)) {
+    let startX = event.clientX;
+    let startY = event.clientY;
+    let elemLeft = wintGrList.offsetLeft;
+    let elemTop = wintGrList.offsetTop;
+
+    function onMouseMove(event) {
+		if (!(event.buttons & 1)) {
+			onMouseUp();
+			return;
+		  }
+      let deltaX = event.clientX - startX;
+      let deltaY = event.clientY - startY;
+
+      wintGrList.style.left = (elemLeft + deltaX) + "px";
+      wintGrList.style.top = (elemTop + deltaY) + "px";
+
+      localStorage.setItem('winTopTaskCreate', String(elemTop + deltaY));
+      localStorage.setItem('winLeftTaskCreate', String(elemLeft + deltaX));
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    document.addEventListener('mouseup', onMouseUp);
+  }
 };
 
-wintGrList.onmousedown = function (a) { // изменение позиции окна Список группы
-    if (checkelementtype(a)) {
-        window.myX13 = a.layerX;
-        window.myY13 = a.layerY;
-        document.addEventListener('mousemove', listenerGrList);
-    }
-}
-wintGrList.onmouseup = function () { document.removeEventListener('mousemove', listenerGrList); } // прекращение изменения позиции окна Список группы
 
 document.getElementById('AF_GrList').ondblclick = function (a) { // скрытие окна Список группы по двойному клику
     if (checkelementtype(a)) { document.getElementById('AF_GrList').style.display = 'none'; }
+}
+
+
+
+document.getElementById('GrListData').onclick = function() {
+	        if (document.getElementById('AF_GrList').style.display == '') {
+				document.getElementById('AF_GrList').style.display = 'none';
+			} else {
+				document.getElementById('AF_GrList').style.display = '';
+			}
 }
 
     document.getElementById('hideMeGrList').onclick = function () { // скрытие окна Список группы

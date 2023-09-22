@@ -10,6 +10,7 @@ var win_Links =  // описание элементов окна ссылок
 					<button title="Открывает меню для работы со статистикой, поиска чатов без тематики, с низкими оценками, по комментарию" id="getStats" class="uplinksbar">📋</button>
 					<button title="Открывает Infra для запроса сброса пароля в Mattermost Teacher" id="resetMMPassword" class="uplinksbar">🔐</button>
 					<button title="Открывает менюшку для просмотра информации по BIN банка, чтобы узнать тип карты, страну происхождения, название банка" id="bankCheck" class="uplinksbar">💳</button>
+					<button title="Открывает просмотр список группы" id="GrListData" class="uplinksbar">👩‍👩‍👧‍👦</button>
                     <button title="Открывает известные баги на платформе" id="confbugs" style="width: 50px; float: right; margin-right: 5px" class="uplinksbar">🐞</button>
 				</div>
 				<div style="margin: 5px; width: 550px;" id="links_but">
