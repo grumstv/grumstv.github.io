@@ -148,11 +148,10 @@ if (window.location.href.indexOf('skyeng.autofaq.ai') !== -1) {
             changeStatus('Offline');
         } else if (event.altKey && event.code === 'KeyI') { // горячие клавиши для смены статуса в Занят
             changeStatus('Busy');
-        }  else if (event.altKey && event.code === 'KeyT') { // горячие клавиши тестового чата
+        } else if (event.altKey && event.code === 'KeyT') { // горячие клавиши тестового чата
             const currentStatus = localStorage.getItem('trigertestchat');
             const newStatus = currentStatus === '0' ? '1' : '0';
             localStorage.setItem('trigertestchat', newStatus);
-            console.log('trigertestchat = ' + newStatus)
         }
     };
 }
@@ -285,23 +284,26 @@ function prepTp() { //функция подготовки расширения �
     }
     document.getElementById('rightPanel').appendChild(butServ)
 	
-	let openKnowledge = document.createElement('button')
+    let openKnowledge = document.createElement('button')
     openKnowledge.innerHTML = '💡'
     openKnowledge.id = 'knowledgeCenter'
     openKnowledge.title = 'Открывает базу знаний решений неполадок'
     openKnowledge.classList.add('onlyfortp', 'rightPanelBtn')
     document.getElementById('rightPanel').appendChild(openKnowledge)
 
-    //пока неактуально ибо там сразу вся форма открывается при вызове потом может попробуем вернуть
     let taskBut = document.createElement('button')
     taskBut.id = "taskBut"
     taskBut.innerHTML = "🛠"
     taskBut.style = 'width: 40px; height: 40px; margin-bottom:4px; font-size: 22px; cursor: pointer; border-radius: 50%; opacity:0.5; transition: all 0.5s ease;'
     taskBut.classList.add('onlyfortp', 'rightPanelBtn')
     document.getElementById('rightPanel').appendChild(taskBut)
-
+    
+    setTimeout(() => {
+        document.getElementById('rightPanel').appendChild(maskBack) 
+    }, 5000);
+	
     flagLangBut = 1
-    setInterval(timerHideButtons, 300)
+    setInterval(timerHideButtons, 500)
 
     let gfgScript = ["https://grumstv.github.io/ChMAF/Extras/jquery-3.6.0.js", // подключаем модуль обработки JQuery
         "https://grumstv.github.io/ChMAF/Extras/chart.js", // подключаем модуль для работы с графиками
@@ -890,45 +892,17 @@ function closeTerms() { // функция автоподтверждения у�
     }
 }
 
-// function changeNewUIStyle() {
-	// const hrefisnow = window.location.href;
-	// if (hrefisnow.includes('tickets/assigned')) {
-		// if (document.getElementsByTagName('iframe').length != 0) {
-			// document.getElementsByTagName('iframe')[0].style.zIndex = "999"
-		// }
+function changeNewUIStyle() {
+	const hrefisnow = window.location.href;
+	if (hrefisnow.includes('tickets/assigned')) {
+		if (document.getElementsByTagName('iframe').length != 0) {
+			document.getElementsByTagName('iframe')[0].style.zIndex = "999"
+		}
 		
-		// if (document.getElementsByClassName('ant-modal-root').length != 0 && document.getElementsByClassName('ant-modal-confirm-title')[0].textContent != "Начать диалог") {
-			// document.getElementsByClassName('ant-modal-root')[0].remove()
-		// }
-	// }
-// }
-
-function changeNewUIStyle() { // новая версия, чтобы разгрузить код, а не постоянно дергать DOM
-  // получаем текущий URL
-  const hrefisnow = window.location.href;
-  // проверяем, содержит ли он 'tickets/assigned'
-  if (hrefisnow.includes('tickets/assigned')) {
-    // находим все элементы iframe на странице
-    let iframes = document.getElementsByTagName('iframe');
-    // если есть хотя бы один элемент iframe
-    if (iframes.length > 0) {
-      // устанавливаем свойство zIndex первого элемента iframe равным "999"
-      iframes[0].style.zIndex = "999";
-    }
-    
-    // находим все элементы с классом 'ant-modal-root' на странице
-    let modals = document.getElementsByClassName('ant-modal-root');
-    // если есть хотя бы один элемент с классом 'ant-modal-root'
-    if (modals.length > 0) {
-      // находим элемент с классом 'ant-modal-confirm-title' внутри первого элемента с классом 'ant-modal-root'
-      let title = modals[0].getElementsByClassName('ant-modal-confirm-title')[0];
-      // если текст этого элемента не равен "Начать диалог"
-      if (title.textContent != "Начать диалог") {
-        // удаляем первый элемент с классом 'ant-modal-root' со страницы
-        modals[0].remove();
-      }
-    }
-  }
+		if (document.getElementsByClassName('ant-modal-root').length != 0 && document.getElementsByClassName('ant-modal-confirm-title')[0].textContent != "Начать диалог") {
+			document.getElementsByClassName('ant-modal-root')[0].remove()
+		}
+	}
 }
 
 
@@ -956,11 +930,6 @@ wintAF.onmousedown = function (event) {
         let elemTop = wintAF.offsetTop;
 
         function onMouseMove(event) {
-		  if (!(event.buttons & 1)) {
-			onMouseUp();
-			return;
-		  }
-			
             let deltaX = event.clientX - startX;
             let deltaY = event.clientY - startY;
 
@@ -988,10 +957,6 @@ maskBack.innerHTML = "↩️"
 maskBack.title = "Вернуть скрытое окно"
 maskBack.style = 'display: none; width: 40px; height: 40px; margin-bottom:4px; font-size: 22px; cursor: pointer; border-radius: 50%; opacity:0.5; transition: all 0.5s ease;'
 maskBack.classList.add('rightPanelBtn')
-
-setTimeout(() => {
-    document.getElementById('rightPanel').appendChild(maskBack) 
-}, 5000);
 
 maskBack.onclick = function () { // функция кнопки вернуть
     const iframeDoc = document.querySelector('[class^="NEW_FRONTEND"]').contentDocument || document.querySelector('[class^="NEW_FRONTEND"]').contentWindow.document;
@@ -1238,15 +1203,29 @@ function getActiveConvUserName() {
     const Usernamefield = iframeDocument.querySelectorAll('[class^="User_Preview"]')[0];
     let ConvUsername = null;
 
+    // массив для исключения
+    const predefinedNames = ["тьютор", "тютор", "тутор", "бадди", "tutor", "buddy"];
+    
     if (Usernamefield) {
-        ConvUsername = Usernamefield.textContent.split(' ')[0]
-        if (ConvUsername) {
-            return ConvUsername;
+        const namesParts = Usernamefield.textContent.split(' ');
+        const firstPartInLowerCase = namesParts[0].toLowerCase();
+        
+        if (predefinedNames.includes(firstPartInLowerCase) && !namesParts[1]) {
+            return '';
+        }
+
+        if (predefinedNames.includes(firstPartInLowerCase) && namesParts[1]) {
+            return namesParts[1];
+        }
+
+        if (firstPartInLowerCase) {
+            return namesParts[0];
         }
     }
-
+    
     return '';
 }
+
 
 // окрашивание чатов при остатке времени <2 min
 
