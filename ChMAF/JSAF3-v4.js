@@ -593,118 +593,78 @@ async function remandressl() { // функция добавляения масс
         setTimeout(() => { document.getElementById('clwbtn').textContent = "Classwork" }, 3000)
     }
 
-    let classworkbtn = document.createElement('div') // создание кнопки Classwork
-    classworkbtn.id = "clwbtn"
-    classworkbtn.textContent = "Classwork"
-    classworkbtn.style = "position:absolute; top:14px; left:65%; cursor: pointer; color:green; text-shadow: 1px 2px 5px rgb(0 0 0 / 20%);"
-    let subject = document.URL.split('/')[4] + "/" + document.URL.split('/')[5]
+let classworkbtn = document.createElement('div');
+classworkbtn.id = "clwbtn";
+classworkbtn.textContent = "Classwork";
+classworkbtn.style = "position:absolute; top:14px; left:65%; cursor: pointer; color:green; text-shadow: 1px 2px 5px rgb(0 0 0 / 20%);";
 
-    switch (subject) {
-        case "chess/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Шахматы"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-chess.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "math/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Математика"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-math.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "geography/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Географии"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-geography.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "preschool/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Дошколка"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-preschool.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "social-science/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Обществознания"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-social-science.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "history/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Истории"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-history.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "biology/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Биологии"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-biology.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "english/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Английского языка"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-english.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "computer-science/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Компьютерных курсов"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-computer-science.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "physics/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Физики"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-physics.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "literature/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Литературы"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-literature.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "chemistry/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Химии"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-chemistry.skyeng.ru/api/v1/rooms/")
-            }
-            break;
-        case "russian/room":
-            if (document.getElementById('clwbtn') == null)
-                document.getElementsByClassName('root')[0].appendChild(classworkbtn)
-            classworkbtn.title = "Перезапускает комнату выставляя статус Classwork для Русского языка"
-            classworkbtn.onclick = function () {
-                dosetclasswork("https://api-russian.skyeng.ru/api/v1/rooms/")
-            }
-            break;
+let subject = document.URL.split('/')[4] + "/" + document.URL.split('/')[5];
+
+const subjectsData = {
+    "chess/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Шахматы",
+        apiURL: "https://api-chess.skyeng.ru/api/v1/rooms/"
+    },
+    "math/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Математика",
+        apiURL: "https://api-math.skyeng.ru/api/v1/rooms/"
+    },
+    "geography/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Географии",
+        apiURL: "https://api-geography.skyeng.ru/api/v1/rooms/"
+    },
+    "preschool/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Дошколка",
+        apiURL: "https://api-preschool.skyeng.ru/api/v1/rooms/"
+    },
+    "social-science/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Обществознания",
+        apiURL: "https://api-social-science.skyeng.ru/api/v1/rooms/"
+    },
+    "history/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Истории",
+        apiURL: "https://api-history.skyeng.ru/api/v1/rooms/"
+    },
+    "biology/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Биологии",
+        apiURL: "https://api-biology.skyeng.ru/api/v1/rooms/"
+    },
+    "english/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Английского языка",
+        apiURL: "https://api-english.skyeng.ru/api/v1/rooms/"
+    },
+    "computer-science/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Компьютерных курсов",
+        apiURL: "https://api-computer-science.skyeng.ru/api/v1/rooms/"
+    },
+    "physics/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Физики",
+        apiURL: "https://api-physics.skyeng.ru/api/v1/rooms/"
+    },
+    "literature/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Литературы",
+        apiURL: "https://api-literature.skyeng.ru/api/v1/rooms/"
+    },
+    "chemistry/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Химии",
+        apiURL: "https://api-chemistry.skyeng.ru/api/v1/rooms/"
+    },
+    "russian/room": {
+        title: "Перезапускает комнату выставляя статус Classwork для Русского языка",
+        apiURL: "https://api-russian.skyeng.ru/api/v1/rooms/"
     }
+};
+
+if (subjectsData.hasOwnProperty(subject)) {
+    if (!document.getElementById('clwbtn')) {
+        document.getElementsByClassName('root')[0].appendChild(classworkbtn);
+    }
+    classworkbtn.title = subjectsData[subject].title;
+    classworkbtn.onclick = function() {
+        dosetclasswork(subjectsData[subject].apiURL);
+    };
+}
+
 }
 
 function screenshots() {  //просмотр и трансформация скриншотов в активном чате
@@ -906,7 +866,6 @@ function changeNewUIStyle() {
 	}
 }
 
-
 if (localStorage.getItem('winTopAF') == null) { // началоное положение главного окна (если не задано ранее)
     localStorage.setItem('winTopAF', '120');
     localStorage.setItem('winLeftAF', '295');
@@ -931,6 +890,10 @@ wintAF.onmousedown = function (event) {
         let elemTop = wintAF.offsetTop;
 
         function onMouseMove(event) {
+		  if (!(event.buttons & 1)) {
+			onMouseUp();
+			return;
+		  }
             let deltaX = event.clientX - startX;
             let deltaY = event.clientY - startY;
 
