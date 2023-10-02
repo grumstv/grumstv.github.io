@@ -320,83 +320,156 @@ function getTimeSlots() { //функция получения информаци
             responseslotsdata = JSON.parse(responsevar);
             // console.log(responseslotsdata)
             document.getElementById('datenowtime').value = responseslotsdata.nowDateTime;
+			
+			const excludedTimes = new Set([
+				"00:00", "00:20", "00:40", "23:00", "23:20", "23:40",
+				"01:00", "01:20", "01:40", "02:00", "02:20", "02:40",
+				"03:00", "03:20", "03:40", "04:00", "04:20", "04:40",
+				"05:00", "05:20", "05:40", "06:00", "06:20", "06:40",
+				"07:00", "07:20", "07:40"
+			]);
 
-            let availableslotsentries = Object.entries(responseslotsdata.DataTimeSlot)
-            for (let i = 0; i < availableslotsentries.length; i++) {
-                if (availableslotsentries[i][0] != "00:00" && availableslotsentries[i][0] != "00:20" && availableslotsentries[i][0] != "00:40" && availableslotsentries[i][0] != "23:00" && availableslotsentries[i][0] != "23:20" && availableslotsentries[i][0] != "23:40" && availableslotsentries[i][0] != "01:00" && availableslotsentries[i][0] != "01:20" && availableslotsentries[i][0] != "01:40" && availableslotsentries[i][0] != "02:00" && availableslotsentries[i][0] != "02:20" && availableslotsentries[i][0] != "02:40" && availableslotsentries[i][0] != "03:00" && availableslotsentries[i][0] != "03:20" && availableslotsentries[i][0] != "03:40" && availableslotsentries[i][0] != "04:00" && availableslotsentries[i][0] != "04:20" && availableslotsentries[i][0] != "04:40" && availableslotsentries[i][0] != "05:00" && availableslotsentries[i][0] != "05:20" && availableslotsentries[i][0] != "05:40" && availableslotsentries[i][0] != "06:00" && availableslotsentries[i][0] != "06:20" && availableslotsentries[i][0] != "06:40" && availableslotsentries[i][0] != "07:00" && availableslotsentries[i][0] != "07:20" && availableslotsentries[i][0] != "07:40") {
-                    // console.log(availableslotsentries[i])
+			const availableslotsentries = Object.entries(responseslotsdata.DataTimeSlot);
+			const outputcalendarfield = document.getElementById('outputcalendarfield');
 
+			availableslotsentries.forEach(([time, data]) => {
+				if (!excludedTimes.has(time)) {
+					if (data.EventList && data.EventList.length) {
+						Object.values(data.EventList).forEach(event => {
+							if (!uniqueEvents.has(event.id)) {
+								const eventObj = {
+									'eventId': event.id,
+									'eventText': event.text,
+									'slotTime': event.slot,
+									'slotDate': event.new_date_slot,
+									'createdBy': event.created_by_name
+								};
 
-					if (availableslotsentries[i][1].EventList.length != 0) {
-					
-						for (let k = 0; k < Object.keys(availableslotsentries[i][1].EventList).length; k++) {
-						  const event = Object.values(availableslotsentries[i][1].EventList)[k];
+								arrayOfEvents.push(eventObj);
+								uniqueEvents.add(event.id);
 
-						  if (!uniqueEvents.has(event.id)) {
-							arrayOfEvents.push({
-							  'eventId': event.id,
-							  'eventText': event.text,
-							  'slotTime': event.slot,
-							  'slotDate': event.new_date_slot,
-							  'createdBy': event.created_by_name
-							});
-
-							uniqueEvents.add(event.id);
-
-							if (
-							  operNamesAF[0] == event.created_by_name ||
-							  operNamesAF[1] == event.created_by_name
-							) {
-							  arrayOfMyEvents.push({
-								'eventId': event.id,
-								'eventText': event.text,
-								'slotTime': event.slot,
-								'slotDate': event.new_date_slot,
-								'createdBy': event.created_by_name
-							  });
+								if (operNamesAF.includes(event.created_by_name)) {
+									arrayOfMyEvents.push(eventObj);
+								}
 							}
-						  }
+						});
+					} else {
+						for (let k = 0; k < Object.keys(data.EventList).length; k++) {
+							arrayOfEvents.push({
+								'eventId': null,
+								'eventText': null,
+								'slotTime': null,
+								'slotDate': null,
+								'createdBy': null
+							});
 						}
-					} else { 					  
-						for(let k=0; k < Object.keys(availableslotsentries[i][1].EventList).length; k++) {
-						arrayOfEvents.push({'eventId': null,
-											'eventText': null,
-											'slotTime' : null,
-											'slotDate' : null,
-											'createdBy': null});
-					  }
 					}
+
+					const tempor = createStyledElement(data, time, document.getElementById('eventDate').value);
+					outputcalendarfield.append(tempor);
+				}
+			});
+
+			function createStyledElement(data, time, eventDateValue) {
+				const tempor = document.createElement('p');
+				let style;
+				const ratio = data.CountEvent / data.CountSlot;
+
+				if (ratio === 1) {
+					style = 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;';
+				} else if (ratio === 0) {
+					style = 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(62 158 83); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;';
+				} else if (ratio > 0 && ratio < 1) {
+					style = 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(62 158 83); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;';
+					tempor.setAttribute('title', '⚠ Есть как занятые так и свободные слоты');
+				} 
+				// Добавьте другие условия по необходимости
+				
+				tempor.setAttribute('style', style);
+				tempor.setAttribute('name', 'slotRow');
+				tempor.setAttribute('dlina', `${data.CountSlot}`);
+				tempor.innerHTML = `<span style="background: #2058cb; border-radius:10px; padding-left: 5px; padding-right: 5px;">${time}</span> ${eventDateValue}`;
+				
+				return tempor;
+			}
+
+
+            // let availableslotsentries = Object.entries(responseslotsdata.DataTimeSlot)
+            // for (let i = 0; i < availableslotsentries.length; i++) {
+                // if (availableslotsentries[i][0] != "00:00" && availableslotsentries[i][0] != "00:20" && availableslotsentries[i][0] != "00:40" && availableslotsentries[i][0] != "23:00" && availableslotsentries[i][0] != "23:20" && availableslotsentries[i][0] != "23:40" && availableslotsentries[i][0] != "01:00" && availableslotsentries[i][0] != "01:20" && availableslotsentries[i][0] != "01:40" && availableslotsentries[i][0] != "02:00" && availableslotsentries[i][0] != "02:20" && availableslotsentries[i][0] != "02:40" && availableslotsentries[i][0] != "03:00" && availableslotsentries[i][0] != "03:20" && availableslotsentries[i][0] != "03:40" && availableslotsentries[i][0] != "04:00" && availableslotsentries[i][0] != "04:20" && availableslotsentries[i][0] != "04:40" && availableslotsentries[i][0] != "05:00" && availableslotsentries[i][0] != "05:20" && availableslotsentries[i][0] != "05:40" && availableslotsentries[i][0] != "06:00" && availableslotsentries[i][0] != "06:20" && availableslotsentries[i][0] != "06:40" && availableslotsentries[i][0] != "07:00" && availableslotsentries[i][0] != "07:20" && availableslotsentries[i][0] != "07:40") {
+               ////     console.log(availableslotsentries[i])
+
+
+					// if (availableslotsentries[i][1].EventList.length != 0) {
 					
-                    textvar = '<span style = "background: #2058cb; border-radius:10px; padding-left: 5px; padding-right: 5px;">' + availableslotsentries[i][0] + '</span>' + ' ' + document.getElementById('eventDate').value
-                    let tempor = document.createElement('p');
-                    document.getElementById('outputcalendarfield').append(tempor);
+						// for (let k = 0; k < Object.keys(availableslotsentries[i][1].EventList).length; k++) {
+						  // const event = Object.values(availableslotsentries[i][1].EventList)[k];
 
-                    if (availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot == 1) {
-                        tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
-                    } else if (availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot == 0) {
-                        tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(62 158 83); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
-                    } else if (availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot > 0 && availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot < 1) {
-                        tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(62 158 83); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
-                        tempor.setAttribute('title', '⚠ Есть как занятые так и свободные слоты')
-                    } else if (availableslotsentries[i][1].CountEvent == 0 && availableslotsentries[i][1].CountSlot == 0) {
-                        tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
-                        tempor.setAttribute('title', '🚫 Свободных слотов изначально и не было')
-                    } else if (availableslotsentries[i][1].AssignSlot == 0 && availableslotsentries[i][1].CountEvent == 0 && availableslotsentries[i][1].CountSlot == availableslotsentries[i][1].FreeSlot) {
-                        tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;');
-                    } else if (availableslotsentries[i][1].FreeSlot < 0) {
-                        tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;');
-                    }
+						  // if (!uniqueEvents.has(event.id)) {
+							// arrayOfEvents.push({
+							  // 'eventId': event.id,
+							  // 'eventText': event.text,
+							  // 'slotTime': event.slot,
+							  // 'slotDate': event.new_date_slot,
+							  // 'createdBy': event.created_by_name
+							// });
 
-                    if (compareTimes(availableslotsentries[i][0], currentTimeCalendar) <= 0 && eventDate == curentDate ) {
-						 tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #cbcbcb; font-weight:700; background:rgb(126 113 113); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;');
-                    }
+							// uniqueEvents.add(event.id);
 
-                    tempor.setAttribute('name', 'slotRow');
-					tempor.setAttribute('dlina',`${availableslotsentries[i][1].CountSlot}`)
-                    tempor.innerHTML = textvar;
+							// if (
+							  // operNamesAF[0] == event.created_by_name ||
+							  // operNamesAF[1] == event.created_by_name
+							// ) {
+							  // arrayOfMyEvents.push({
+								// 'eventId': event.id,
+								// 'eventText': event.text,
+								// 'slotTime': event.slot,
+								// 'slotDate': event.new_date_slot,
+								// 'createdBy': event.created_by_name
+							  // });
+							// }
+						  // }
+						// }
+					// } else { 					  
+						// for(let k=0; k < Object.keys(availableslotsentries[i][1].EventList).length; k++) {
+						// arrayOfEvents.push({'eventId': null,
+											// 'eventText': null,
+											// 'slotTime' : null,
+											// 'slotDate' : null,
+											// 'createdBy': null});
+					  // }
+					// }
+					
+                    // textvar = '<span style = "background: #2058cb; border-radius:10px; padding-left: 5px; padding-right: 5px;">' + availableslotsentries[i][0] + '</span>' + ' ' + document.getElementById('eventDate').value
+                    // let tempor = document.createElement('p');
+                    // document.getElementById('outputcalendarfield').append(tempor);
 
-                }
-            }
+                    // if (availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot == 1) {
+                        // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
+                    // } else if (availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot == 0) {
+                        // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(62 158 83); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
+                    // } else if (availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot > 0 && availableslotsentries[i][1].CountEvent / availableslotsentries[i][1].CountSlot < 1) {
+                        // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(62 158 83); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
+                        // tempor.setAttribute('title', '⚠ Есть как занятые так и свободные слоты')
+                    // } else if (availableslotsentries[i][1].CountEvent == 0 && availableslotsentries[i][1].CountSlot == 0) {
+                        // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px;padding-top:2px; font-family: cursive; margin-right:5px;');
+                        // tempor.setAttribute('title', '🚫 Свободных слотов изначально и не было')
+                    // } else if (availableslotsentries[i][1].AssignSlot == 0 && availableslotsentries[i][1].CountEvent == 0 && availableslotsentries[i][1].CountSlot == availableslotsentries[i][1].FreeSlot) {
+                        // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;');
+                    // } else if (availableslotsentries[i][1].FreeSlot < 0) {
+                        // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #ececec; font-weight:700; background:rgb(171 65 62); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;');
+                    // }
+
+                    // if (compareTimes(availableslotsentries[i][0], currentTimeCalendar) <= 0 && eventDate == curentDate ) {
+						 // tempor.setAttribute('style', 'width: 32%; cursor:pointer; color: #cbcbcb; font-weight:700; background:rgb(126 113 113); border:1px solid black; font-size:14px; height:25px; margin-bottom:6px; text-align:center; text-shadow:rgb(0 0 0 / 75%) 1px 2px 5px; padding-top:2px; font-family: cursive; margin-right:5px;');
+                    // }
+
+                    // tempor.setAttribute('name', 'slotRow');
+					// tempor.setAttribute('dlina',`${availableslotsentries[i][1].CountSlot}`)
+                    // tempor.innerHTML = textvar;
+
+                // }
+            // }
 		// console.log(arrayOfMyEvents)
 			
 	let allRows = document.getElementsByName('slotRow')
