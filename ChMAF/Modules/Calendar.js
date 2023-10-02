@@ -297,7 +297,6 @@ function getTimeSlots() { //функция получения информаци
 	let formattedMonth = currentMonth < 10 ? '0' + currentMonth : currentMonth;
 	let curentDate = dateCalend.getFullYear() + '-' + formattedMonth + '-' + (dateCalend.getDate() < 10 ? "0" + dateCalend.getDate() : dateCalend.getDate());
 
-
     responseslotsdata = '';
 
     let textvar = 0;
