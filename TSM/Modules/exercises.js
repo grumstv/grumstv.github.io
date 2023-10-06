@@ -225,16 +225,17 @@ async function gethwroominfo(api, hash) {
 // Получаем элемент чекбокса
 const hideNullCardsCheckbox = document.getElementById("hideNullCards");
 
-// Проверяем состояние в локальном хранилище
+// Получаем значение из локального хранилища
 let checkedHideNullCards = localStorage.getItem("Nullcards");
 
-// Если в локальном хранилище есть значение, устанавливаем его
-if (checkedHideNullCards !== null) {
-  hideNullCardsCheckbox.checked = checkedHideNullCards === "1";
-} else {
-  // Если в локальном хранилище нет значения, устанавливаем значение по умолчанию и сохраняем его
-  checkedHideNullCards = "1"; // по умолчанию включено
+// Если значение в локальном хранилище не установлено, устанавливаем его по умолчанию в "1" и включаем чекбокс
+if (checkedHideNullCards === null) {
+  checkedHideNullCards = "1";
   localStorage.setItem("Nullcards", checkedHideNullCards);
+  hideNullCardsCheckbox.checked = true;
+} else {
+  // В противном случае, устанавливаем состояние чекбокса в соответствии с значением из локального хранилища
+  hideNullCardsCheckbox.checked = checkedHideNullCards === "1";
 }
 
 // Добавляем обработчик события при изменении состояния чекбокса
@@ -243,9 +244,6 @@ hideNullCardsCheckbox.addEventListener("change", function () {
   checkedHideNullCards = this.checked ? "1" : "0";
   localStorage.setItem("Nullcards", checkedHideNullCards);
 });
-
-
-
 
 function getkidsroominfo(data) {
     let temparr = [];
