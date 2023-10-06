@@ -265,7 +265,11 @@ function getkidsroominfo(data) {
 	}
 	
     for (let i = 0; i < data.lessonCards[indexOfSlides].themes.length; i++) {
-        temparr += '<div class="roomtypekids" style="cursor:default;">' + data.lessonCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
+		if (localStorage.getItem("Nullcards") == 1 && data.lessonCards[indexOfSlides].themes[i].cards.length > 0) {
+			temparr += '<div class="roomtypekids" style="cursor:default;">' + data.lessonCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
+		} else if (localStorage.getItem("Nullcards") == 0) {
+			temparr += '<div class="roomtypekids" style="cursor:default;">' + data.lessonCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
+		}
         for (let j = 0; j < data.lessonCards[indexOfSlides].themes[i].cards.length; j++) {
             (data.lessonCards[indexOfSlides].themes[i].cards[j].completeness == 100 && data.lessonCards[indexOfSlides].themes[i].cards[j].score == null) ? data.lessonCards[indexOfSlides].themes[i].cards[j].score = 100 : data.lessonCards[indexOfSlides].themes[i].cards[j].score;
             if (data.lessonCards[indexOfSlides].themes[i].cards[j].completeness == null) {
