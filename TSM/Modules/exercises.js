@@ -243,6 +243,7 @@ hideNullCardsCheckbox.addEventListener("change", function () {
   // Обновляем значение в локальном хранилище
   checkedHideNullCards = this.checked ? "1" : "0";
   localStorage.setItem("Nullcards", checkedHideNullCards);
+  document.getElementById('getroomdatakids').click();
 });
 
 function getkidsroominfo(data) {
