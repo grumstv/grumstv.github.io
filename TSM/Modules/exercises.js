@@ -291,6 +291,7 @@ function getkidsroominfo(data) {
             } else if (data.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'speaking') {
                 data.homeworkCards[indexOfSlides].themes[i].cards[j].name = data.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎙'
             }
+			
             hwarr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
                 data.homeworkCards[indexOfSlides].themes[i].cards[j].name + ' ' +
                 '<span class="stepuidslkids" style="display:none">' + data.homeworkCards[indexOfSlides].themes[i].cards[j].stepUuid + '</span>' +

@@ -31,16 +31,16 @@ function loadmoduls(TSMScript){ // загрузка доп. модулей ра�
 function firstLoad() { //первичаня загрузка страницы
         let mystyles = document.createElement('link')
 		mystyles.rel = 'stylesheet'
-		mystyles.href = "https://dimentorexpo.github.io/TSM/CSS/styles.css" // подключаем модуль стилей 
+		mystyles.href = "https://grumstv.github.io/TSM/CSS/styles.css" // подключаем модуль стилей 
 		document.querySelector('head').append(mystyles)
 
         let TSMScript = [
-        "https://dimentorexpo.github.io/TSM/Modules/main.js", // подключаем модуль главного окна
-		"https://dimentorexpo.github.io/TSM/Modules/chats.js", // подключаем модуль окна работы с чатами
-        "https://dimentorexpo.github.io/TSM/Modules/lessoninfo.js", // подключаем модуль окна получения информации по уроку
-        "https://dimentorexpo.github.io/TSM/Modules/students.js", // подключаем модуль окна работы с учениками
-        "https://dimentorexpo.github.io/TSM/Modules/exercises.js", // подключаем модуль окна работы с домашками
-        "https://dimentorexpo.github.io/TSM/Modules/vocabulary.js" // подключаем модуль окна словаря
+        "https://grumstv.github.io/TSM/Modules/main.js", // подключаем модуль главного окна
+		"https://grumstv.github.io/TSM/Modules/chats.js", // подключаем модуль окна работы с чатами
+        "https://grumstv.github.io/TSM/Modules/lessoninfo.js", // подключаем модуль окна получения информации по уроку
+        "https://grumstv.github.io/TSM/Modules/students.js", // подключаем модуль окна работы с учениками
+        "https://grumstv.github.io/TSM/Modules/exercises.js", // подключаем модуль окна работы с домашками
+        "https://grumstv.github.io/TSM/Modules/vocabulary.js" // подключаем модуль окна словаря
 		];
     loadmoduls(TSMScript)
 }
