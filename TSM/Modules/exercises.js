@@ -11,7 +11,7 @@ var win_kidsExercises = `<div style="display: flex;">
                         </div>
 
 						<div style="margin: 5px; width:500px;" id="exercisesSkysmartTeacher">
-							<label style="color:bisque; margin-left: 5px;"><input type="checkbox" id="hideNullCards">Скрыть Темы с 0 карточек</label>
+							<label style="color: black; margin-left: 5px; background: mediumseagreen; font-weight: 700; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 3px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);"><input type="checkbox" id="hideNullCards">Скрыть Темы с 0 карточек</label>
 							<span id="teachname" style="color:#d5f4ff; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 							<span id="teachdid" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 						</div>
@@ -221,6 +221,31 @@ async function gethwroominfo(api, hash) {
         "credentials": "include"
     }).then(r => r.json()).then(r => hwroomdata = r)
 }
+
+// Получаем элемент чекбокса
+const hideNullCardsCheckbox = document.getElementById("hideNullCards");
+
+// Проверяем состояние в локальном хранилище
+let checkedHideNullCards = localStorage.getItem("Nullcards");
+
+// Если в локальном хранилище есть значение, устанавливаем его
+if (checkedHideNullCards !== null) {
+  hideNullCardsCheckbox.checked = checkedHideNullCards === "1";
+} else {
+  // Если в локальном хранилище нет значения, устанавливаем значение по умолчанию и сохраняем его
+  checkedHideNullCards = "1"; // по умолчанию включено
+  localStorage.setItem("Nullcards", checkedHideNullCards);
+}
+
+// Добавляем обработчик события при изменении состояния чекбокса
+hideNullCardsCheckbox.addEventListener("change", function () {
+  // Обновляем значение в локальном хранилище
+  checkedHideNullCards = this.checked ? "1" : "0";
+  localStorage.setItem("Nullcards", checkedHideNullCards);
+});
+
+
+
 
 function getkidsroominfo(data) {
     let temparr = [];
