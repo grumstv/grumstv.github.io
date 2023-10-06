@@ -11,6 +11,7 @@ var win_kidsExercises = `<div style="display: flex;">
                         </div>
 
 						<div style="margin: 5px; width:500px;" id="exercisesSkysmartTeacher">
+							<label style="color:bisque; margin-left: 5px;"><input type="checkbox" id="hideNullCards">Скрыть Темы с 0 карточек</label>
 							<span id="teachname" style="color:#d5f4ff; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 							<span id="teachdid" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 						</div>
