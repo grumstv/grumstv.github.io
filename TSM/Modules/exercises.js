@@ -298,7 +298,9 @@ function getkidsroominfo(data) {
         '</div>';
 	
     for (let i = 0; i < data.homeworkCards[indexOfSlides].themes.length; i++) {
-		if (data.homeworkCards[indexOfSlides].themes[i].cards.length > 0) {
+		if (localStorage.getItem("Nullcards") == 1 && data.homeworkCards[indexOfSlides].themes[i].cards.length > 0) {
+			hwarr += '<div class="roomtypekids" style="cursor:default;">' + data.homeworkCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
+		} else if (localStorage.getItem("Nullcards") == 0) {
 			hwarr += '<div class="roomtypekids" style="cursor:default;">' + data.homeworkCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
 		}
         for (let j = 0; j < data.homeworkCards[indexOfSlides].themes[i].cards.length; j++) {
