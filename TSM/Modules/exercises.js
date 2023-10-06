@@ -274,7 +274,9 @@ function getkidsroominfo(data) {
         '</div>';
 	
     for (let i = 0; i < data.homeworkCards[indexOfSlides].themes.length; i++) {
-        hwarr += '<div class="roomtypekids" style="cursor:default;">' + data.homeworkCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
+		if (data.homeworkCards[indexOfSlides].themes[i].cards.length > 0) {
+			hwarr += '<div class="roomtypekids" style="cursor:default;">' + data.homeworkCards[indexOfSlides].themes[i].name + '<br>' + '</div>'
+		}
         for (let j = 0; j < data.homeworkCards[indexOfSlides].themes[i].cards.length; j++) {
             (data.homeworkCards[indexOfSlides].themes[i].cards[j].completeness == 100 && data.homeworkCards[indexOfSlides].themes[i].cards[j].score == null) ? data.homeworkCards[indexOfSlides].themes[i].cards[j].score = 100 : data.homeworkCards[indexOfSlides].themes[i].cards[j].score;
             if (data.homeworkCards[indexOfSlides].themes[i].cards[j].completeness == null) {
@@ -286,6 +288,8 @@ function getkidsroominfo(data) {
                 data.homeworkCards[indexOfSlides].themes[i].cards[j].name = data.homeworkCards[indexOfSlides].themes[i].cards[j].name + '✏'
             } else if (data.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'pronunciation') {
                 data.homeworkCards[indexOfSlides].themes[i].cards[j].name = data.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎧'
+            } else if (data.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'speaking') {
+                data.homeworkCards[indexOfSlides].themes[i].cards[j].name = data.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎙'
             }
             hwarr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
                 data.homeworkCards[indexOfSlides].themes[i].cards[j].name + ' ' +
