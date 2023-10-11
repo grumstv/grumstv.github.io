@@ -5,12 +5,21 @@ let responsejira;
 let psarr = [];
 let firstEl;
 let mmlink;
+const messanger_name = "Mattermost";
+const messanger_URL = "https://mattermost.skyeng.tech";
+//const messanger_name = "TiMe";
+//const messanger_URL = "https://mm-time.skyeng.tech";
+const messregexPattern = new RegExp(`">(${messanger_URL}.*?)<\/a>`);
 // let infoarr;
 let lasttsk;
 let prevtsk;
 let flagpsis = 0;
 let msgissnd = 0;
 let varinfraOID; //переменная для хранения значения ID оператора в Infra
+const responseTextarea1 = document.getElementById('responseTextarea1');
+const responseTextarea2 = document.getElementById('responseTextarea2');
+const responseTextarea3 = document.getElementById('responseTextarea3');
+const sendResponse = document.getElementById('sendResponse');
 const buttons = [ //array of buttonsnames
     '.edumodbtn',
     '.bilqabtn',
@@ -26,11 +35,11 @@ const buttons = [ //array of buttonsnames
     '.studcabbtn',
     '.chatqabtn',
     '.tripwbtn',
-    '.analystbtn',
     '.mobbugsbtn',
     '.academymobbugsbtn',
     '.stcabmbsbtn',
-    '.CommProblemsbtn'
+    '.CommProblemsbtn',
+    '.analystbtn'
 ];
 
 const otherOptions = [ // array of buttons categories id's
@@ -47,12 +56,12 @@ const otherOptions = [ // array of buttons categories id's
     'studcaboptions',
     'chatqaoptions',
     'tripwireoptions',
-    'analystoptions',
     'edumodeloptions',
     'studcabmobbugskoptions',
     'mobbugsoptions',
     'academymobbugsoptions',
-    'CommProblemsoptions'
+    'CommProblemsoptions',
+    'analystoptions'
 ];
 
 var win_servicedesk = // описание элементов окна Service Desk
@@ -85,12 +94,12 @@ var win_servicedesk = // описание элементов окна Service De
                     <button class="sdbtn" id="optionStudcab" value="34" style="margin-left:2px; margin-top:2px; width:80px;">👨‍🎓Studcab</button>
                     <button class="sdbtn" id="optionChat" value="24" style="margin-left:2px; margin-top:2px; width:80px;">💬Chat</button>
                     <button class="sdbtn" id="optionTripwire" value="27" style="margin-left:2px; margin-top:2px; width:80px;">🗣Tripwire</button>
-                    <button class="sdbtn" id="optionAnalyst"  value="18" style="margin-left:2px; margin-top:2px; width:80px; display: none;">TEST</button>
                     <button class="sdbtn" id="optionEdModel" value="28" style="margin-left:2px; margin-top:2px; width:80px;">🎓SmartL</button>
                     <button class="sdbtn" id="optionStudcabmobbugs" value="35" style="margin-left:2px; margin-top:2px; width:80px;">👨‍🎓📱Bugs</button>
 					<button class="sdbtn" id="optionMobbugs" value="30" style="margin-left:2px; margin-top:2px; width:80px;">📱Mobil bug</button>
                     <button class="sdbtn" id="optionAcademymobbugs" value="19" style="margin-left:2px; margin-top:2px; width:80px;">🅰📱🐞</button>
                     <button class="sdbtn" id="optionCommProblems" value="75" style="margin-left:2px; margin-top:2px; width:80px;">📧Comm</button>
+                    <button class="sdbtn" id="optionAnalyst" value="18" style="margin-left:2px; margin-top:2px; width:80px; display: none;">TEST</button>
                 </div>
 				<div id="studcabmobbugskoptions" style="display: none; margin-left:20px;">
 					<p style="color:bisque;font-size:18px;position:relative; top:7px; left:10px; width:90%;">#student-cabinet-mobile-bugs; Cообщаем о проблемах в МП Skysmart Parents и в МП Skyeng главные страницы продуктов</p>
@@ -173,11 +182,6 @@ var win_servicedesk = // описание элементов окна Service De
 
                 </div>
 				
-				<div id="testsoptions" style="display: none; margin-left:20px;">
-					<p style="color:bisque;font-size:18px;position:relative; top:7px; left:10px; width:90%;">Просто проверчка все хорошо здоврья вам, счастья вам. добра вам!</p>
-
-				</div>
-				
 				<div id="buttonsfromtest" style="margin-left: 4%; margin-bottom: 5px; max-height: 200px; overflow-x: hidden; overflow-y: auto;">
 				</div>
 
@@ -214,10 +218,10 @@ var win_servicedesk = // описание элементов окна Service De
 
 //func getOperInfraId
 function getInfraOId() {
-	document.getElementById('responseTextarea1').value = `{}`
-    document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/session";
-    document.getElementById('responseTextarea3').value = 'infradata'
-    document.getElementById('sendResponse').click()
+	responseTextarea1.value = `{}`
+    responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/session";
+    responseTextarea3.value = 'infradata'
+    sendResponse.click()
 	
 	responseTextarea1.addEventListener("DOMSubtreeModified", function () {
         const rsparray = JSON.parse(responseTextarea1.getAttribute('infradata'));
@@ -230,10 +234,7 @@ function getInfraOId() {
 }
 
 function getprsuplasttask() { //функция для получения ссылки на последний созданный после отправки в канал тикет в джира +
-    const responseTextarea1 = document.getElementById('responseTextarea1');
-    const responseTextarea2 = document.getElementById('responseTextarea2');
-    const responseTextarea3 = document.getElementById('responseTextarea3');
-    const sendResponse = document.getElementById('sendResponse');
+
     const prevtask = document.getElementById('prevtask');
 
     responseTextarea1.value = `{}`;
@@ -261,17 +262,17 @@ function getprsuplasttask() { //функция для получения ссы�
 
 function getmmlink() {
 	        if (newtask.innerText != '') {
-            document.getElementById('responseTextarea1').value = `{}`
-            document.getElementById('responseTextarea2').value = "https://jira.skyeng.tech/browse/" + newtask.innerText ;
-            document.getElementById('responseTextarea3').value = 'mmlinkhere'
-            document.getElementById('sendResponse').click()
+            responseTextarea1.value = `{}`
+            responseTextarea2.value = "https://jira.skyeng.tech/browse/" + newtask.innerText ;
+            responseTextarea3.value = 'mmlinkhere'
+            sendResponse.click()
 			
 			    responseTextarea1.addEventListener("DOMSubtreeModified", function () {
 				const infoarr = responseTextarea1.getAttribute('mmlinkhere');
 				if (infoarr) {
-					mmlink = infoarr.match(/">(https:\/\/mattermost.skyeng.tech.*?)<\/a>/)[1];
-					console.log("Mattermost link " + mmlink);
-                    sendComment("Mattermost link: " + mmlink);
+                    mmlink = infoarr.match(messregexPattern)[1];
+                    console.log(`${messanger_name} link ${mmlink}`);
+                    sendComment(`${messanger_name} link: ${mmlink}`);
 				}
 				responseTextarea1.removeAttribute('mmlinkhere');
 			});
@@ -302,16 +303,16 @@ function sendRequest(idstdserv, dscr, str, erx, ary, code) {
 
   let requestOptionsString = JSON.stringify(requestOptions);
 
-  document.getElementById('responseTextarea1').value = requestOptionsString;
-  document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-  document.getElementById('responseTextarea3').value = 'responseRequest';
+  responseTextarea1.value = requestOptionsString;
+  responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+  responseTextarea3.value = 'responseRequest';
 
   // логируем входящие переменные и значение полей отправки запроса
   console.log(`${idstdserv} ${dscr} ${str} ${erx} ${ary} ${code}`);
-  console.log(document.getElementById('responseTextarea1').value);
-  console.log(document.getElementById('responseTextarea2').value);
+  console.log(responseTextarea1.value);
+  console.log(responseTextarea2.value);
 
-  document.getElementById('sendResponse').click();
+  sendResponse.click();
     
       responseTextarea1.addEventListener("DOMSubtreeModified", function () {
         const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -355,16 +356,16 @@ function sendRequestmrktbill(idstdserv, service, dscr, str, erx, ary, code) {
   
     let requestOptionsString = JSON.stringify(requestOptions);
   
-    document.getElementById('responseTextarea1').value = requestOptionsString;
-    document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-    document.getElementById('responseTextarea3').value = 'responseRequest';
+    responseTextarea1.value = requestOptionsString;
+    responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+    responseTextarea3.value = 'responseRequest';
   
     // логируем входящие переменные и значение полей отправки запроса
     console.log(`${idstdserv} ${service} ${dscr} ${str} ${erx} ${ary} ${code}`);
-    console.log(document.getElementById('responseTextarea1').value);
-    console.log(document.getElementById('responseTextarea2').value);
+    console.log(responseTextarea1.value);
+    console.log(responseTextarea2.value);
   
-    document.getElementById('sendResponse').click();
+    sendResponse.click();
       
         responseTextarea1.addEventListener("DOMSubtreeModified", function () {
           const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -408,16 +409,16 @@ function sendRequestVimVid(idstdserv, hesh, dscr, str, erx, ary, code) {
   
     let requestOptionsString = JSON.stringify(requestOptions);
   
-    document.getElementById('responseTextarea1').value = requestOptionsString;
-    document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-    document.getElementById('responseTextarea3').value = 'responseRequest';
+    responseTextarea1.value = requestOptionsString;
+    responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+    responseTextarea3.value = 'responseRequest';
   
     // логируем входящие переменные и значение полей отправки запроса
     console.log(`${idstdserv} ${hesh} ${dscr} ${str} ${erx} ${ary} ${code}`);
-    console.log(document.getElementById('responseTextarea1').value);
-    console.log(document.getElementById('responseTextarea2').value);
+    console.log(responseTextarea1.value);
+    console.log(responseTextarea2.value);
   
-    document.getElementById('sendResponse').click();
+    sendResponse.click();
       
         responseTextarea1.addEventListener("DOMSubtreeModified", function () {
           const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -459,16 +460,16 @@ function sendRequestCommprob(categoryvalue, usermail, idstdserv, dscr, code) {
   
     let requestOptionsString = JSON.stringify(requestOptions);
   
-    document.getElementById('responseTextarea1').value = requestOptionsString;
-    document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-    document.getElementById('responseTextarea3').value = 'responseRequest';
+    responseTextarea1.value = requestOptionsString;
+    responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+    responseTextarea3.value = 'responseRequest';
   
     // логируем входящие переменные и значение полей отправки запроса
     console.log(`${idstdserv} ${dscr} ${categoryvalue} ${usermail} ${code}`);
-    console.log(document.getElementById('responseTextarea1').value);
-    console.log(document.getElementById('responseTextarea2').value);
+    console.log(responseTextarea1.value);
+    console.log(responseTextarea2.value);
   
-    document.getElementById('sendResponse').click();
+    sendResponse.click();
       
         responseTextarea1.addEventListener("DOMSubtreeModified", function () {
           const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -491,11 +492,11 @@ function sendRequestCommprob(categoryvalue, usermail, idstdserv, dscr, code) {
 
 let checkingId = [];
 function getthemesfrominfra(categoryId,index) {
-  document.getElementById('responseTextarea1').value = '{}';
-  document.getElementById('responseTextarea2').value = `https://api-infra.skyeng.ru/api/v1/rs/categories/${categoryId}/request-types`;
-  document.getElementById('responseTextarea3').value = 'sendrequest';
+  responseTextarea1.value = '{}';
+  responseTextarea2.value = `https://api-infra.skyeng.ru/api/v1/rs/categories/${categoryId}/request-types`;
+  responseTextarea3.value = 'sendrequest';
 
-  document.getElementById('sendResponse').click();
+  sendResponse.click();
 
   responseTextarea1.addEventListener("DOMSubtreeModified", function () {
     const reqvarr = JSON.parse(responseTextarea1.getAttribute('sendrequest'));
@@ -535,11 +536,11 @@ function getcommproboptions(){
         credentials: 'include'
     };
 
-        document.getElementById('responseTextarea1').value = JSON.stringify(requestopt);
-        document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request-types/541/form";
-        document.getElementById('responseTextarea3').value = 'getoptionscomm';
+        responseTextarea1.value = JSON.stringify(requestopt);
+        responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request-types/541/form";
+        responseTextarea3.value = 'getoptionscomm';
       
-        document.getElementById('sendResponse').click();
+        sendResponse.click();
       
         responseTextarea1.addEventListener("DOMSubtreeModified", function () {
             const commprobarr = JSON.parse(responseTextarea1.getAttribute('getoptionscomm'));
@@ -591,15 +592,15 @@ function sendRequestMobNoPriority(idstdserv, ary, erx, str, dscr, deviceinfo , a
 
   let requestOptionsString = JSON.stringify(requestOptions);
 
-  document.getElementById('responseTextarea1').value = requestOptionsString;
-  document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-  document.getElementById('responseTextarea3').value = 'responseRequest';
+  responseTextarea1.value = requestOptionsString;
+  responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+  responseTextarea3.value = 'responseRequest';
 	
 
     // логируем входящие переменные и значение полей отправки запроса
     console.log(appinfo + " " + deviceinfo + " " + dscr + " " + str + " " + erx + " " + ary + " " + idstdserv + " " + code)
 
-    document.getElementById('sendResponse').click()
+    sendResponse.click()
 	
 	      responseTextarea1.addEventListener("DOMSubtreeModified", function () {
         const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -646,15 +647,15 @@ function sendRequestMobWithPriority(priorvalue, appinfo, deviceinfo, dscr, str, 
 
   let requestOptionsString = JSON.stringify(requestOptions);
 
-  document.getElementById('responseTextarea1').value = requestOptionsString;
-  document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-  document.getElementById('responseTextarea3').value = 'responseRequest';
+  responseTextarea1.value = requestOptionsString;
+  responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+  responseTextarea3.value = 'responseRequest';
 	
 	
     // логируем входящие переменные и значение полей отправки запроса
     console.log(priorvalue + " " + appinfo + " " + deviceinfo + " " + dscr + " " + str + " " + erx + " " + ary + " " + idstdserv + " " + code)
 
-    document.getElementById('sendResponse').click()
+    sendResponse.click()
 	
 	      responseTextarea1.addEventListener("DOMSubtreeModified", function () {
         const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -702,15 +703,15 @@ function sendRequestAcademMob(CMSvalue, priorvalue, appinfo, deviceinfo, dscr, s
   
     let requestOptionsString = JSON.stringify(requestOptions);
   
-    document.getElementById('responseTextarea1').value = requestOptionsString;
-    document.getElementById('responseTextarea2').value = "https://api-infra.skyeng.ru/api/v1/rs/request";
-    document.getElementById('responseTextarea3').value = 'responseRequest';
+    responseTextarea1.value = requestOptionsString;
+    responseTextarea2.value = "https://api-infra.skyeng.ru/api/v1/rs/request";
+    responseTextarea3.value = 'responseRequest';
       
       
       // логируем входящие переменные и значение полей отправки запроса
       console.log(CMSvalue + " "  + priorvalue + " " + appinfo + " " + deviceinfo + " " + dscr + " " + str + " " + erx + " " + ary + " " + idstdserv + " " + code)
   
-      document.getElementById('sendResponse').click()
+      sendResponse.click()
       
             responseTextarea1.addEventListener("DOMSubtreeModified", function () {
           const reqvarr = JSON.parse(responseTextarea1.getAttribute('responseRequest'));
@@ -753,10 +754,6 @@ wintServDsk.onmousedown = function(event) {
     let elemTop = wintServDsk.offsetTop;
 
     function onMouseMove(event) {
-		  if (!(event.buttons & 1)) {
-			onMouseUp();
-			return;
-		  }
       let deltaX = event.clientX - startX;
       let deltaY = event.clientY - startY;
 
