@@ -1088,7 +1088,7 @@ document.getElementById('stargrab').onclick = async function () {
                             .then(r => {
                                 if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration != undefined) {
 									
-									(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
+									//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 									
                                     payloadarray.push({
                                         ChatId: conversationId,
@@ -1106,7 +1106,7 @@ document.getElementById('stargrab').onclick = async function () {
                                     // console.log(operstagsarray);
                                 } else if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration == undefined) {
 									
-									(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
+								   //(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 									
                                     payloadarray.push({
                                         ChatId: conversationId,
@@ -1139,7 +1139,7 @@ document.getElementById('stargrab').onclick = async function () {
                             .then(r => r.json())
                             .then(r => {
 								
-								(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
+								//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 								
                                 operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
                                 if (r.payload.topicId && r.payload.topicId.value == '' && tmponlyoperhashes[j].Duration == undefined) {
@@ -1184,7 +1184,7 @@ document.getElementById('stargrab').onclick = async function () {
                             .then(r => r.json())
                             .then(r => {
 								
-								(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
+								//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 								
                                 if (r.payload && r.payload.tags) {
                                     operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
