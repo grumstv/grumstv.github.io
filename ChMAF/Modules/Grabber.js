@@ -8,6 +8,7 @@ let countsArray = [];
 let countsArrayInterval = [];
 let isDescending;
 let testarray = [];
+let keyMatch = "/Категория: Техподдержка исход crm2/g"
 // let convDurationArr=[];
 var win_Grabber =  // описание элементов окна Grabber
     `<div style="display: flex; width: 800px;">
@@ -1122,6 +1123,16 @@ document.getElementById('stargrab').onclick = async function () {
                                     // console.log(namespisochek[i]);
                                     // console.log(operstagsarray);
                                 }
+								
+								//test
+									if(r.messages.length >0){ 
+										for (let z=0;z<r.messages.length;z++) {
+											if (r.messages[z].txt.match(keyMatch)) {
+												console.log("Исход найден: ", conversationId)
+											}
+										}
+									}
+								// end test
                             });
                     } else if (chosentheme !== "parseallthemes" && chosentheme == "parsenothemes") {
                         await fetch("https://skyeng.autofaq.ai/api/conversations/" + conversationId)
@@ -1154,6 +1165,17 @@ document.getElementById('stargrab').onclick = async function () {
 
                                 // console.log(payloadarray);
                                 // console.log(namespisochek[i]);
+								
+								
+								//test
+									if(r.messages.length >0){ 
+										for (let z=0;z<r.messages.length;z++) {
+											if (r.messages[z].txt.match(keyMatch)) {
+												console.log("Исход найден: ", conversationId)
+											}
+										}
+									}
+								// end test
                             });
 
 
@@ -1215,6 +1237,17 @@ document.getElementById('stargrab').onclick = async function () {
 
                                 // console.log(payloadarray);
                                 // console.log(namespisochek[i]);
+								
+								//test
+									if(r.messages.length >0){ 
+										for (let z=0;z<r.messages.length;z++) {
+											if (r.messages[z].txt.match(keyMatch)) {
+												console.log("Исход найден: ", conversationId)
+											}
+										}
+									}
+								// end test
+								
                             });
                     }
                 }
