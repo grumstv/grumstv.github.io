@@ -8,7 +8,7 @@ let countsArray = [];
 let countsArrayInterval = [];
 let isDescending;
 let testarray = [];
-let keyMatch = /Категория: Техподдержка исход crm2/g
+let keyMatch = /Категория: Техподдержка вход crm2/g
 // let convDurationArr=[];
 var win_Grabber =  // описание элементов окна Grabber
     `<div style="display: flex; width: 800px;">
