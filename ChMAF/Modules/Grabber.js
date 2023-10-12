@@ -1128,7 +1128,7 @@ document.getElementById('stargrab').onclick = async function () {
 									if (r.messages.length > 0) {
 									  for (let z = 0; z < r.messages.length; z++) {
 										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  console.log("Исход найден: ", conversationId);
+										  console.log("Вход найден: ", conversationId);
 										}
 									  }
 									}
@@ -1171,7 +1171,7 @@ document.getElementById('stargrab').onclick = async function () {
 									if (r.messages.length > 0) {
 									  for (let z = 0; z < r.messages.length; z++) {
 										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  console.log("Исход найден: ", conversationId);
+										  console.log("Вход найден: ", conversationId);
 										}
 									  }
 									}
@@ -1242,7 +1242,7 @@ document.getElementById('stargrab').onclick = async function () {
 									if (r.messages.length > 0) {
 									  for (let z = 0; z < r.messages.length; z++) {
 										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  console.log("Исход найден: ", conversationId);
+										  console.log("Вход найден: ", conversationId);
 										}
 									  }
 									}
