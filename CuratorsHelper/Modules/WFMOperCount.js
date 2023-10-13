@@ -315,18 +315,17 @@ function searchitnow() {
     const responseTextarea1 = document.getElementById('responseTextarea1');
     
     dataOutputCount.innerHTML = '';
-    let worktimesarray = [];
+    const worktimesarray = [];
     let activeoperscounter = 0;
 
     const beginDate = ishodDateElem.value;
     const endDate = konezDateElem.value;
 
-	outputVar.innerHTML = '';
-	responseTextarea1.value = `{}`;
-	document.getElementById('responseTextarea2').value = `https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`;
-	document.getElementById('responseTextarea3').value = 'operslist';
-	document.getElementById('sendResponse').click();
-
+    outputVar.innerHTML = '';
+    responseTextarea1.value = `{}`;
+    document.getElementById('responseTextarea2').value = `https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`;
+    document.getElementById('responseTextarea3').value = 'operslist';
+    document.getElementById('sendResponse').click();
 
     responseTextarea1.addEventListener("DOMSubtreeModified", function() {
         const resultdata = responseTextarea1.getAttribute('operslist');
@@ -337,67 +336,73 @@ function searchitnow() {
         responseTextarea1.removeAttribute('operslist');
 
         converteddata.groups[0].operators.forEach(element => {
-			if (element.schedules && element.schedules.length > 0) {
-				let newObjOptions = {
-					operator: `${element.name} ${element.surname}`,
-					start: new Date(element.schedules[0].start).toLocaleString("ru-RU", options),
-					end: new Date(element.schedules[0].end).toLocaleString("ru-RU", options),
-					breaks: [],
-					vigruzkas: [],
-					other_works: [],
-					FMs: [],
-					soglots: [],
-					meetings: [],
-					trainings: [],
-					vacations: []
-				};
+            if (element.schedules && element.schedules.length > 0) {
+                let newObjOptions = {
+                    operator: `${element.name} ${element.surname}`,
+                    start: new Date(element.schedules[0].start).toLocaleString("ru-RU", options),
+                    end: new Date(element.schedules[0].end).toLocaleString("ru-RU", options),
+                    breaks: [],
+                    vigruzkas: [],
+                    other_works: [],
+                    FMs: [],
+                    soglots: [],
+                    meetings: [],
+                    trainings: [],
+                    vacations: []
+                };
 
-            element.events.forEach(event => {
-                const startTime = new Date(event.start).toLocaleString("ru-RU", options);
-                const endTime = new Date(event.end).toLocaleString("ru-RU", options);
+                element.events.forEach(event => {
+                    const startTime = new Date(event.start).toLocaleString("ru-RU", options);
+                    const endTime = new Date(event.end).toLocaleString("ru-RU", options);
 
-                switch (event.title) {
-                    case "Перерыв/Обед":
-                        newObjOptions.breaks.push({ start: startTime, end: endTime });
-                        break;
-                    case "Работа с выгрузкой":
-                        newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
-                        break;
-                    case "Работа в другом отделе":	
-                        newObjOptions.other_works.push({ start: startTime, end: endTime });
-                        break;
-                    case "Форс-мажор":	
-                        newObjOptions.FMs.push({ start: startTime, end: endTime });
-                        break;
-                    case "Согласованное отсутствие":
-                        newObjOptions.soglots.push({ start: startTime, end: endTime });
-                        break;
-                    case "Встреча":
-                        newObjOptions.meetings.push({ start: startTime, end: endTime });
-                        break;
-                    case "Тренинг":
-                        newObjOptions.trainings.push({ start: startTime, end: endTime });
-                        break;
-                    case "Отпуск":
-                        newObjOptions.vacations.push({ start: startTime, end: endTime });
-                        break;
+                    switch (event.title) {
+                        case "Перерыв/Обед":
+                            newObjOptions.breaks.push({ start: startTime, end: endTime });
+                            break;
+                        case "Работа с выгрузкой":
+                            newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
+                            break;
+                        case "Работа в другом отделе":
+                            newObjOptions.other_works.push({ start: startTime, end: endTime });
+                            break;
+                        case "Форс-мажор":
+                            newObjOptions.FMs.push({ start: startTime, end: endTime });
+                            break;
+                        case "Согласованное отсутствие":
+                            newObjOptions.soglots.push({ start: startTime, end: endTime });
+                            break;
+                        case "Встреча":
+                            newObjOptions.meetings.push({ start: startTime, end: endTime });
+                            break;
+                        case "Тренинг":
+                            newObjOptions.trainings.push({ start: startTime, end: endTime });
+                            break;
+                        case "Отпуск":
+                            newObjOptions.vacations.push({ start: startTime, end: endTime });
+                            break;
+                    }
+                });
+
+                if (element.events.length === 0) {
+                    outputVar.innerHTML += `<span style="color:DeepSkyBlue">[СУ/Нет перерыва] ${element.name} ${element.surname}</span><br>`;
+                } else if (element.events[0].title === "Отпуск") {
+                    outputVar.innerHTML += `<span style="color:coral">[Отпуск] ${element.name} ${element.surname}</span><br>`;
+                } else if (element.events[0].title === "Перерыв по болезни") {
+                    outputVar.innerHTML += `<span style="color:coral">[Заболел] ${element.name} ${element.surname}</span><br>`;
+                } else {
+                    outputVar.innerHTML += `<span style="color:MediumSpringGreen">${element.name} ${element.surname}</span><br>`;
                 }
-            });
-
-            // ... ваш код обработки событий для оператора ...
-
-            worktimesarray.push(newObjOptions);
-            activeoperscounter++;
+                
+                worktimesarray.push(newObjOptions);
+                activeoperscounter++;
+            }
         });
 
-        // Здесь можно дополнить обработку worktimesarray, чтобы высчитать итоговое время работы для каждого оператора.
-        // После этого вы можете добавить эти данные в outputVar.
-
         outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
-        worktimesarray.sort((a, b) => a.start.localeCompare(b.start));
-        // Вызовите здесь функцию countOperatorsByHour или другую подобную функцию, если она у вас есть.
+        // Assume the rest of your function (e.g., countOperatorsByHour) goes here.
     });
 }
+
 
 document.getElementById('wfmopercounter').onclick = function() {
     document.getElementById('Curators_WFMOperCnt').style.display =''
