@@ -64,20 +64,20 @@ let resultdata;
 let converteddata;
 let worktimesarray = [];
 
-	function parseTime(timeString) {
-		    const now = new Date();
-		if (!timeString) {
-			console.error('Invalid timeString provided:', timeString);
-			return;
-		}
+function convertToMSK(utcDateString) {
+    const date = new Date(utcDateString);
+    date.setMinutes(date.getMinutes() + 180); // Add 180 minutes for MSK
+    return date;
+}
 
-		const [hours, minutes] = timeString.split(':').map(Number);
-		return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-	}
+function parseTime(timeString) {
+    const date = convertToMSK(timeString);
+    return date;
+}
 
-  function formatTime(date) {
+function formatTime(date) {
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  }
+}
 
 function hourEnd(hour) {
     const hourStart = parseTime(hour);
@@ -315,8 +315,8 @@ function searchitnow() {
     const responseTextarea1 = document.getElementById('responseTextarea1');
     
     dataOutputCount.innerHTML = '';
-    let worktimesarray = [];
-    let activeoperscounter = 0;
+    worktimesarray = [];
+    activeoperscounter = 0;
 
     const beginDate = ishodDateElem.value;
     const endDate = konezDateElem.value;
@@ -336,32 +336,29 @@ function searchitnow() {
         responseTextarea1.removeAttribute('operslist');
 
         converteddata.groups[0].operators.forEach(element => {
+            let totalWorkingMinutes = 0;
+
+            // Проверьте наличие расписания перед обращением к нему
             if (element.schedules && element.schedules.length > 0) {
-                let newObjOptions = {
-                    operator: `${element.name} ${element.surname}`,
-                    start: element.schedules[0].start,
-                    end: element.schedules[0].end,
-                    events: element.events.map(event => ({
-                        title: event.title,
-                        start: event.start,
-                        end: event.end
-                    }))
-                };
+                const scheduleStart = parseTime(element.schedules[0].start);
+                const scheduleEnd = parseTime(element.schedules[0].end);
+                totalWorkingMinutes = (scheduleEnd - scheduleStart) / 60000; // Convert milliseconds to minutes
 
-                worktimesarray.push(newObjOptions);
-                activeoperscounter++;
+                element.events.forEach(event => {
+                    if (["Работа с выгрузкой", "Тренинг", "Работа в другом отделе"].includes(event.title)) {
+                        // Exclude these events from working hours
+                        const eventStart = parseTime(event.start);
+                        const eventEnd = parseTime(event.end);
+                        totalWorkingMinutes -= (eventEnd - eventStart) / 60000;
+                    }
+                });
+
+                console.log(`Operator: ${element.name} ${element.surname}, Worked hours: ${totalWorkingMinutes / 60}`);
             }
-        });
-
-        outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
-        
-        worktimesarray.forEach(operatorObj => {
-            let totalWorkingMinutes = calculateWorkingMinutes(operatorObj);
-            let totalWorkingHours = totalWorkingMinutes / 60;
-            console.log(`Оператор ${operatorObj.operator} проработал: ${Math.floor(totalWorkingHours)} часов и ${totalWorkingMinutes % 60} минут, что равно ${totalWorkingHours.toFixed(2)} часов.`);
         });
     });
 }
+
 
 function calculateWorkingMinutes(operatorObj) {
     let startHour = new Date(operatorObj.start).getHours();
