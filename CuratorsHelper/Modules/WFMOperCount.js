@@ -204,8 +204,137 @@ function countOperatorsByHour(arr, start, end) {
 }
 
 
+// function searchitnow() {
+    // const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
+    // const dataOutputCount = document.querySelector('#dataoutputcount');
+    // const ishodDateElem = document.getElementById('ishodDate');
+    // const konezDateElem = document.getElementById('konezDate');
+    // const outputVar = document.getElementById('analyzedoutput');
+    // const responseTextarea1 = document.getElementById('responseTextarea1');
+    
+    // dataOutputCount.innerHTML = '';
+    // worktimesarray = [];
+    // activeoperscounter = 0;
+
+    // const beginDate = ishodDateElem.value;
+    // const endDate = konezDateElem.value;
+
+	// outputVar.innerHTML = '';
+	// responseTextarea1.value = `{}`;
+	// document.getElementById('responseTextarea2').value = `https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`;
+	// document.getElementById('responseTextarea3').value = 'operslist';
+	// document.getElementById('sendResponse').click();
+
+
+    // responseTextarea1.addEventListener("DOMSubtreeModified", function() {
+        // const resultdata = responseTextarea1.getAttribute('operslist');
+        
+        // if (!resultdata) return;
+
+        // const converteddata = JSON.parse(resultdata);
+        // responseTextarea1.removeAttribute('operslist');
+
+		// converteddata.groups[0].operators.forEach(element => {
+				// let newObjOptions = {
+					// operator: `${element.name} ${element.surname}`,
+					// start: '',
+					// end: '',
+					// breaks: [],
+					// vigruzkas: [],
+					// other_works: [],
+					// FMs: [],
+					// soglots: [],
+					// meetings: [],
+					// trainings: [],
+					// vacations: []
+				// };
+
+				 // if (element.schedules.length > 0) {
+							// newObjOptions.start = new Date(element.schedules[0].start).toLocaleString("ru-RU", options);
+							// newObjOptions.end = new Date(element.schedules[0].end).toLocaleString("ru-RU", options);
+
+							// element.events.forEach(event => {
+								// const startTime = new Date(event.start).toLocaleString("ru-RU", options);
+								// const endTime = new Date(event.end).toLocaleString("ru-RU", options);
+
+								// switch (event.title) {
+									// case "Перерыв/Обед":
+										// newObjOptions.breaks.push({ start: startTime, end: endTime });
+										// break;
+									// case "Работа с выгрузкой":
+										// newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
+										// break;
+									// case "Работа в другом отделе":	
+										// newObjOptions.other_works.push({ start: startTime, end: endTime });
+										// break;
+									// case "Форс-мажор":	
+										// newObjOptions.FMs.push({ start: startTime, end: endTime });
+										// break;
+									// case "Согласованное отсутствие":
+										// newObjOptions.soglots.push({ start: startTime, end: endTime });
+									// break;
+									// case "Встреча":
+										// newObjOptions.meetings.push({ start: startTime, end: endTime });
+									// break;
+									// case "Тренинг":
+										// newObjOptions.trainings.push({ start: startTime, end: endTime });
+									// break;
+									// case "Отпуск":
+										// newObjOptions.vacations.push({ start: startTime, end: endTime });
+									// break;
+                    // }
+                // });
+
+                // if (element.events.length === 0) {
+                    // outputVar.innerHTML += `<span style="color:DeepSkyBlue">[СУ/Нет перерыва] ${element.name} ${element.surname}</span><br>`;
+                // } else if (element.events[0].title === "Отпуск") {
+                    // outputVar.innerHTML += `<span style="color:coral">[Отпуск] ${element.name} ${element.surname}</span><br>`;
+                // } else if (element.events[0].title === "Перерыв по болезни") {
+                    // outputVar.innerHTML += `<span style="color:coral">[Заболел] ${element.name} ${element.surname}</span><br>`;
+                // } else {
+                    // outputVar.innerHTML += `<span style="color:MediumSpringGreen">${element.name} ${element.surname}</span><br>`;
+                // }
+                
+				// worktimesarray.push(newObjOptions);
+                // activeoperscounter++;
+            // }
+        // });
+
+        // outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
+        // worktimesarray.sort((a, b) => a.start.localeCompare(b.start));
+        // countOperatorsByHour(worktimesarray, "07:00", "24:00");
+    // });
+// }
+
 function searchitnow() {
     const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
+    
+    // Определение функций для расчёта времени
+    function toDate(dateStr) {
+        return new Date(dateStr);
+    }
+
+    function getDifferenceInMs(startStr, endStr) {
+        return toDate(endStr) - toDate(startStr);
+    }
+
+    function calculateWorkHoursForOperator(operator) {
+        const ignoredEvents = ["Работа с выгрузкой", "Тренинг", "Работа в другом отделе"];
+
+        let workDurationMs = getDifferenceInMs(operator.start, operator.end);
+
+        operator.breaks.concat(operator.vigruzkas, operator.other_works, operator.FMs, operator.soglots, operator.meetings, operator.trainings, operator.vacations)
+            .forEach(event => {
+                if (!ignoredEvents.includes(event.title)) {
+                    workDurationMs -= getDifferenceInMs(event.start, event.end);
+                }
+            });
+
+        let totalMinutes = workDurationMs / (1000 * 60);
+        return totalMinutes / 60;
+    }
+    
+    // Остальной код вашей функции
     const dataOutputCount = document.querySelector('#dataoutputcount');
     const ishodDateElem = document.getElementById('ishodDate');
     const konezDateElem = document.getElementById('konezDate');
@@ -213,8 +342,8 @@ function searchitnow() {
     const responseTextarea1 = document.getElementById('responseTextarea1');
     
     dataOutputCount.innerHTML = '';
-    worktimesarray = [];
-    activeoperscounter = 0;
+    let worktimesarray = [];
+    let activeoperscounter = 0;
 
     const beginDate = ishodDateElem.value;
     const endDate = konezDateElem.value;
@@ -225,7 +354,6 @@ function searchitnow() {
 	document.getElementById('responseTextarea3').value = 'operslist';
 	document.getElementById('sendResponse').click();
 
-
     responseTextarea1.addEventListener("DOMSubtreeModified", function() {
         const resultdata = responseTextarea1.getAttribute('operslist');
         
@@ -234,77 +362,21 @@ function searchitnow() {
         const converteddata = JSON.parse(resultdata);
         responseTextarea1.removeAttribute('operslist');
 
-		converteddata.groups[0].operators.forEach(element => {
-				let newObjOptions = {
-					operator: `${element.name} ${element.surname}`,
-					start: '',
-					end: '',
-					breaks: [],
-					vigruzkas: [],
-					other_works: [],
-					FMs: [],
-					soglots: [],
-					meetings: [],
-					trainings: [],
-					vacations: []
-				};
+        converteddata.groups[0].operators.forEach(element => {
+            // ... ваш код обработки операторов
 
-				 if (element.schedules.length > 0) {
-							newObjOptions.start = new Date(element.schedules[0].start).toLocaleString("ru-RU", options);
-							newObjOptions.end = new Date(element.schedules[0].end).toLocaleString("ru-RU", options);
-
-							element.events.forEach(event => {
-								const startTime = new Date(event.start).toLocaleString("ru-RU", options);
-								const endTime = new Date(event.end).toLocaleString("ru-RU", options);
-
-								switch (event.title) {
-									case "Перерыв/Обед":
-										newObjOptions.breaks.push({ start: startTime, end: endTime });
-										break;
-									case "Работа с выгрузкой":
-										newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
-										break;
-									case "Работа в другом отделе":	
-										newObjOptions.other_works.push({ start: startTime, end: endTime });
-										break;
-									case "Форс-мажор":	
-										newObjOptions.FMs.push({ start: startTime, end: endTime });
-										break;
-									case "Согласованное отсутствие":
-										newObjOptions.soglots.push({ start: startTime, end: endTime });
-									break;
-									case "Встреча":
-										newObjOptions.meetings.push({ start: startTime, end: endTime });
-									break;
-									case "Тренинг":
-										newObjOptions.trainings.push({ start: startTime, end: endTime });
-									break;
-									case "Отпуск":
-										newObjOptions.vacations.push({ start: startTime, end: endTime });
-									break;
-                    }
-                });
-
-                if (element.events.length === 0) {
-                    outputVar.innerHTML += `<span style="color:DeepSkyBlue">[СУ/Нет перерыва] ${element.name} ${element.surname}</span><br>`;
-                } else if (element.events[0].title === "Отпуск") {
-                    outputVar.innerHTML += `<span style="color:coral">[Отпуск] ${element.name} ${element.surname}</span><br>`;
-                } else if (element.events[0].title === "Перерыв по болезни") {
-                    outputVar.innerHTML += `<span style="color:coral">[Заболел] ${element.name} ${element.surname}</span><br>`;
-                } else {
-                    outputVar.innerHTML += `<span style="color:MediumSpringGreen">${element.name} ${element.surname}</span><br>`;
-                }
-                
-				worktimesarray.push(newObjOptions);
-                activeoperscounter++;
-            }
+            worktimesarray.push(newObjOptions);
+            activeoperscounter++;
         });
 
         outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
-        worktimesarray.sort((a, b) => a.start.localeCompare(b.start));
-        countOperatorsByHour(worktimesarray, "07:00", "24:00");
+        worktimesarray.forEach(operator => {
+            let workHours = calculateWorkHoursForOperator(operator);
+            console.log(`${operator.operator}: проработал ${Math.floor(workHours)} часов ${Math.round((workHours - Math.floor(workHours)) * 60)} минут или ${workHours.toFixed(1)} часов`);
+        });
     });
 }
+
 
 
 
