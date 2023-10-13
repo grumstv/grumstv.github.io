@@ -337,19 +337,20 @@ function searchitnow() {
         responseTextarea1.removeAttribute('operslist');
 
         converteddata.groups[0].operators.forEach(element => {
-            let newObjOptions = {
-                operator: `${element.name} ${element.surname}`,
-                start: new Date(element.schedules[0].start).toLocaleString("ru-RU", options),
-                end: new Date(element.schedules[0].end).toLocaleString("ru-RU", options),
-                breaks: [],
-                vigruzkas: [],
-                other_works: [],
-                FMs: [],
-                soglots: [],
-                meetings: [],
-                trainings: [],
-                vacations: []
-            };
+			if (element.schedules && element.schedules.length > 0) {
+				let newObjOptions = {
+					operator: `${element.name} ${element.surname}`,
+					start: new Date(element.schedules[0].start).toLocaleString("ru-RU", options),
+					end: new Date(element.schedules[0].end).toLocaleString("ru-RU", options),
+					breaks: [],
+					vigruzkas: [],
+					other_works: [],
+					FMs: [],
+					soglots: [],
+					meetings: [],
+					trainings: [],
+					vacations: []
+				};
 
             element.events.forEach(event => {
                 const startTime = new Date(event.start).toLocaleString("ru-RU", options);
