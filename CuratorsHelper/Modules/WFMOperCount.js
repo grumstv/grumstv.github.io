@@ -308,33 +308,6 @@ function countOperatorsByHour(arr, start, end) {
 
 function searchitnow() {
     const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
-    
-    // Определение функций для расчёта времени
-    function toDate(dateStr) {
-        return new Date(dateStr);
-    }
-
-    function getDifferenceInMs(startStr, endStr) {
-        return toDate(endStr) - toDate(startStr);
-    }
-
-    function calculateWorkHoursForOperator(operator) {
-        const ignoredEvents = ["Работа с выгрузкой", "Тренинг", "Работа в другом отделе"];
-
-        let workDurationMs = getDifferenceInMs(operator.start, operator.end);
-
-        operator.breaks.concat(operator.vigruzkas, operator.other_works, operator.FMs, operator.soglots, operator.meetings, operator.trainings, operator.vacations)
-            .forEach(event => {
-                if (!ignoredEvents.includes(event.title)) {
-                    workDurationMs -= getDifferenceInMs(event.start, event.end);
-                }
-            });
-
-        let totalMinutes = workDurationMs / (1000 * 60);
-        return totalMinutes / 60;
-    }
-    
-    // Остальной код вашей функции
     const dataOutputCount = document.querySelector('#dataoutputcount');
     const ishodDateElem = document.getElementById('ishodDate');
     const konezDateElem = document.getElementById('konezDate');
@@ -354,6 +327,7 @@ function searchitnow() {
 	document.getElementById('responseTextarea3').value = 'operslist';
 	document.getElementById('sendResponse').click();
 
+
     responseTextarea1.addEventListener("DOMSubtreeModified", function() {
         const resultdata = responseTextarea1.getAttribute('operslist');
         
@@ -363,23 +337,66 @@ function searchitnow() {
         responseTextarea1.removeAttribute('operslist');
 
         converteddata.groups[0].operators.forEach(element => {
-            // ... ваш код обработки операторов
+            let newObjOptions = {
+                operator: `${element.name} ${element.surname}`,
+                start: new Date(element.schedules[0].start).toLocaleString("ru-RU", options),
+                end: new Date(element.schedules[0].end).toLocaleString("ru-RU", options),
+                breaks: [],
+                vigruzkas: [],
+                other_works: [],
+                FMs: [],
+                soglots: [],
+                meetings: [],
+                trainings: [],
+                vacations: []
+            };
+
+            element.events.forEach(event => {
+                const startTime = new Date(event.start).toLocaleString("ru-RU", options);
+                const endTime = new Date(event.end).toLocaleString("ru-RU", options);
+
+                switch (event.title) {
+                    case "Перерыв/Обед":
+                        newObjOptions.breaks.push({ start: startTime, end: endTime });
+                        break;
+                    case "Работа с выгрузкой":
+                        newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
+                        break;
+                    case "Работа в другом отделе":	
+                        newObjOptions.other_works.push({ start: startTime, end: endTime });
+                        break;
+                    case "Форс-мажор":	
+                        newObjOptions.FMs.push({ start: startTime, end: endTime });
+                        break;
+                    case "Согласованное отсутствие":
+                        newObjOptions.soglots.push({ start: startTime, end: endTime });
+                        break;
+                    case "Встреча":
+                        newObjOptions.meetings.push({ start: startTime, end: endTime });
+                        break;
+                    case "Тренинг":
+                        newObjOptions.trainings.push({ start: startTime, end: endTime });
+                        break;
+                    case "Отпуск":
+                        newObjOptions.vacations.push({ start: startTime, end: endTime });
+                        break;
+                }
+            });
+
+            // ... ваш код обработки событий для оператора ...
 
             worktimesarray.push(newObjOptions);
             activeoperscounter++;
         });
 
+        // Здесь можно дополнить обработку worktimesarray, чтобы высчитать итоговое время работы для каждого оператора.
+        // После этого вы можете добавить эти данные в outputVar.
+
         outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
-        worktimesarray.forEach(operator => {
-            let workHours = calculateWorkHoursForOperator(operator);
-            console.log(`${operator.operator}: проработал ${Math.floor(workHours)} часов ${Math.round((workHours - Math.floor(workHours)) * 60)} минут или ${workHours.toFixed(1)} часов`);
-        });
+        worktimesarray.sort((a, b) => a.start.localeCompare(b.start));
+        // Вызовите здесь функцию countOperatorsByHour или другую подобную функцию, если она у вас есть.
     });
 }
-
-
-
-
 
 document.getElementById('wfmopercounter').onclick = function() {
     document.getElementById('Curators_WFMOperCnt').style.display =''
