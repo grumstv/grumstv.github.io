@@ -315,7 +315,7 @@ function searchitnow() {
     const responseTextarea1 = document.getElementById('responseTextarea1');
     
     dataOutputCount.innerHTML = '';
-    const worktimesarray = [];
+    let worktimesarray = [];
     let activeoperscounter = 0;
 
     const beginDate = ishodDateElem.value;
@@ -339,69 +339,55 @@ function searchitnow() {
             if (element.schedules && element.schedules.length > 0) {
                 let newObjOptions = {
                     operator: `${element.name} ${element.surname}`,
-                    start: new Date(element.schedules[0].start).toLocaleString("ru-RU", options),
-                    end: new Date(element.schedules[0].end).toLocaleString("ru-RU", options),
-                    breaks: [],
-                    vigruzkas: [],
-                    other_works: [],
-                    FMs: [],
-                    soglots: [],
-                    meetings: [],
-                    trainings: [],
-                    vacations: []
+                    start: element.schedules[0].start,
+                    end: element.schedules[0].end,
+                    events: element.events.map(event => ({
+                        title: event.title,
+                        start: event.start,
+                        end: event.end
+                    }))
                 };
 
-                element.events.forEach(event => {
-                    const startTime = new Date(event.start).toLocaleString("ru-RU", options);
-                    const endTime = new Date(event.end).toLocaleString("ru-RU", options);
-
-                    switch (event.title) {
-                        case "Перерыв/Обед":
-                            newObjOptions.breaks.push({ start: startTime, end: endTime });
-                            break;
-                        case "Работа с выгрузкой":
-                            newObjOptions.vigruzkas.push({ start: startTime, end: endTime });
-                            break;
-                        case "Работа в другом отделе":
-                            newObjOptions.other_works.push({ start: startTime, end: endTime });
-                            break;
-                        case "Форс-мажор":
-                            newObjOptions.FMs.push({ start: startTime, end: endTime });
-                            break;
-                        case "Согласованное отсутствие":
-                            newObjOptions.soglots.push({ start: startTime, end: endTime });
-                            break;
-                        case "Встреча":
-                            newObjOptions.meetings.push({ start: startTime, end: endTime });
-                            break;
-                        case "Тренинг":
-                            newObjOptions.trainings.push({ start: startTime, end: endTime });
-                            break;
-                        case "Отпуск":
-                            newObjOptions.vacations.push({ start: startTime, end: endTime });
-                            break;
-                    }
-                });
-
-                if (element.events.length === 0) {
-                    outputVar.innerHTML += `<span style="color:DeepSkyBlue">[СУ/Нет перерыва] ${element.name} ${element.surname}</span><br>`;
-                } else if (element.events[0].title === "Отпуск") {
-                    outputVar.innerHTML += `<span style="color:coral">[Отпуск] ${element.name} ${element.surname}</span><br>`;
-                } else if (element.events[0].title === "Перерыв по болезни") {
-                    outputVar.innerHTML += `<span style="color:coral">[Заболел] ${element.name} ${element.surname}</span><br>`;
-                } else {
-                    outputVar.innerHTML += `<span style="color:MediumSpringGreen">${element.name} ${element.surname}</span><br>`;
-                }
-                
                 worktimesarray.push(newObjOptions);
                 activeoperscounter++;
             }
         });
 
         outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
-        // Assume the rest of your function (e.g., countOperatorsByHour) goes here.
+        
+        worktimesarray.forEach(operatorObj => {
+            let totalWorkingMinutes = calculateWorkingMinutes(operatorObj);
+            let totalWorkingHours = totalWorkingMinutes / 60;
+            console.log(`Оператор ${operatorObj.operator} проработал: ${Math.floor(totalWorkingHours)} часов и ${totalWorkingMinutes % 60} минут, что равно ${totalWorkingHours.toFixed(2)} часов.`);
+        });
     });
 }
+
+function calculateWorkingMinutes(operatorObj) {
+    let startHour = new Date(operatorObj.start).getHours();
+    let startMinute = new Date(operatorObj.start).getMinutes();
+    let endHour = new Date(operatorObj.end).getHours();
+    let endMinute = new Date(operatorObj.end).getMinutes();
+
+    let totalMinutes = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
+
+    const excludeTitles = ["Работа с выгрузкой", "Тренинг", "Работа в другом отделе"];
+    
+    operatorObj.events.forEach(event => {
+        if (excludeTitles.includes(event.title)) {
+            let eventStartHour = new Date(event.start).getHours();
+            let eventStartMinute = new Date(event.start).getMinutes();
+            let eventEndHour = new Date(event.end).getHours();
+            let eventEndMinute = new Date(event.end).getMinutes();
+            let eventDuration = (eventEndHour * 60 + eventEndMinute) - (eventStartHour * 60 + eventStartMinute);
+
+            totalMinutes -= eventDuration;
+        }
+    });
+
+    return totalMinutes;
+}
+
 
 
 document.getElementById('wfmopercounter').onclick = function() {
