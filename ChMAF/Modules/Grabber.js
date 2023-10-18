@@ -1089,7 +1089,7 @@ document.getElementById('stargrab').onclick = async function () {
                                 if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration != undefined) {
 									
 									//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
-									(r.payload && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
+									//(r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
 
                                     payloadarray.push({
                                         ChatId: conversationId,
@@ -1108,7 +1108,7 @@ document.getElementById('stargrab').onclick = async function () {
                                 } else if (r.payload.topicId && r.payload.topicId.value === chosentheme && tmponlyoperhashes[j].Duration == undefined) {
 									
 								   //(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
-								   (r.payload && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
+									// (r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
 									
                                     payloadarray.push({
                                         ChatId: conversationId,
@@ -1142,7 +1142,8 @@ document.getElementById('stargrab').onclick = async function () {
                             .then(r => {
 								
 								//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
-								(r.payload && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
+								//(r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
+								
 								
                                 operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
                                 if (r.payload.topicId && r.payload.topicId.value == '' && tmponlyoperhashes[j].Duration == undefined) {
@@ -1188,7 +1189,7 @@ document.getElementById('stargrab').onclick = async function () {
                             .then(r => {
 								
 								//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
-								(r.payload && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
+								//(r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
 								
                                 if (r.payload && r.payload.tags) {
                                     operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
