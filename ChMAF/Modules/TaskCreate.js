@@ -381,7 +381,7 @@ document.getElementById('serviceinf').innerHTML = '';
             document.getElementById('taskserviceid').value = '';
 			console.log(document.getElementById('taskuserid').value)
 			
-			document.querySelector('#taskcomment').value = "Дата и время календаря:\nПриоритетный способ связи:\nОписание неполадки:"
+			document.querySelector('#taskcomment').value = "Дата и время календаря:\nПриоритетный способ связи:\nОписание неполадки:\nЧто было сделано:"
         }
 
         document.getElementById('highteachertc').onclick = function () {
