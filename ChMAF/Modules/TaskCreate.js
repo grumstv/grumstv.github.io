@@ -380,6 +380,8 @@ document.getElementById('serviceinf').innerHTML = '';
 			document.getElementById('taskuserid').value = SearchinAFnewUI("id")
             document.getElementById('taskserviceid').value = '';
 			console.log(document.getElementById('taskuserid').value)
+			
+			document.querySelector('#taskcomment').value = "Дата и время календаря:\nПриоритетный способ связи:\nОписание неполадки:"
         }
 
         document.getElementById('highteachertc').onclick = function () {
