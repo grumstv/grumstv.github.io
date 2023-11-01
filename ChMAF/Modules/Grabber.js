@@ -1110,7 +1110,7 @@ document.getElementById('stargrab').onclick = async function () {
 									
 								   //(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 									// (r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
-									(r.channelUser.payload && r.channelUser.payload.userType =="teacher") ? console.log("П", r.id, r.channelUser.payload.teacherSTKList) : ""
+									// (r.channelUser.payload && r.channelUser.payload.userType =="teacher") ? console.log("П", r.id, r.channelUser.payload.teacherSTKList) : ""
 									
                                     payloadarray.push({
                                         ChatId: conversationId,
@@ -1129,13 +1129,13 @@ document.getElementById('stargrab').onclick = async function () {
                                 }
 								
 								//test
-									// if (r.messages.length > 0) {
-									  // for (let z = 0; z < r.messages.length; z++) {
-										// if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  // console.log("Вход найден: ", conversationId);
-										// }
-									  // }
-									// }
+									if (r.messages.length > 0) {
+									  for (let z = 0; z < r.messages.length; z++) {
+										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
+										  console.log("Вход найден: ", conversationId);
+										}
+									  }
+									}
 								// end test
                             });
                     } else if (chosentheme !== "parseallthemes" && chosentheme == "parsenothemes") {
@@ -1145,7 +1145,7 @@ document.getElementById('stargrab').onclick = async function () {
 								
 								//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 								//(r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
-								(r.channelUser.payload && r.channelUser.payload.userType =="teacher") ? console.log("П", r.id, r.channelUser.payload.teacherSTKList) : ""
+								// (r.channelUser.payload && r.channelUser.payload.userType =="teacher") ? console.log("П", r.id, r.channelUser.payload.teacherSTKList) : ""
 								
 								
 								
@@ -1176,13 +1176,13 @@ document.getElementById('stargrab').onclick = async function () {
 								
 								
 								//test
-									// if (r.messages.length > 0) {
-									  // for (let z = 0; z < r.messages.length; z++) {
-										// if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  // console.log("Вход найден: ", conversationId);
-										// }
-									  // }
-									// }
+									if (r.messages.length > 0) {
+									  for (let z = 0; z < r.messages.length; z++) {
+										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
+										  console.log("Вход найден: ", conversationId);
+										}
+									  }
+									}
 								// end test
                             });
 
@@ -1194,7 +1194,7 @@ document.getElementById('stargrab').onclick = async function () {
 								
 								//(r.channelUser.payload["nextClass-status"] && r.channelUser.payload["nextClass-status"] =="идёт урок") ? console.log(r.id, r.channelUser.payload["nextClass-status"]) : ""
 								//(r.payload && r.payload.taskUrl && r.payload.taskUrl.value == "https://jira.skyeng.tech/browse/VIM-22298") ? console.log(r.id,r.payload.taskUrl.value) : ""
-								(r.channelUser.payload && r.channelUser.payload.userType =="teacher") ? console.log("П", r.id, r.channelUser.payload.teacherSTKList) : ""
+								// (r.channelUser.payload && r.channelUser.payload.userType =="teacher") ? console.log("П", r.id, r.channelUser.payload.teacherSTKList) : ""
 								
                                 if (r.payload && r.payload.tags) {
                                     operstagsarray.push({ ChatId: conversationId, Tags: r.payload.tags.value })
@@ -1249,13 +1249,13 @@ document.getElementById('stargrab').onclick = async function () {
                                 // console.log(namespisochek[i]);
 								
 								//test
-									// if (r.messages.length > 0) {
-									  // for (let z = 0; z < r.messages.length; z++) {
-										// if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  // console.log("Вход найден: ", conversationId);
-										// }
-									  // }
-									// }
+									if (r.messages.length > 0) {
+									  for (let z = 0; z < r.messages.length; z++) {
+										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
+										  console.log("Вход найден: ", conversationId);
+										}
+									  }
+									}
 								// end test
 								
                             });
