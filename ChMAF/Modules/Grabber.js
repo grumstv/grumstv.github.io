@@ -1129,13 +1129,13 @@ document.getElementById('stargrab').onclick = async function () {
                                 }
 								
 								//test
-									if (r.messages.length > 0) {
-									  for (let z = 0; z < r.messages.length; z++) {
-										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  console.log("Вход найден: ", conversationId);
-										}
-									  }
-									}
+									// if (r.messages.length > 0) {
+									  // for (let z = 0; z < r.messages.length; z++) {
+										// if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
+										  // console.log("Вход найден: ", conversationId);
+										// }
+									  // }
+									// }
 								// end test
                             });
                     } else if (chosentheme !== "parseallthemes" && chosentheme == "parsenothemes") {
@@ -1176,13 +1176,13 @@ document.getElementById('stargrab').onclick = async function () {
 								
 								
 								//test
-									if (r.messages.length > 0) {
-									  for (let z = 0; z < r.messages.length; z++) {
-										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  console.log("Вход найден: ", conversationId);
-										}
-									  }
-									}
+									// if (r.messages.length > 0) {
+									  // for (let z = 0; z < r.messages.length; z++) {
+										// if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
+										  // console.log("Вход найден: ", conversationId);
+										// }
+									  // }
+									// }
 								// end test
                             });
 
@@ -1249,13 +1249,13 @@ document.getElementById('stargrab').onclick = async function () {
                                 // console.log(namespisochek[i]);
 								
 								//test
-									if (r.messages.length > 0) {
-									  for (let z = 0; z < r.messages.length; z++) {
-										if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
-										  console.log("Вход найден: ", conversationId);
-										}
-									  }
-									}
+									// if (r.messages.length > 0) {
+									  // for (let z = 0; z < r.messages.length; z++) {
+										// if (r.messages[z].txt && typeof r.messages[z].txt === 'string' && r.messages[z].txt.match(keyMatch)) {
+										  // console.log("Вход найден: ", conversationId);
+										// }
+									  // }
+									// }
 								// end test
 								
                             });
