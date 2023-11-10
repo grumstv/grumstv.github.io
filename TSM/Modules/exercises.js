@@ -562,7 +562,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 							}
 						}
 
-						document.getElementById('exercisebarskysmart').innerHTML += '<div class="roomtype">Lesson</div>' +
+						document.getElementById('exercisebarComplect').innerHTML += '<div class="roomtype">Lesson</div>' +
 							'<div class="boxwithslides" style="display:none">' +
 							'<div class="itemexerciseskids">' +
 							'<div style="text-align:center;">Информация по категории: Lesson</div>' +
