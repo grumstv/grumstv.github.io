@@ -527,14 +527,14 @@ document.getElementById('exercisesComplect').onclick = async function() {
 						if (localStorage.getItem("Nullcards") == 1 && complectationsData.lessonCards[indexOfSlides].themes[i].cards.length > 0) {
 							temparr += '<div style="margin: 5px">' +
 								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + subjecttype + '" ' +
+								'complectationsData-subtype="' + kidsselector + '" ' +
 								'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' + 
 								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.lessonCards[indexOfSlides].themes[i].name + ' ' + '<br>' + 
 								'</div></div>'
 						} else if (localStorage.getItem("Nullcards") == 0) {
 							temparr += '<div style="margin: 5px">'+ 
 								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + subjecttype + '" ' +
+								'complectationsData-subtype="' + kidsselector + '" ' +
 								'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
 								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.lessonCards[indexOfSlides].themes[i].name + ' ' + '<br>' + 
 								'</div></div>'
@@ -548,7 +548,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 							temparr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
 								complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].name + ' ' +
 								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого слайда" ' +
-								'complectationsData-subtype="' + subjecttype + '" ' +
+								'complectationsData-subtype="' + kidsselector + '" ' +
 								'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' +
 								'complectationsData-stepid="' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].id + '"> 💾 </span>' +
 								'<span style="float:right; margin-right: 80px;">' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness + '</span>' +
@@ -578,14 +578,14 @@ document.getElementById('exercisesComplect').onclick = async function() {
 						if (localStorage.getItem("Nullcards") == 1 && complectationsData.homeworkCards[indexOfSlides].themes[i].cards.length > 0) {
 							hwarr += '<div style="margin: 5px">' + 
 								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + subjecttype + '" ' +
+								'complectationsData-subtype="' + kidsselector + '" ' +
 								'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
 								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].name + '<br>' + 
 								'</div></div>'
 						} else if (localStorage.getItem("Nullcards") == 0) {
 							hwarr += '<div style="margin: 5px">' +
 								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + subjecttype + '" ' +
+								'complectationsData-subtype="' + kidsselector + '" ' +
 								'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
 								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].name + '<br>' + 
 								'</div></div>'
@@ -608,7 +608,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 							hwarr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
 								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + ' ' +
 								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого слайда" ' +
-								'complectationsData-subtype="' + subjecttype + '" ' +
+								'complectationsData-subtype="' + kidsselector + '" ' +
 								'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' +
 								'complectationsData-stepid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].id + '"> 💾 </span>' +
 								'<span style="float:right; margin-right: 80px;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness + '</span>' +
@@ -665,17 +665,17 @@ document.getElementById('exercisesComplect').onclick = async function() {
 					}
 
 					if (data.participants[0].role == 'student') {
-						document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + data.participants[0].name
+						document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[0].name
 						document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + data.participants[0].educationServiceId
-						document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + data.participants[0].userId
-						document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + data.participants[1].name
-						document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + data.participants[1].userId
+						document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
+						document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[1].name
+						document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
 					} else if (data.participants[1].role == 'student') {
-						document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + data.participants[1].name
-						document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + data.participants[1].educationServiceId
-						document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + data.participants[1].userId
-						document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + data.participants[0].name
-						document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + data.participants[0].userId
+						document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[1].name
+						document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + complectationsData.participants[1].educationServiceId
+						document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
+						document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[0].name
+						document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
 					}
 				
 				
