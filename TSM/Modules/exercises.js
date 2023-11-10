@@ -666,7 +666,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 
 						if (complectationsData.participants[0].role == 'student') {
 							document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[0].name
-							document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + data.participants[0].educationServiceId
+							document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + complectationsData.participants[0].educationServiceId
 							document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
 							document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[1].name
 							document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
