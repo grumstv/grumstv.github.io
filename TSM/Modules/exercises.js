@@ -570,7 +570,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 							'<br>Общий % завершения слайдов: ' + complectationsData.lessonCards[indexOfSlides].completeness + '%' +
 							'<br>Итоговый результат: ' + complectationsData.lessonCards[indexOfSlides].score + ' баллов из 100<br>' +
 							'<div class="headerexplain">' +
-							'<span style="margin-left: 60px;">Название слайда</span>' +
+							'<span style="margin-left: 15px;">Название слайда</span>' +
 							'<span style="margin-left: 155px;">Балл</span>' +
 							'<span style="margin-left: 70px;">%</span>' +
 							'<span style="margin-left: 50px;">Ссылка</span>' +
@@ -630,7 +630,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 							'<br>Общий % завершения слайдов: ' + complectationsData.homeworkCards[indexOfSlides].completeness + '%' +
 							'<br>Итоговый результат: ' + complectationsData.homeworkCards[indexOfSlides].score + ' баллов из 100<br>' +
 							'<div class="headerexplain">' +
-							'<span style="margin-left: 60px;">Название слайда</span>' +
+							'<span style="margin-left: 15px;">Название слайда</span>' +
 							'<span style="margin-left: 140px;">Балл</span>' +
 							'<span style="margin-left: 60px;">%</span>' +
 							'<span style="margin-left: 50px;">Ссылка</span>' +
