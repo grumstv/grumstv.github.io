@@ -486,7 +486,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 		document.getElementById('roomhashhwComplect').value = document.URL;
 		setTimeout(function(){
 			getroomdataComplect.click()
-		}, 1000)
+		}, 500)
 			
 		} else {
         wintComplect.style.display = 'none'
