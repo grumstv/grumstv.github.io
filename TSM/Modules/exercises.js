@@ -58,7 +58,6 @@ var win_complectationExercises = `<div style="display: flex;">
                         </div>
 
 						<div style="margin: 5px; width:550px;" id="exercisesComplectTeacher">
-							<label style="color: black; margin-left: 5px; background: mediumseagreen; font-weight: 700; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 3px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);"><input type="checkbox" id="hideNullCardsComplect">Скрыть Темы с 0 карточек</label>
 							<span id="teachnameComplect" style="color:#d5f4ff; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 							<span id="teachdidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 						</div>
@@ -481,7 +480,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
         wintComplect.style.display = ''
 		wintExercSkysmart.style.display = 'none'
 		document.getElementById('roomhashhwComplect').value = document.URL;
-		document.getElementById('getroomdataComplect').click()
+		getroomdataComplect.click()
 			
 		} else {
         wintComplect.style.display = 'none'
