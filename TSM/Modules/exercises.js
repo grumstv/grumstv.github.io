@@ -55,7 +55,7 @@ var win_complectationExercises = `<div style="display: flex;">
 							<span id="studnameComplect" style="color:#d5f4ff; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 							<span id="studserviceidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
 							<span id="studidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
-							<span id="groupidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
+							<div id="groupidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
                         </div>
 
 						<div style="margin: 5px; width:550px;" id="exercisesComplectTeacher">
@@ -679,14 +679,14 @@ document.getElementById('exercisesComplect').onclick = async function() {
 							document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
 							document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[1].name
 							document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
-							document.getElementById('groupidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 группы: </span>' + complectationsData.groupInfo.externalGroupId
+							document.getElementById('groupidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 гр: </span>' + complectationsData.groupInfo.externalGroupId
 						} else if (complectationsData.participants[1].role == 'student') {
 							document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[1].name
 							document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + complectationsData.participants[1].educationServiceId
 							document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
 							document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[0].name
 							document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
-							document.getElementById('groupidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 группы: </span>' + complectationsData.groupInfo.externalGroupId
+							document.getElementById('groupidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 гр: </span>' + complectationsData.groupInfo.externalGroupId
 						}
 					
 			}
