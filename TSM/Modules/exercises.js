@@ -45,6 +45,34 @@ var win_TTCExercises = `<div style="display: flex;">
 
 					</span>
 				   </div>`;
+				   
+var win_complectationExercises = `<div style="display: flex;">
+					<span style="cursor: -webkit-grab;">
+
+					     <div style="margin: 5px; width:550px;" id="exercisesComplectHeader">
+                            <button class="commonbtn" title="скрывает меню" id="hideExercisesComplectMenu" style="width:50px; height:30px; background: #228B22;">hide</button>
+							<button class="commonbtn" id="RefreshInfoExerciseComplect title = "Обновляет информацию по открытой комнате" style="margin: 5px; width: 25px; height: 25px; padding: 0;">♻</button>
+							<span id="studnameComplect" style="color:#d5f4ff; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
+							<span id="studserviceidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
+							<span id="studidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
+                        </div>
+
+						<div style="margin: 5px; width:550px;" id="exercisesComplectTeacher">
+							<label style="color: black; margin-left: 5px; background: mediumseagreen; font-weight: 700; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 3px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);"><input type="checkbox" id="hideNullCardsComplect">Скрыть Темы с 0 карточек</label>
+							<span id="teachnameComplect" style="color:#d5f4ff; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
+							<span id="teachdidComplect" style="color:bisque; cursor:text; text-shadow: 1px 2px 5px rgb(0 0 0 / 55%)"></span>
+						</div>
+
+						<div style="margin: 5px; width:550px;">
+							<input id="roomhashhwComplect" placeholder="homework link" style="width: 490px; margin-left: 15px; text-align: center;">
+							<button class="commonbtn" id="getroomdataComplect">🔎</button>
+						</div>
+
+						<div id="exercisebarComplect" class="skysmartexcbar">
+						<div>
+
+					</span>
+				   </div>`;			   
 
 if (localStorage.getItem('winTopexercisesSkysmart') == null) { //additional skysmart students exercise menu
     localStorage.setItem('winTopexercisesSkysmart', '118');
@@ -55,6 +83,10 @@ if (localStorage.getItem('winTopexercisesTTC') == null) { //additional TTC info 
     localStorage.setItem('winTopexercisesTTC', '118');
     localStorage.setItem('winLeftexercisesTTC', '407');
 }
+
+if (localStorage.getItem('winTopComplect') == null) { //additional complectations info
+    localStorage.setItem('winTopComplect', '118');
+    localStorage.setItem('winLeftComplect', '407');
 
 let wintExercSkysmart = document.createElement('div');
 document.body.append(wintExercSkysmart);
@@ -70,6 +102,13 @@ wintExercTTC.style = 'display:none;  top: ' + localStorage.getItem('winTopexerci
 wintExercTTC.setAttribute('id', 'AFMS_TTCExercInfo');
 wintExercTTC.innerHTML = win_TTCExercises;
 
+let wintComplect = document.createElement('div');
+document.body.append(wintComplect);
+wintComplect.className = 'wintInitializeComplectExercisesInfo'
+wintComplect.style = 'display:none;  top: ' + localStorage.getItem('winTopComplect') + 'px; left: ' + localStorage.getItem('winLeftComplect') + 'px;';
+wintComplect.setAttribute('id', 'AFMS_Complect');
+wintComplect.innerHTML = win_complectationExercises;
+
 // Exercises skysmart
 
 var listenerExercSkysmart = function (e, a) {
@@ -78,6 +117,7 @@ var listenerExercSkysmart = function (e, a) {
     localStorage.setItem('winTopexercisesSkysmart', String(Number(e.clientY - myY9993)));
     localStorage.setItem('winLeftexercisesSkysmart', String(Number(e.clientX - myX9993)));
 };
+
 wintExercSkysmart.onmousedown = function (a) {
     if (checkelementt(a)) {
         window.myX9993 = a.layerX;
@@ -107,6 +147,24 @@ wintExercTTC.onmousedown = function (a) {
 wintExercTTC.onmouseup = function () { document.removeEventListener('mousemove', listenerExercTTC); }
 
 // End Exercises TTC
+
+// Exercises complectations
+var listenerComplectations = function (e, a) {
+    wintComplect.style.left = Number(e.clientX - ComplectX) + "px";
+    wintComplect.style.top = Number(e.clientY - ComplectY) + "px";
+    localStorage.setItem('winTopComplect', String(Number(e.clientY - ComplectY)));
+    localStorage.setItem('winLeftComplect', String(Number(e.clientX - ComplectX)));
+};
+wintComplect.onmousedown = function (a) {
+    if (checkelementt(a)) {
+        window.ComplectX = a.layerX;
+        window.ComplectY = a.layerY;
+        document.addEventListener('mousemove', listenerComplectations);
+    }
+}
+wintComplect.onmouseup = function () { document.removeEventListener('mousemove', listenerComplectations); }
+
+// End Exercises complectation
 
 document.getElementById('exercisekysmart').onclick = async function () { // открывает менюшку скайсмарт упражнений
     if (wintExercSkysmart.style.display == 'none') {
