@@ -476,13 +476,13 @@ document.getElementById('exercisesttc').onclick = async function () {
     }
 }
 
-document.getElementById('AFMS_Complect').onclick = async function() {
-	    if (wintComplect.style.display == 'none') {
-        wintComplect.style.display = ''
-        wintComplect.style.display = 'none'
+document.getElementById('exercisesComplect').onclick = async function() {
+	    if (AFMS_Complect.style.display == 'none') {
+        AFMS_Complect.style.display = ''
+        AFMS_Complect.style.display = 'none'
     }
     else {
-        wintComplect.style.display = 'none'
+        AFMS_Complect.style.display = 'none'
     }
 }
 
