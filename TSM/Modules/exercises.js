@@ -481,12 +481,17 @@ document.getElementById('exercisesComplect').onclick = async function() {
         wintComplect.style.display = ''
 		wintExercSkysmart.style.display = 'none'
 		document.getElementById('roomhashhwComplect').value = document.URL;
+		document.getElementById('getroomdataComplect').click()
+			
+		} else {
+        wintComplect.style.display = 'none'
+		}
 		
-		  document.getElementById('hideExercisesComplectMenu').onclick = function () {
+		document.getElementById('hideExercisesComplectMenu').onclick = function () {
             wintComplect.style.display = 'none'
         }
-		
-			document.getElementById('getroomdataComplect').onclick = async function () {
+	
+				document.getElementById('getroomdataComplect').onclick = async function () {
 				let rhash = document.getElementById('roomhashhwComplect').value
 				let urlComponents = rhash.split('/');
 				let hashroomkids = urlComponents[6].split('?')[0];
@@ -679,9 +684,6 @@ document.getElementById('exercisesComplect').onclick = async function() {
 						}
 					
 			}
-		
-		} else {
-        wintComplect.style.display = 'none'
-    }
+	
 }
 
