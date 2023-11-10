@@ -477,12 +477,12 @@ document.getElementById('exercisesttc').onclick = async function () {
 }
 
 document.getElementById('exercisesComplect').onclick = async function() {
-	    if (AFMS_Complect.style.display == 'none') {
-        AFMS_Complect.style.display = ''
-        AFMS_Complect.style.display = 'none'
+	    if (wintComplect.style.display == 'none') {
+        wintComplect.style.display = ''
+        wintComplect.style.display = 'none'
     }
     else {
-        AFMS_Complect.style.display = 'none'
+        wintComplect.style.display = 'none'
     }
 }
 
