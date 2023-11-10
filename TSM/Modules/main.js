@@ -5,15 +5,15 @@ var win_addMenu = `<div style="display: flex;">
 						<div>
 
 						<div id="mainmenu" style="display:block">
-							<button id="openchataddmenu" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">💬</span> ChatMenu</button>
+							<button id="openchataddmenu" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 125px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">💬</span> ChatMenu</button>
 							<br>
-							<button id="openlesinfomenu" style="margin: 5px 5px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">ℹ</span> LessonInfo</button>
+							<button id="openlesinfomenu" style="margin: 5px 5px 0px 5px; height: 30px; min-width: 125px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">ℹ</span> LessonInfo</button>
 							<br>
-							<button id="openstudentsmenu" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">👨‍🎓</span> Students</button>
+							<button id="openstudentsmenu" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 125px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">👨‍🎓</span> Students</button>
 							<br>
-							<button id="openexercisesmenu" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">🎯</span> Exercises</button>
+							<button id="openexercisesmenu" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 125px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">🎯</span> Exercises</button>
 							<br>
-							<button id="VocabularyMenu" title = "Открывает  меню для роаботы со словарем" style="margin: 5px 5px 5px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">📚</span> Vocabulary</button>
+							<button id="VocabularyMenu" title = "Открывает  меню для роаботы со словарем" style="margin: 5px 5px 5px 5px; height: 30px; min-width: 125px; padding-top:8px;" class="commonbtn dobig"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">📚</span> Vocabulary</button>
 						</div>
 
 						<div id="studentsmenu" style="display:none">
