@@ -480,7 +480,9 @@ document.getElementById('exercisesComplect').onclick = async function() {
         wintComplect.style.display = ''
 		wintExercSkysmart.style.display = 'none'
 		document.getElementById('roomhashhwComplect').value = document.URL;
-		getroomdataComplect.click()
+		setTimeout(function(){
+			getroomdataComplect.click()
+		}, 1000)
 			
 		} else {
         wintComplect.style.display = 'none'
