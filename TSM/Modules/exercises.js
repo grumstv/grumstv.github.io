@@ -506,7 +506,7 @@ document.getElementById('exercisesComplect').onclick = async function() {
 
                 console.log(complectationsData)
     }
-    else {
+		} else {
         wintComplect.style.display = 'none'
     }
 }
