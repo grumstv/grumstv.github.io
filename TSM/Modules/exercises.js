@@ -480,6 +480,10 @@ document.getElementById('exercisesComplect').onclick = async function() {
 	    if (document.getElementById('AFMS_Complect').style.display == 'none') {
         wintComplect.style.display = ''
 		wintExercSkysmart.style.display = 'none'
+		
+		  document.getElementById('hideExercisesComplectMenu').onclick = function () {
+            wintComplect.style.display = 'none'
+        }
     }
     else {
         wintComplect.style.display = 'none'
