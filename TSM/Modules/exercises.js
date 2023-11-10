@@ -87,6 +87,7 @@ if (localStorage.getItem('winTopexercisesTTC') == null) { //additional TTC info 
 if (localStorage.getItem('winTopComplect') == null) { //additional complectations info
     localStorage.setItem('winTopComplect', '118');
     localStorage.setItem('winLeftComplect', '407');
+}
 
 let wintExercSkysmart = document.createElement('div');
 document.body.append(wintExercSkysmart);
