@@ -486,205 +486,200 @@ document.getElementById('exercisesComplect').onclick = async function() {
             wintComplect.style.display = 'none'
         }
 		
-		document.getElementById('getroomdataComplect').onclick = async function () {
-			let rhash = document.getElementById('roomhashhwComplect').value
-			let urlComponents = rhash.split('/');
-            let hashroomkids = urlComponents[6].split('?')[0];
-            let kidsselector = urlComponents[4];
-            
-            const baseURL = `https://api-${kidsselector}.skyeng.ru/api/v2/rooms/${hashroomkids}?verbosity=only_mine_participants`;
-			
-                await fetch(baseURL, {
-					"headers": {
-                        "content-type": "application/json",
-                    },
-                    "body": "{\"roomHash\":\"" + rhash + "\"}",
-                    "method": "POST",
-                    "mode": "cors",
-                    "credentials": "include"
-				}).then(r => r.json()).then(r => complectationsData = r)
-
-                console.log(complectationsData)
+			document.getElementById('getroomdataComplect').onclick = async function () {
+				let rhash = document.getElementById('roomhashhwComplect').value
+				let urlComponents = rhash.split('/');
+				let hashroomkids = urlComponents[6].split('?')[0];
+				let kidsselector = urlComponents[4];
 				
-				    let temparr = [];
-					let hwarr = [];
-					let indexOfSlides=''
-							
-					let flagofuser='';
+				const baseURL = `https://api-${kidsselector}.skyeng.ru/api/v2/rooms/${hashroomkids}?verbosity=only_mine_participants`;
+				
+					await fetch(baseURL, {
+						"headers": {
+							"content-type": "application/json",
+						},
+						"body": "{\"roomHash\":\"" + rhash + "\"}",
+						"method": "POST",
+						"mode": "cors",
+						"credentials": "include"
+					}).then(r => r.json()).then(r => complectationsData = r)
 
-					for (let z=0; z<complectationsData.participants.length;z++) {
-						if (complectationsData.participants[z].role == 'student')
-							flagofuser = complectationsData.participants[z].userId;
-					}
+					console.log(complectationsData)
 					
-					for (let usId=0; usId<complectationsData.lessonCards.length; usId++) {
-						if (flagofuser == complectationsData.lessonCards[usId].userId) {
-							indexOfSlides = usId
+						let temparr = [];
+						let hwarr = [];
+						let indexOfSlides=''
+								
+						let flagofuser='';
+
+						for (let z=0; z<complectationsData.participants.length;z++) {
+							if (complectationsData.participants[z].role == 'student')
+								flagofuser = complectationsData.participants[z].userId;
 						}
-					}
-					
-					for (let i = 0; i < complectationsData.lessonCards[indexOfSlides].themes.length; i++) {
-						if (localStorage.getItem("Nullcards") == 1 && complectationsData.lessonCards[indexOfSlides].themes[i].cards.length > 0) {
-							temparr += '<div style="margin: 5px">' +
-								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + kidsselector + '" ' +
-								'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' + 
-								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.lessonCards[indexOfSlides].themes[i].name + ' ' + '<br>' + 
-								'</div></div>'
-						} else if (localStorage.getItem("Nullcards") == 0) {
-							temparr += '<div style="margin: 5px">'+ 
-								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + kidsselector + '" ' +
-								'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
-								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.lessonCards[indexOfSlides].themes[i].name + ' ' + '<br>' + 
-								'</div></div>'
-						}
-						for (let j = 0; j < complectationsData.lessonCards[indexOfSlides].themes[i].cards.length; j++) {
-							(complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness == 100 && complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score == null) ? complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score = 100 : complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score;
-							if (complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness == null) {
-								complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness = '——'
-								complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score = '—'
+						
+						for (let usId=0; usId<complectationsData.lessonCards.length; usId++) {
+							if (flagofuser == complectationsData.lessonCards[usId].userId) {
+								indexOfSlides = usId
 							}
-							temparr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
-								complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].name + ' ' +
-								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого слайда" ' +
-								'complectationsData-subtype="' + kidsselector + '" ' +
-								'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' +
-								'complectationsData-stepid="' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].id + '"> 💾 </span>' +
-								'<span style="float:right; margin-right: 80px;">' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness + '</span>' +
-								'<span style="float:right; margin-right: 60px;">' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score + '</span>' +
-								'</div>';
 						}
-					}
-
-					document.getElementById('exercisebarskysmart').innerHTML += '<div class="roomtype">Lesson</div>' +
-						'<div class="boxwithslides" style="display:none">' +
-						'<div class="itemexerciseskids">' +
-						'<div style="text-align:center;">Информация по категории: Lesson</div>' +
-						'Количество завершенных карточек: ' + complectationsData.lessonCards[indexOfSlides].completedCardsCount + ' из ' + complectationsData.lessonCards[indexOfSlides].cardsCount +
-						'<br>Общий % завершения слайдов: ' + complectationsData.lessonCards[indexOfSlides].completeness + '%' +
-						'<br>Итоговый результат: ' + complectationsData.lessonCards[indexOfSlides].score + ' баллов из 100<br>' +
-						'<div class="headerexplain">' +
-						'<span style="margin-left: 60px;">Название слайда</span>' +
-						'<span style="margin-left: 155px;">Балл</span>' +
-						'<span style="margin-left: 70px;">%</span>' +
-						'<span style="margin-left: 50px;">Ссылка</span>' +
-						'</div>' +
-						'</div>' +
-						temparr +
-						'</div>';
-					
-					for (let i = 0; i < complectationsData.homeworkCards[indexOfSlides].themes.length; i++) {
-						if (localStorage.getItem("Nullcards") == 1 && complectationsData.homeworkCards[indexOfSlides].themes[i].cards.length > 0) {
-							hwarr += '<div style="margin: 5px">' + 
-								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + kidsselector + '" ' +
-								'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
-								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].name + '<br>' + 
-								'</div></div>'
-						} else if (localStorage.getItem("Nullcards") == 0) {
-							hwarr += '<div style="margin: 5px">' +
-								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
-								'complectationsData-subtype="' + kidsselector + '" ' +
-								'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
-								'<div class="roomtypekids" style="cursor:default;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].name + '<br>' + 
-								'</div></div>'
-						}
-						for (let j = 0; j < complectationsData.homeworkCards[indexOfSlides].themes[i].cards.length; j++) {
-							(complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness == 100 && complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score == null) ? complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score = 100 : complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score;
-							if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness == null) {
-								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness = '——'
-								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score = '—'
+						
+						for (let i = 0; i < complectationsData.lessonCards[indexOfSlides].themes.length; i++) {
+							if (localStorage.getItem("Nullcards") == 1 && complectationsData.lessonCards[indexOfSlides].themes[i].cards.length > 0) {
+								temparr += '<div style="margin: 5px">' +
+									'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
+									'complectationsData-subtype="' + kidsselector + '" ' +
+									'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' + 
+									'<div class="roomtypekids" style="cursor:default;">' + complectationsData.lessonCards[indexOfSlides].themes[i].name + ' ' + '<br>' + 
+									'</div></div>'
+							} else if (localStorage.getItem("Nullcards") == 0) {
+								temparr += '<div style="margin: 5px">'+ 
+									'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
+									'complectationsData-subtype="' + kidsselector + '" ' +
+									'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
+									'<div class="roomtypekids" style="cursor:default;">' + complectationsData.lessonCards[indexOfSlides].themes[i].name + ' ' + '<br>' + 
+									'</div></div>'
 							}
-
-							if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'writing') {
-								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name = complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + '✏'
-							} else if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'pronunciation') {
-								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name = complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎧'
-							} else if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'speaking') {
-								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name = complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎙'
+							for (let j = 0; j < complectationsData.lessonCards[indexOfSlides].themes[i].cards.length; j++) {
+								(complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness == 100 && complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score == null) ? complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score = 100 : complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score;
+								if (complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness == null) {
+									complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness = '——'
+									complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score = '—'
+								}
+								temparr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
+									complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].name + ' ' +
+									'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого слайда" ' +
+									'complectationsData-subtype="' + kidsselector + '" ' +
+									'complectationsData-lessonid="' + complectationsData.lessonCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' +
+									'complectationsData-stepid="' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].id + '"> 💾 </span>' +
+									'<span style="float:right; margin-right: 80px;">' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].completeness + '</span>' +
+									'<span style="float:right; margin-right: 60px;">' + complectationsData.lessonCards[indexOfSlides].themes[i].cards[j].score + '</span>' +
+									'</div>';
 							}
-							
-							hwarr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
-								complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + ' ' +
-								'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого слайда" ' +
-								'complectationsData-subtype="' + kidsselector + '" ' +
-								'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' +
-								'complectationsData-stepid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].id + '"> 💾 </span>' +
-								'<span style="float:right; margin-right: 80px;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness + '</span>' +
-								'<span style="float:right; margin-right: 60px;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score + '</span>' +
-								'</div>';
 						}
-					}
 
-					document.getElementById('exercisebarComplect').innerHTML += '<div class="roomtype">Homework</div>' +
-						'<div class="boxwithslides" style="display:none">' +
-						'<div class="itemexerciseskids">' +
-						'<div style="text-align:center;">Информация по категории: Homework</div>' +
-						'Количество завершенных карточек: ' + complectationsData.homeworkCards[indexOfSlides].completedCardsCount + ' из ' + complectationsData.homeworkCards[indexOfSlides].cardsCount +
-						'<br>Общий % завершения слайдов: ' + complectationsData.homeworkCards[indexOfSlides].completeness + '%' +
-						'<br>Итоговый результат: ' + complectationsData.homeworkCards[indexOfSlides].score + ' баллов из 100<br>' +
-						'<div class="headerexplain">' +
-						'<span style="margin-left: 60px;">Название слайда</span>' +
-						'<span style="margin-left: 140px;">Балл</span>' +
-						'<span style="margin-left: 60px;">%</span>' +
-						'<span style="margin-left: 50px;">Ссылка</span>' +
-						'</div>' +
-						'</div>' +
-						hwarr +
-						'</div>';
-
-					let subjbtnsarr = document.getElementsByClassName('roomtype')
-					let slidesbar = document.getElementsByClassName('boxwithslides')
-					for (let i = 0; i < subjbtnsarr.length; i++) {
-						subjbtnsarr[i].onclick = function () {
-							if (slidesbar[i].style.display == 'none')
-								slidesbar[i].style.display = ''
-							else slidesbar[i].style.display = 'none'
-						}
-					}
-
-					let savelinkarr = document.getElementsByClassName('savelinktocms');
-
-					for (let z = 0; z < savelinkarr.length; z++) {
-						savelinkarr[z].onclick = function() {
-							let subtype = this.getAttribute('complectationsData-subtype');
-							let lessonid = this.getAttribute('complectationsData-lessonid');
-							let stepid = this.getAttribute('complectationsData-stepid');
-					
-							// Определение нужной ссылки в зависимости от наличия атрибута data-stepid
-							let link;
-							if (!stepid) {
-								link = `https://cms.skyeng.ru/${subtype}/cms/lesson/${lessonid}`;
-							} else {
-								link = `https://cms.skyeng.ru/${subtype}/cms/lesson/${lessonid}/cards/${stepid}/edit`;
+						document.getElementById('exercisebarskysmart').innerHTML += '<div class="roomtype">Lesson</div>' +
+							'<div class="boxwithslides" style="display:none">' +
+							'<div class="itemexerciseskids">' +
+							'<div style="text-align:center;">Информация по категории: Lesson</div>' +
+							'Количество завершенных карточек: ' + complectationsData.lessonCards[indexOfSlides].completedCardsCount + ' из ' + complectationsData.lessonCards[indexOfSlides].cardsCount +
+							'<br>Общий % завершения слайдов: ' + complectationsData.lessonCards[indexOfSlides].completeness + '%' +
+							'<br>Итоговый результат: ' + complectationsData.lessonCards[indexOfSlides].score + ' баллов из 100<br>' +
+							'<div class="headerexplain">' +
+							'<span style="margin-left: 60px;">Название слайда</span>' +
+							'<span style="margin-left: 155px;">Балл</span>' +
+							'<span style="margin-left: 70px;">%</span>' +
+							'<span style="margin-left: 50px;">Ссылка</span>' +
+							'</div>' +
+							'</div>' +
+							temparr +
+							'</div>';
+						
+						for (let i = 0; i < complectationsData.homeworkCards[indexOfSlides].themes.length; i++) {
+							if (localStorage.getItem("Nullcards") == 1 && complectationsData.homeworkCards[indexOfSlides].themes[i].cards.length > 0) {
+								hwarr += '<div style="margin: 5px">' + 
+									'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
+									'complectationsData-subtype="' + kidsselector + '" ' +
+									'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
+									'<div class="roomtypekids" style="cursor:default;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].name + '<br>' + 
+									'</div></div>'
+							} else if (localStorage.getItem("Nullcards") == 0) {
+								hwarr += '<div style="margin: 5px">' +
+									'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого урока" ' +
+									'complectationsData-subtype="' + kidsselector + '" ' +
+									'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' + '"> 💾 </span>' +
+									'<div class="roomtypekids" style="cursor:default;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].name + '<br>' + 
+									'</div></div>'
 							}
-					
-							copyToClipboardTSM(link);
-						}
-					}
+							for (let j = 0; j < complectationsData.homeworkCards[indexOfSlides].themes[i].cards.length; j++) {
+								(complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness == 100 && complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score == null) ? complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score = 100 : complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score;
+								if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness == null) {
+									complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness = '——'
+									complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score = '—'
+								}
 
-					if (data.participants[0].role == 'student') {
-						document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[0].name
-						document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + data.participants[0].educationServiceId
-						document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
-						document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[1].name
-						document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
-					} else if (data.participants[1].role == 'student') {
-						document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[1].name
-						document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + complectationsData.participants[1].educationServiceId
-						document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
-						document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[0].name
-						document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
-					}
-				
-				
-				
-				
-				
-				
-				
-    }
+								if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'writing') {
+									complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name = complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + '✏'
+								} else if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'pronunciation') {
+									complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name = complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎧'
+								} else if (complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].emphasis == 'speaking') {
+									complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name = complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + '🎙'
+								}
+								
+								hwarr += '<div class="itemexerciseskids">' + [j + 1] + '.' +
+									complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].name + ' ' +
+									'<span class="savelinktocms" title="Копирует в буфер обмена ссылку на CMS для этого слайда" ' +
+									'complectationsData-subtype="' + kidsselector + '" ' +
+									'complectationsData-lessonid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].meta.contentLessonId + '" ' +
+									'complectationsData-stepid="' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].id + '"> 💾 </span>' +
+									'<span style="float:right; margin-right: 80px;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].completeness + '</span>' +
+									'<span style="float:right; margin-right: 60px;">' + complectationsData.homeworkCards[indexOfSlides].themes[i].cards[j].score + '</span>' +
+									'</div>';
+							}
+						}
+
+						document.getElementById('exercisebarComplect').innerHTML += '<div class="roomtype">Homework</div>' +
+							'<div class="boxwithslides" style="display:none">' +
+							'<div class="itemexerciseskids">' +
+							'<div style="text-align:center;">Информация по категории: Homework</div>' +
+							'Количество завершенных карточек: ' + complectationsData.homeworkCards[indexOfSlides].completedCardsCount + ' из ' + complectationsData.homeworkCards[indexOfSlides].cardsCount +
+							'<br>Общий % завершения слайдов: ' + complectationsData.homeworkCards[indexOfSlides].completeness + '%' +
+							'<br>Итоговый результат: ' + complectationsData.homeworkCards[indexOfSlides].score + ' баллов из 100<br>' +
+							'<div class="headerexplain">' +
+							'<span style="margin-left: 60px;">Название слайда</span>' +
+							'<span style="margin-left: 140px;">Балл</span>' +
+							'<span style="margin-left: 60px;">%</span>' +
+							'<span style="margin-left: 50px;">Ссылка</span>' +
+							'</div>' +
+							'</div>' +
+							hwarr +
+							'</div>';
+
+						let subjbtnsarr = document.getElementsByClassName('roomtype')
+						let slidesbar = document.getElementsByClassName('boxwithslides')
+						for (let i = 0; i < subjbtnsarr.length; i++) {
+							subjbtnsarr[i].onclick = function () {
+								if (slidesbar[i].style.display == 'none')
+									slidesbar[i].style.display = ''
+								else slidesbar[i].style.display = 'none'
+							}
+						}
+
+						let savelinkarr = document.getElementsByClassName('savelinktocms');
+
+						for (let z = 0; z < savelinkarr.length; z++) {
+							savelinkarr[z].onclick = function() {
+								let subtype = this.getAttribute('complectationsData-subtype');
+								let lessonid = this.getAttribute('complectationsData-lessonid');
+								let stepid = this.getAttribute('complectationsData-stepid');
+						
+								// Определение нужной ссылки в зависимости от наличия атрибута data-stepid
+								let link;
+								if (!stepid) {
+									link = `https://cms.skyeng.ru/${subtype}/cms/lesson/${lessonid}`;
+								} else {
+									link = `https://cms.skyeng.ru/${subtype}/cms/lesson/${lessonid}/cards/${stepid}/edit`;
+								}
+						
+								copyToClipboardTSM(link);
+							}
+						}
+
+						if (complectationsData.participants[0].role == 'student') {
+							document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[0].name
+							document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + data.participants[0].educationServiceId
+							document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
+							document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[1].name
+							document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
+						} else if (complectationsData.participants[1].role == 'student') {
+							document.getElementById('studnameComplect').innerHTML = '<span style="font-size: 17px;"> 👨‍🎓 </span>' + complectationsData.participants[1].name
+							document.getElementById('studserviceidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔 услуги: </span>' + complectationsData.participants[1].educationServiceId
+							document.getElementById('studidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[1].userId
+							document.getElementById('teachnameComplect').innerHTML = '<span style="font-size: 17px;"> 👽 Teacher </span>' + complectationsData.participants[0].name
+							document.getElementById('teachdidComplect').innerHTML = '<span style="user-select:none; font-size: 17px;">🆔: </span>' + complectationsData.participants[0].userId
+						}
+					
+			}
+		
 		} else {
         wintComplect.style.display = 'none'
     }
