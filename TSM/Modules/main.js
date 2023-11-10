@@ -1,7 +1,7 @@
 var win_addMenu = `<div style="display: flex;">
 					<span style="cursor: -webkit-grab;">
 						<div>
-							<button class="commonbtn" id="hidemainmenu">h i d e </button>
+							<button class="commonbtn" style="min-width:125px" id="hidemainmenu">h i d e </button>
 						<div>
 
 						<div id="mainmenu" style="display:block">
