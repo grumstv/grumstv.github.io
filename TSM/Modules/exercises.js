@@ -64,7 +64,7 @@ var win_complectationExercises = `<div style="display: flex;">
 						</div>
 
 						<div style="margin: 5px; width:550px;">
-							<input id="roomhashhwComplect" placeholder="homework link" style="width: 490px; margin-left: 15px; text-align: center;">
+							<input id="roomhashhwComplect" placeholder=" link" style="width: 490px; margin-left: 15px; text-align: center;">
 							<button class="commonbtn" id="getroomdataComplect">🔎</button>
 						</div>
 
@@ -475,3 +475,14 @@ document.getElementById('exercisesttc').onclick = async function () {
         wintExercTTC.style.display = 'none'
     }
 }
+
+document.getElementById('AFMS_Complect').onclick = async function() {
+	    if (wintComplect.style.display == 'none') {
+        wintComplect.style.display = ''
+        wintComplect.style.display = 'none'
+    }
+    else {
+        wintComplect.style.display = 'none'
+    }
+}
+
