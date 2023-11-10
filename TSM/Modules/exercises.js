@@ -484,6 +484,27 @@ document.getElementById('exercisesComplect').onclick = async function() {
 		  document.getElementById('hideExercisesComplectMenu').onclick = function () {
             wintComplect.style.display = 'none'
         }
+		
+		document.getElementById('getroomdataComplect').onclick = async function () {
+			document.getElementById('roomhashhwComplect').value = document.URL;
+			let rhash = document.getElementById('roomhashhwComplect').value
+			let urlComponents = rhash.split('/');
+            let hashroomkids = urlComponents[6].split('?')[0];
+            let kidsselector = urlComponents[4];
+            
+            const baseURL = `https://api-${kidsselector}.skyeng.ru/api/v2/rooms/${hashroomkids}?verbosity=only_mine_participants`;
+			
+                await fetch(baseURL, {
+					"headers": {
+                        "content-type": "application/json",
+                    },
+                    "body": "{\"roomHash\":\"" + rhash + "\"}",
+                    "method": "POST",
+                    "mode": "cors",
+                    "credentials": "include"
+				}).then(r => r.json()).then(r => complectationsData = r)
+
+                console.log(complectationsData)
     }
     else {
         wintComplect.style.display = 'none'
