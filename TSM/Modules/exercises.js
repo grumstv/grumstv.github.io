@@ -479,6 +479,8 @@ document.getElementById('exercisesComplect').onclick = async function() {
 	    if (document.getElementById('AFMS_Complect').style.display == 'none') {
         wintComplect.style.display = ''
 		wintExercSkysmart.style.display = 'none'
+		wintExercTTC.style.display = 'none'
+		AFMS_addMenu.style.display = 'none'
 		document.getElementById('roomhashhwComplect').value = document.URL;
 		setTimeout(function(){
 			getroomdataComplect.click()
