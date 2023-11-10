@@ -477,9 +477,9 @@ document.getElementById('exercisesttc').onclick = async function () {
 }
 
 document.getElementById('exercisesComplect').onclick = async function() {
-	    if (wintComplect.style.display == 'none') {
+	    if (document.getElementById('AFMS_Complect').style.display == 'none') {
         wintComplect.style.display = ''
-        wintComplect.style.display = 'none'
+		wintExercSkysmart.style.display = 'none'
     }
     else {
         wintComplect.style.display = 'none'
