@@ -204,7 +204,7 @@ function countOperatorsByHour(arr, start, end) {
 }
 
 
-function searchitnow() {
+async function searchitnow() {
     const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
     const dataOutputCount = document.querySelector('#dataoutputcount');
     const ishodDateElem = document.getElementById('ishodDate');
@@ -220,32 +220,27 @@ function searchitnow() {
     const endDate = konezDateElem.value;
 
 	outputVar.innerHTML = '';
-	responseTextarea1.value = `{
-		  "headers": {
-			"accept": "application/json, text/plain, */*",
-			"sec-fetch-mode": "cors",
-		  },
-		  "referrer": "https://crm2.skyeng.ru/",
-		  "referrerPolicy": "strict-origin-when-cross-origin",
-		  "body": null,
-		  "method": "GET",
-		  "mode": "cors",
-		  "credentials": "include"
-	}`;
-	document.getElementById('responseTextarea2').value = `https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`;
-	document.getElementById('responseTextarea3').value = 'operslist';
-	document.getElementById('sendResponse').click();
 
+	await fetch(`https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`, {
+	  "headers": {
+		"accept": "application/json, text/plain, */*",
+		"accept-language": "ru",
+		"sec-ch-ua": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\"",
+		"sec-ch-ua-mobile": "?0",
+		"sec-ch-ua-platform": "\"Windows\"",
+		"sec-fetch-dest": "empty",
+		"sec-fetch-mode": "cors",
+		"sec-fetch-site": "same-site"
+	  },
+	  "referrer": "https://crm2.skyeng.ru/",
+	  "referrerPolicy": "strict-origin-when-cross-origin",
+	  "body": null,
+	  "method": "GET",
+	  "mode": "cors",
+	  "credentials": "include"
+	}).then(r=>r.json()).then(r=>wfmData=r)
 
-    responseTextarea1.addEventListener("DOMSubtreeModified", function() {
-        const resultdata = responseTextarea1.getAttribute('operslist');
-        
-        if (!resultdata) return;
-
-        const converteddata = JSON.parse(resultdata);
-        responseTextarea1.removeAttribute('operslist');
-
-		converteddata.groups[0].operators.forEach(element => {
+		wfmData.groups[0].operators.forEach(element => {
 				let newObjOptions = {
 					operator: `${element.name} ${element.surname}`,
 					start: '',
@@ -314,7 +309,7 @@ function searchitnow() {
         outputVar.innerHTML += `Всего активных операторов: ${activeoperscounter}`;
         worktimesarray.sort((a, b) => a.start.localeCompare(b.start));
         countOperatorsByHour(worktimesarray, "07:00", "24:00");
-    });
+
 }
 
 
