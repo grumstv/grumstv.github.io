@@ -223,9 +223,7 @@ function searchitnow() {
 	responseTextarea1.value = `{
 		  "headers": {
 			"accept": "application/json, text/plain, */*",
-			"sec-fetch-dest": "empty",
 			"sec-fetch-mode": "cors",
-			"sec-fetch-site": "same-site"
 		  },
 		  "referrer": "https://crm2.skyeng.ru/",
 		  "referrerPolicy": "strict-origin-when-cross-origin",
