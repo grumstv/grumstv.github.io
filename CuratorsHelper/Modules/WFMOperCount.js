@@ -220,7 +220,20 @@ function searchitnow() {
     const endDate = konezDateElem.value;
 
 	outputVar.innerHTML = '';
-	responseTextarea1.value = `{}`;
+	responseTextarea1.value = `{
+		  "headers": {
+			"accept": "application/json, text/plain, */*",
+			"sec-fetch-dest": "empty",
+			"sec-fetch-mode": "cors",
+			"sec-fetch-site": "same-site"
+		  },
+		  "referrer": "https://crm2.skyeng.ru/",
+		  "referrerPolicy": "strict-origin-when-cross-origin",
+		  "body": null,
+		  "method": "GET",
+		  "mode": "cors",
+		  "credentials": "include"
+	}`;
 	document.getElementById('responseTextarea2').value = `https://wfm.skyeng.ru/api/user/operators/manager/groups?groups=0d3ffb44-c343-4156-a34e-d8e117c106fb&startDate=${beginDate}T21%3A00%3A00.000Z&endDate=${endDate}T20%3A59%3A59.999Z`;
 	document.getElementById('responseTextarea3').value = 'operslist';
 	document.getElementById('sendResponse').click();
