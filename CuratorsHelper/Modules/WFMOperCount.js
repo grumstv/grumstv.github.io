@@ -203,7 +203,6 @@ function countOperatorsByHour(arr, start, end) {
     }
 }
 
-
 async function searchitnow() {
     const options = { timeZone: "Europe/Moscow", hour12: false, hour: "2-digit", minute: "2-digit" };
     const dataOutputCount = document.querySelector('#dataoutputcount');
@@ -312,9 +311,6 @@ async function searchitnow() {
 
 }
 
-
-
-
 document.getElementById('wfmopercounter').onclick = function() {
     document.getElementById('Curators_WFMOperCnt').style.display =''
 	document.getElementById('Curators_MainMenu').style.display = 'none'
@@ -371,4 +367,11 @@ document.getElementById('wfmopercounter').onclick = function() {
 			document.getElementById('konezDate').value = newDateEnd;
 			searchitnow()
 		}
+		
+		let hideMePlease = document.getElementById('clearallfieldswfmopercnt');
+		hideMePlease.onclick = function(){
+			dataoutputcount.innerHTML = ""
+			analyzedoutput.innerHTML = ""
+		}
 }
+
