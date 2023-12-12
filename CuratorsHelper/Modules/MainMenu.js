@@ -11,7 +11,7 @@ var win_mainMenu = `<div style="display: flex;">
 							<br>
 							<button id="wfmopercounter" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="btn-main dobigger"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">🧮</span> WFM Count</button>
 							<br>
-							<button id="none3" style="display:none; margin: 5px 0px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="btn-main dobigger"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">🚫</span> In Dev</button>
+							<button id="wfmtimecalc" style="margin: 5px 0px 0px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="btn-main dobigger"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">📟</span> Time Calc</button>
 							<br>
 							<button id="none4" title = "" style="display:none; margin: 5px 5px 5px 5px; height: 30px; min-width: 105px; padding-top:8px;" class="btn-main dobigger"><span style="font-size:18px;float:left; position:relative; top:-5px; left:0px;">🚫</span> In Dev</button>
 						</div>
