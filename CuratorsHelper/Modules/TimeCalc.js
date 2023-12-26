@@ -6,7 +6,7 @@ var win_TimeCalculator = `<div">
 							</div>
 						</span>	
 						
-						<div id="main_timecalc>
+						<div id="main_timecalc">
 							<input type="text" autocomplete="off" placeholder="Введите количество минут отсутствия">
 							<button class="btn-main" style="margin-left: 40%; padding: 5px; border-radius: 20px;" id="calcIt">Calculate</button>
 							<div id="calculatedData" style="color:bisque; margin-left: 10px;">
@@ -21,7 +21,7 @@ if (localStorage.getItem('winTopTimeCalc') == null) { //additional menu
 
 let wintTimeCalc = document.createElement('div');
 document.body.append(wintTimeCalc);
-wintTimeCalc.className = 'wintInitializeWFMOperCnt'
+wintTimeCalc.className = 'wintInitializeTimeCalc'
 wintTimeCalc.style = 'display:none;  top: ' + localStorage.getItem('winTopTimeCalc') + 'px; left: ' + localStorage.getItem('winLeftTimeCalc') + 'px;';
 wintTimeCalc.setAttribute('id', 'Curators_TimeCalc');
 wintTimeCalc.innerHTML = win_TimeCalculator;
