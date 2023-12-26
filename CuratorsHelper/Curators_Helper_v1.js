@@ -53,5 +53,6 @@ function loadmodules(gfgScript){
 
     let gfgScript = ["https://grumstv.github.io/CuratorsHelper/Modules/MainMenu.js", // подключаем модуль главного меню скрипта
 	"https://grumstv.github.io/CuratorsHelper/Modules/WFMOperCount.js", // подключаем модуль для помощи  с WFM при получении количества операторов, которые уже внесены в WFM
-	"https://grumstv.github.io/CuratorsHelper/Modules/WFMHelper.js"]; // подключаем модуль для помощи  с WFM при построении графика
+	"https://grumstv.github.io/CuratorsHelper/Modules/WFMHelper.js", // подключаем модуль для помощи  с WFM при построении графика
+	"https://grumstv.github.io/CuratorsHelper/Modules/TimeCalc.js"]; // подключаем модуль для помощи  с WFM при построении графика
     loadmodules(gfgScript)
