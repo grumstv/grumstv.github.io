@@ -7,8 +7,9 @@ var win_TimeCalculator = `<div">
 						</span>	
 						
 						<div id="main_timecalc">
-							<input type="text" autocomplete="off" placeholder="Введите количество минут отсутствия">
-							<button class="btn-main" style="margin-left: 40%; padding: 5px; border-radius: 20px;" id="calcIt">Calculate</button>
+							<input type="text" autocomplete="off" placeholder="Введите количество рабочих часов" style="margin-left: 5%;    width: 90%;    text-align: center;">
+							<input type="text" autocomplete="off" placeholder="Введите количество минут отсутствия" style="margin-left: 5%;    width: 90%;    text-align: center;">
+							<button class="btn-main" style="margin-left: 45%; margin-top:5px; padding: 5px; border-radius: 20px;" id="calcIt">Calculate</button>
 							<div id="calculatedData" style="color:bisque; margin-left: 10px;">
 							</div>
 						</div>
