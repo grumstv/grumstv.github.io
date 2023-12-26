@@ -51,12 +51,13 @@ document.getElementById('wfmtimecalc').onclick = function() {
 }
 
 document.getElementById('calcIt').onclick = function() {
-	let chasi = Number(document.getElementById('chasiwork').value)
-	let minutiotsutstvie = Number(document.getElementById('minutiotsutstvie').value)
-	let outputData = document.getElementById('calculatedData')
-	let result = '';
-	if (chasi !=0  && minutiotsutstvie !=0) {
-		result = (chasi * 60) -  minutiotsutstvie
-		outputData.innerHTML = (result / 60)
-	}
-}
+    let chasi = Number(document.getElementById('chasiwork').value);
+    let minutiotsutstvie = Number(document.getElementById('minutiotsutstvie').value);
+    let outputData = document.getElementById('calculatedData');
+    let result = '';
+    
+    if (chasi !== 0 && minutiotsutstvie !== 0) {
+        result = (chasi * 60) - minutiotsutstvie;
+        outputData.innerHTML = (result / 60).toFixed(2);
+    }
+};
