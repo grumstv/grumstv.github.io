@@ -55,7 +55,7 @@ document.getElementById('calcIt').onclick = function() {
 	let minutiotsutstvie = Number(document.getElementById('minutiotsutstvie').value)
 	let outputData = document.getElementById('calculatedData')
 	let result = '';
-	if (chasi.length>0 and minutiotsutstvie.length>0) {
+	if (chasi.length > 0 && minutiotsutstvie.length > 0) {
 		result = (chasi * 60) -  minutiotsutstvie
 		outputData.innerHTML = (result / 60)
 	}
