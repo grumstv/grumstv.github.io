@@ -7,7 +7,7 @@ var win_TimeCalculator = `<div">
 						</span>	
 						
 						<div id="main_timecalc>
-							<input placeholder="Введите количество минут отсутствия"></input>
+							<input type="text" autocomplete="off" placeholder="Введите количество минут отсутствия">
 							<button class="btn-main" style="margin-left: 40%; padding: 5px; border-radius: 20px;" id="calcIt">Calculate</button>
 							<div id="calculatedData" style="color:bisque; margin-left: 10px;">
 							</div>
@@ -40,3 +40,11 @@ wintTimeCalc.onmousedown = function (a) {
     }
 }
 wintTimeCalc.onmouseup = function () { document.removeEventListener('mousemove', listenerTimeCalc); }
+
+document.getElementById('wfmtimecalc').onclick = function() {
+	if (document.getElementById('Curators_TimeCalc').style.display == "") {
+		document.getElementById('Curators_TimeCalc').style.display = "none"
+	} else {
+		document.getElementById('Curators_TimeCalc').style.display = ""
+	}
+}
