@@ -61,3 +61,7 @@ document.getElementById('calcIt').onclick = function() {
         outputData.innerHTML = (result / 60).toFixed(2);
     }
 };
+
+document.getElementById('hideTimeCalc').onclick = function() {
+	document.getElementById('Curators_TimeCalc').style.display = "none"
+}
