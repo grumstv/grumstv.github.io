@@ -25,6 +25,7 @@ var win_WFMHelper = `<div">
 										<li><label title="ПН-ПТ ⏰ 09:00-18:00 🍔 12:00-13:00"><input type="checkbox" name="5days" value="Копачевский Александр">Копачевский Александр</label></li>
 										<li><label title="ПН-ПТ ⏰ 08:00-17:00 🍔 12:00-13:00"><input type="checkbox" name="upper" value="Зубарев Дмитрий">Зубарев Дмитрий</label></li>
 										<li><label title=""><input type="checkbox" name="5days" value="---">---</label></li>
+										<li><label title=""><input type="checkbox" name="5days" value="---">---</label></li>
 
 								</ul>
 							
